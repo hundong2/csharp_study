@@ -1,0 +1,16 @@
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\bin\Debug\DataBindingListToClass.exe.config
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\bin\Debug\DataBindingListToClass.exe
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\bin\Debug\DataBindingListToClass.pdb
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.csprojAssemblyReference.cache
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\MainWindow.g.cs
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\App.g.cs
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass_MarkupCompile.cache
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass_MarkupCompile.lref
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\MainWindow.baml
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.g.resources
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.Properties.Resources.resources
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.csproj.GenerateResource.cache
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.csproj.CoreCompileInputs.cache
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.exe
+C:\Users\Gzen\Developer\Denis Videos\WPF-Masterclass-App-Mahapps\Demos\DataBindingListToClass\obj\Debug\DataBindingListToClass.pdb
