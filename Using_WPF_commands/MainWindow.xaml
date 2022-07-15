@@ -1,0 +1,38 @@
+﻿<Window 
+    x:Class="Using_WPF_commands.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Using_WPF_commands"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="100" 
+    Width="200"
+    >
+    <!--TODO: Step 1: This example shows a message box
+    when a buttons is pressed
+    The Executed handler shows a message box when the 
+    command is invoked. If you run the sample and press the 
+    button, you will see the message from NewCommand_Executed
+    As an added bonus, instead of clicking the 
+    button, you can try to press Ctrl+N on your keyboard - 
+    the result is the same.
+
+    Add the window CommandBindings
+    These binding will be avilable throught the application -->
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" 
+                        Executed="CloseCommand_Executed" 
+                        CanExecute="CloseCommand_CanExecute" 
+        />
+    </Window.CommandBindings>
+    <!--TODO: Step 2: Add the main stack panel with button
+    GOTO: MainWindow.xaml.cs
+    -->
+    <StackPanel HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+    >
+        <Button Command="ApplicationCommands.Close">Close</Button>
+    </StackPanel>
+</Window>
