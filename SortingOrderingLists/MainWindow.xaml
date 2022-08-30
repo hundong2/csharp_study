@@ -1,0 +1,29 @@
+﻿<Window 
+    x:Class="SortingOrderingLists.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:SortingOrderingLists"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="450" 
+    Width="800"
+    >
+    <!--TODO: Step 1: In this example we are going to 
+    show how to use the where function in order 
+    to filter a list. First weare going to
+    filter odd numbers then the even ones
+    Add main vertical stack panel-->
+    <StackPanel>
+        <!--TODO: Step 2: Add horizontal stack panel-->
+        <StackPanel Orientation="Horizontal">
+            <Button Name="Odd" Click="Odd_Click">Filter odd numbers</Button>
+            <Button Name="Even" Click="Even_Click">Filter even numbers</Button>
+            <Button Name="RemoveFilter" Click="RemoveFilter_Click">Remove Filter</Button>
+        </StackPanel>
+        <!--TODO: Step 3: Add result textblock
+        GOTO: MainWindow.xaml.cs -->
+        <TextBlock Name="MyTextBlock"/>
+    </StackPanel>
+</Window>
