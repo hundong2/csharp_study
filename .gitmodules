@@ -1,3 +1,6 @@
 [submodule "youtube"]
 	path = youtube
 	url = https://github.com/angelsix/youtube.git
+[submodule "loxodon-framework"]
+	path = loxodon-framework
+	url = https://github.com/hundong2/loxodon-framework.git
