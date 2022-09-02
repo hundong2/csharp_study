@@ -1,0 +1,10 @@
+/workspace/csharp_git/nettest/bin/Debug/netcoreapp2.0/nettest.deps.json
+/workspace/csharp_git/nettest/bin/Debug/netcoreapp2.0/nettest.runtimeconfig.json
+/workspace/csharp_git/nettest/bin/Debug/netcoreapp2.0/nettest.runtimeconfig.dev.json
+/workspace/csharp_git/nettest/bin/Debug/netcoreapp2.0/nettest.dll
+/workspace/csharp_git/nettest/bin/Debug/netcoreapp2.0/nettest.pdb
+/workspace/csharp_git/nettest/obj/Debug/netcoreapp2.0/nettest.csproj.CoreCompileInputs.cache
+/workspace/csharp_git/nettest/obj/Debug/netcoreapp2.0/nettest.AssemblyInfoInputs.cache
+/workspace/csharp_git/nettest/obj/Debug/netcoreapp2.0/nettest.AssemblyInfo.cs
+/workspace/csharp_git/nettest/obj/Debug/netcoreapp2.0/nettest.dll
+/workspace/csharp_git/nettest/obj/Debug/netcoreapp2.0/nettest.pdb
