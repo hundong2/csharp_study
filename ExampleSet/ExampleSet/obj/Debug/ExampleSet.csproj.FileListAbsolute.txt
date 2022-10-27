@@ -1,0 +1,15 @@
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\bin\Debug\ExampleSet.exe.config
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\bin\Debug\ExampleSet.exe
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\bin\Debug\ExampleSet.pdb
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.csprojAssemblyReference.cache
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\MainWindow.g.cs
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\App.g.cs
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet_MarkupCompile.cache
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet_MarkupCompile.lref
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\MainWindow.baml
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.g.resources
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.Properties.Resources.resources
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.csproj.GenerateResource.cache
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.csproj.CoreCompileInputs.cache
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.exe
+C:\Users\73673\Desktop\workspace\csharp_study\ExampleSet\ExampleSet\obj\Debug\ExampleSet.pdb
