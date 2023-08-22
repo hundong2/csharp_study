@@ -20,3 +20,15 @@
     </GridView.Columns>
 </GridView>
 ```
+
+## Binding
+
+### Width, Height Binding
+
+- 특정 xaml의 element의 width/Height와 동일하게 연동하고 싶은 경우 사용.
+
+```
+<Grid x:Name="ElementName" />
+
+Width="{Binding Path=ActualWidth, ElementName=ElementName }"
+```
