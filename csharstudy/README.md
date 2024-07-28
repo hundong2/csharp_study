@@ -121,6 +121,12 @@ int n; //n vlaue is not initialize, not assigned value of n
 
 Console.WriteLine(n); //Compile Error Occur!!
 ```
+## page-240
+
+### Enum 
+
+[enum example](./dotnetexample/Enum/Program.cs)  
+
 
 
 
