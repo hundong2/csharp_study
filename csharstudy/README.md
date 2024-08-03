@@ -139,6 +139,13 @@ Console.WriteLine(n); //Compile Error Occur!!
 </Project>
 ```
 
+## page 311 32, 64 bit check
+
+```csharp
+Console.WriteLine($"64 bit process : {Environment.Is64BitProcess}");
+```
+
+- `EXE` is 64 bit then True, it's 32 bit then False.
 
 
 
