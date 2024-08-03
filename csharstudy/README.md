@@ -127,7 +127,17 @@ Console.WriteLine(n); //Compile Error Occur!!
 
 [enum example](./dotnetexample/Enum/Program.cs)  
 
+## page-284 unsafe code
 
+- if you want to use unsafe code, then, you should be set AlowUnsafeBlocks Option.
+
+```csharp
+<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+</PropertyGroup>
+</Project>
+```
 
 
 
