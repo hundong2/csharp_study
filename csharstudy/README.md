@@ -147,5 +147,33 @@ Console.WriteLine($"64 bit process : {Environment.Is64BitProcess}");
 
 - `EXE` is 64 bit then True, it's 32 bit then False.
 
+## page 362 DateTime 
 
+- [Example for DateTime](./dotnetexample/Datetime/Program.cs)  
 
+|Kind|Description|
+|---|---|
+|Unspecified|Some kind|
+|Utc|그니치 천문대 시간|
+|Local|시간대를 반영한 지역 시간|
+
+- Dotnet DateTime reference value : `1 year 1 month 1 day`
+- Unix and JAVA Platform and etc... : `1970 year 1 month 1 day`
+
+- JAVA Code 
+
+```java
+System.println(System.currentTimeMillis()); //result : 1361077426483
+```
+
+- .NET Code 
+
+```csharp
+Console.WriteLine(DateTime.UtcNow.Tricks / 10000); //result : 63496674226482
+```
+
+- Convert .NET milllis to JAVA millis 
+
+```
+long javaMillis = (DateTime.UtcNow.Ticks - 621355968000000000) / 10000;
+```
