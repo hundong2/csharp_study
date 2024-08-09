@@ -177,3 +177,10 @@ Console.WriteLine(DateTime.UtcNow.Tricks / 10000); //result : 63496674226482
 ```
 long javaMillis = (DateTime.UtcNow.Ticks - 621355968000000000) / 10000;
 ```
+
+## StringBuilder 
+
+- `System.Text.StringBuilder`
+- `string + string` is too many copy, plus action
+- StringBuilder have enough memory allocate.  
+- [StringBuilder Example](./dotnetexample/StringExample/Program.cs)  
