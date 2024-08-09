@@ -1,5 +1,6 @@
 ﻿namespace StringExample;
 using System.Text;
+using System.Text.RegularExpressions;
 class Program
 {
     static void Example()
@@ -32,6 +33,23 @@ class Program
         }
 
     }
+    static string funcMatch(Match match)
+    {
+        return "Universe";
+    }
+    static void ExampleRegex2()
+    {
+        string txt = "Hello, World! Welcome to my world!";
+        Regex regex = new Regex("world", RegexOptions.IgnoreCase);
+        string result = regex.Replace(txt, funcMatch);
+        Console.WriteLine(result);
+    }
+    static void ExampleRegex()
+    {
+        string email = "tester@test.com";
+        Regex regex = new Regex(@"^([0-9a-zA-Z]+)@([0-9a-zA-Z]+)(\.[0-9a-zA-Z]+){1,}$");
+        Console.WriteLine(regex.IsMatch(email));
+    }
     static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
@@ -40,5 +58,7 @@ class Program
         ExampleStringFormat2();
         ExampleStringFormat3();
         ExampleStringFormat4();
+        ExampleRegex();
+        ExampleRegex2();
     }
 }
