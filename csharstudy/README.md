@@ -184,3 +184,8 @@ long javaMillis = (DateTime.UtcNow.Ticks - 621355968000000000) / 10000;
 - `string + string` is too many copy, plus action
 - StringBuilder have enough memory allocate.  
 - [StringBuilder Example](./dotnetexample/StringExample/Program.cs)  
+
+## System.IO.MemoryStream
+
+- [Convert Example](./dotnetexample/ConvertExample/Program.cs)  
+- 
