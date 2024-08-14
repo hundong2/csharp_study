@@ -188,4 +188,38 @@ long javaMillis = (DateTime.UtcNow.Ticks - 621355968000000000) / 10000;
 ## System.IO.MemoryStream
 
 - [Convert Example](./dotnetexample/ConvertExample/Program.cs)  
-- 
+
+```sh
+Hello, World!
+01
+00-7D
+4C-36-19-00
+1652300
+string result 4C-36-19-00
+32000
+1652300
+Memory Stream Example : Using ToArray of MemoryStream
+32000
+1652300
+ExampleStreamEncoding
+Hello World
+StreamWriter to StreamReader
+Hello world
+Anderson
+32000
+ExampleXmlSerializer
+Name : Anderson, Age : 30
+<?xml version="1.0" encoding="utf-8"?>
+<Person xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Anderson</Name>
+  <Age>30</Age>
+</Person>
+ExampleJsonSerializer
+{
+  "Name": "Anderson",
+  "Age": 30
+}
+Name : Anderson, Age : 30
+```
+
+## System.Collection

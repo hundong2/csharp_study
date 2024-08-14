@@ -1,7 +1,54 @@
 ﻿namespace ConvertExample;
 using System;
-class Program
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+
+public class Program
 {
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public Person()
+        {
+        }
+        public Person(string name, int age)
+        {
+            Name = name;
+            Age = age;
+        }
+        public override string ToString()
+        {
+            return $"Name : {this.Name}, Age : {this.Age}";
+        }
+    }
+    static void ExampleJsonSerializer()
+    {
+        Console.WriteLine("ExampleJsonSerializer");
+        Person p = new Person("Anderson", 30);
+        System.Text.Json.JsonSerializerOptions options = new System.Text.Json.JsonSerializerOptions { IncludeFields = true, WriteIndented = true};
+        string text = System.Text.Json.JsonSerializer.Serialize(p, options);
+        Console.WriteLine(text);
+
+        Person p2 = JsonSerializer.Deserialize<Person>(text);
+        Console.WriteLine(p2);
+
+    }
+    static void ExampleXmlSerializer()
+    {
+        Console.WriteLine("ExampleXmlSerializer");
+        Person p = new Person("Anderson", 30);
+        System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(Person));
+        System.IO.MemoryStream ms = new System.IO.MemoryStream();
+        serializer.Serialize(ms, p);
+        ms.Position = 0;
+        Person p2 = (Person)serializer.Deserialize(ms);
+        Console.WriteLine(p2);
+
+        byte[] buf = ms.ToArray();
+        Console.WriteLine(System.Text.Encoding.UTF8.GetString(buf));
+    }
     static void ExampleBitConvert()
     {
         byte[] boolBytes = BitConverter.GetBytes(true);
@@ -111,5 +158,7 @@ class Program
         ExampleMemoryStream2();
         ExampleStreamEncoding();
         ExampleStreamReader(ExampleStreamWriter());
+        ExampleXmlSerializer();
+        ExampleJsonSerializer();
     }
 }
