@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharstudy", "csharstudy", "{04705522-B8EB-405D-9EDB-988242CE5B1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnetexample", "dotnetexample", "{F9F4780A-89C7-4648-9F2C-51E71FAAA19B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExampleCollection", "ExampleCollection", "{4D09C976-01D8-4F42-A2D9-28CDB79C5781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleCollection", "csharstudy\dotnetexample\ExampleCollection\ExampleCollection\ExampleCollection.csproj", "{C1D34C72-5ABD-44DA-BABC-C0DA1638A2F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1D34C72-5ABD-44DA-BABC-C0DA1638A2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D34C72-5ABD-44DA-BABC-C0DA1638A2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D34C72-5ABD-44DA-BABC-C0DA1638A2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D34C72-5ABD-44DA-BABC-C0DA1638A2F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F9F4780A-89C7-4648-9F2C-51E71FAAA19B} = {04705522-B8EB-405D-9EDB-988242CE5B1E}
+		{4D09C976-01D8-4F42-A2D9-28CDB79C5781} = {F9F4780A-89C7-4648-9F2C-51E71FAAA19B}
+		{C1D34C72-5ABD-44DA-BABC-C0DA1638A2F4} = {4D09C976-01D8-4F42-A2D9-28CDB79C5781}
+	EndGlobalSection
+EndGlobal
