@@ -1,11 +1,11 @@
 ﻿using System;
-using ExampleSortedList;
+using ExampleCollection;
 
 class Program
 {
     static void Main(string[] args)
     {
-        ExampleSortedListClass ex = new ExampleSortedListClass();
+        ExampleSortedList ex = new ExampleSortedList();
         Console.WriteLine("Hello, World!");
     }
 }
