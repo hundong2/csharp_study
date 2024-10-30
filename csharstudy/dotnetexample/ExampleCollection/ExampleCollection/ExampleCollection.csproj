@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="ExampleCollectionTest.cs" />
+    <Compile Include="ExampleFileTest.cs" />
     <Compile Include="ExampleSortedList.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
