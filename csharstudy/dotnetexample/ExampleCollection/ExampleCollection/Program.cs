@@ -9,6 +9,7 @@ class Program
         ex.Example1();
         ExampleCollectionTest.ExampleStack();
         ExampleCollectionTest.ExampleQueue();
-        Console.WriteLine("Hello, World!");
+        ExampleFileTest.ExampleFile();
+        ExampleFileTest.ExampleDirectory();
     }
 }

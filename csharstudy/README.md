@@ -223,3 +223,7 @@ Name : Anderson, Age : 30
 ```
 
 ## System.Collection
+
+> ### Example File 
+> [File usage exmaple](./dotnetexample/ExampleCollection/ExampleCollection/ExampleFileTest.cs)  
+
