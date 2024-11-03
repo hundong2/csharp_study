@@ -227,3 +227,8 @@ Name : Anderson, Age : 30
 > ### Example File 
 > [File usage exmaple](./dotnetexample/ExampleCollection/ExampleCollection/ExampleFileTest.cs)  
 
+|static method|description|
+|---|---|
+|ChangeExtension|Replaces the extension of the given path (first argument) with the string provided as the second argument.|
+|Combine|Combines all provided string arguments into a single path|
+|GetDirectoryName||
