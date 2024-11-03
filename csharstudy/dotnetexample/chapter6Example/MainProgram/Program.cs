@@ -8,5 +8,6 @@ class Program
     {
         ExampleIOFile exampleIOFile = new ExampleIOFile();
         Console.WriteLine("Hello World!");
+        exampleIOFile.ExampleInvaildPath();
     }
 }
