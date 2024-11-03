@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExampleIO\ExampleIO.csproj" />
+    <ProjectReference Include="..\ExampleThreading\ExampleThreading.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

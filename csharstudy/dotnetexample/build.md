@@ -1,5 +1,17 @@
 # Build 
 
+## make solution in this folder 
+
+```sh
+dotnet new sln -n <solution name>
+```
+
+## add project to solution
+
+```sh
+dotnet sln <Current Solution - *.sln> add <project - *.proj>
+```
+
 ## make console project
 
 ```sh

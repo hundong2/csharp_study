@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainProgram", "MainProgram\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleIO", "ExampleIO\ExampleIO.csproj", "{E383B92D-52FC-45E9-89EB-B9E46518F14F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleThreading", "ExampleThreading\ExampleThreading.csproj", "{ED590168-D19F-4567-BA10-363179415F13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{E383B92D-52FC-45E9-89EB-B9E46518F14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E383B92D-52FC-45E9-89EB-B9E46518F14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E383B92D-52FC-45E9-89EB-B9E46518F14F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED590168-D19F-4567-BA10-363179415F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED590168-D19F-4567-BA10-363179415F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED590168-D19F-4567-BA10-363179415F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED590168-D19F-4567-BA10-363179415F13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

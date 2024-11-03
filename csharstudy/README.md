@@ -232,3 +232,32 @@ Name : Anderson, Age : 30
 |ChangeExtension|Replaces the extension of the given path (first argument) with the string provided as the second argument.|
 |Combine|Combines all provided string arguments into a single path|
 |GetDirectoryName||
+
+
+## System.Threading 
+
+- [Threading](./dotnetexample/chapter6Example/ExampleThreading/ExampleThreading.cs)  
+
+### is Atomic variable? ( 32 bit OS )
+
+```csharp
+n32 = 1//n32 is Int32 type. -> Atomic 
+n64 = 1//n64 is Int64 type. -> not Atomic
+```
+
+- `n64` is work, write memory bit 0x00000000, and write 0x05000000. ( two times write )
+- if you want atomic calculate, that above problem. 
+
+```csharp
+long n = 0;
+Interlocked.Exchange(ref n, 5);
+```
+
+- [System.Threading.ThreadPool](./dotnetexample/chapter6Example/ExampleThreading/ExampleThreading.cs)  
+    - `ExampleThreadPool` function. 
+- [System.Threading.EventWaitHandle](./dotnetexample/chapter6Example/ExampleThreading/ExampleEventHandle.cs)  
+  - `AutoReset` :  The event resets automatically after releasing a single waiting thread.  
+  - `ManualReset` : The event remains signaled until it is manually reset.  
+  - [AutoReset, ManualReset, Monitor.Wait의 차이](https://www.sysnet.pe.kr/2/0/1015)  
+- ***In the case of EventWaitHandle, it can compensate for the drawback of not being able to call Join on threads in the ThreadPool.***
+
