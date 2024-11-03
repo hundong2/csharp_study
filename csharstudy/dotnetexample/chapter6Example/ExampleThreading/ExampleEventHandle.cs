@@ -26,6 +26,7 @@ namespace ExampleThreading
             //if Signal status, WaitOne() method is unblocked.
             //EventWaitHandle is used to synchronize threads.
             //and then, parameter is false -> Non-Signal status, true -> Signal status
+            // ManualReset: Once signaled, remains signaled until manually reset.
             EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.ManualReset); 
             Thread t = new Thread(threadFunc);
             t.IsBackground = true;
