@@ -32,6 +32,7 @@ class Program
         exampleEventHandle.ExampleEventHandling();
         exampleEventHandle.ExampleThreadpoolUsingEventHandler();
         //ExampleAysnc.SyncExample.ExampleSync.ExampleSyncDriver();
+        ExampleAysnc.AsyncExample.ExampleAync.ExampleAsyncTest();
 
 
 

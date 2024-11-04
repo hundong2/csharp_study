@@ -266,3 +266,6 @@ Interlocked.Exchange(ref n, 5);
 - [Sync Example](./dotnetexample/chapter6Example/ExampleAysnc/SyncExample/ExampleSync.cs)  
   - `FileStream` is sync function. 
   - `FileStream` provide `BeginRead/EndRead`, `BeginWrite/EndWrite` method for async. 
+
+- [Async Example](./dotnetexample/chapter6Example/ExampleAysnc/AsyncExample/ExampleAync.cs)  
+  - `BeginRead/EndRead` page 449.
