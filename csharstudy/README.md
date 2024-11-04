@@ -261,3 +261,8 @@ Interlocked.Exchange(ref n, 5);
   - [AutoReset, ManualReset, Monitor.Wait의 차이](https://www.sysnet.pe.kr/2/0/1015)  
 - ***In the case of EventWaitHandle, it can compensate for the drawback of not being able to call Join on threads in the ThreadPool.***
 
+## Async, sync example
+
+- [Sync Example](./dotnetexample/chapter6Example/ExampleAysnc/SyncExample/ExampleSync.cs)  
+  - `FileStream` is sync function. 
+  - `FileStream` provide `BeginRead/EndRead`, `BeginWrite/EndWrite` method for async. 

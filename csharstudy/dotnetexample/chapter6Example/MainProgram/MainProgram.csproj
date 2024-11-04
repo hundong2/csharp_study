@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\ExampleAysnc\ExampleAysnc.csproj" />
     <ProjectReference Include="..\ExampleIO\ExampleIO.csproj" />
     <ProjectReference Include="..\ExampleThreading\ExampleThreading.csproj" />
   </ItemGroup>
