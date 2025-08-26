@@ -6,5 +6,8 @@ class Program
     {
         Console.WriteLine("Library Example");
         ExampleIP.ExampleIPParsing();
+
+        ExampleIP.ExampleGetHostEntry();
+        ExampleIP.ExampleGetMyIPEntry();
     }
 }

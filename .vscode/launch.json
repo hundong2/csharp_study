@@ -16,6 +16,18 @@
             "stopAtEntry": false,
             "console": "internalConsole"
         }
+        , 
+        {
+            "name": ".NET Launch Active File",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${fileDirname}/bin/Debug/net8.0/${fileBasenameNoExtension}.dll",
+            "args": [],
+            "cwd": "${fileDirname}",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        }
 
     ]
 }
