@@ -1,5 +1,6 @@
 # dotnet programming 
 
+- [ ][dotnet기본](https://learn.microsoft.com/ko-kr/dotnet/core/get-started)
 - dotnet project sln making example : https://learn.microsoft.com/ko-kr/dotnet/core/tutorials/library-with-visual-studio-code?pivots=dotnet-8-0  
 - make dotnet console 
 
