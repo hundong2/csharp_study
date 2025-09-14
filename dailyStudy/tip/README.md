@@ -10,6 +10,12 @@ dotnet run xxx.cs
 dotnet project convert xxx.cs
 ```
 
+## Reflection
+
+- [reflection.md](./reflection/reflection.md)  
+- 
+
+
 ## text.json property setting 
 
 - [json serialize, deserialize setting problem](./jsonproperty/README.md)
