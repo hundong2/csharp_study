@@ -1,0 +1,15 @@
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\bin\Debug\net10.0\reflection_ex.exe
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\bin\Debug\net10.0\reflection_ex.deps.json
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\bin\Debug\net10.0\reflection_ex.runtimeconfig.json
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\bin\Debug\net10.0\reflection_ex.dll
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\bin\Debug\net10.0\reflection_ex.pdb
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.AssemblyInfoInputs.cache
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.AssemblyInfo.cs
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.csproj.CoreCompileInputs.cache
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.sourcelink.json
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.dll
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\refint\reflection_ex.dll
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.pdb
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\reflection_ex.genruntimeconfig.cache
+D:\workspace\private\csharp_study\dailyStudy\tip\reflection\reflection\obj\Debug\net10.0\ref\reflection_ex.dll

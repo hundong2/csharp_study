@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "pLWfDim4sDs=",
+  "success": true,
+  "projectFilePath": "D:\\workspace\\private\\csharp_study\\dailyStudy\\tip\\reflection\\reflection\\reflection_ex.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ehdgn\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\10.0.0-preview.7.25380.108\\microsoft.dotnet.ilcompiler.10.0.0-preview.7.25380.108.nupkg.sha512",
+    "C:\\Users\\ehdgn\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.0-preview.7.25380.108\\microsoft.net.illink.tasks.10.0.0-preview.7.25380.108.nupkg.sha512",
+    "C:\\Users\\ehdgn\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\10.0.0-preview.7.25380.108\\runtime.win-x64.microsoft.dotnet.ilcompiler.10.0.0-preview.7.25380.108.nupkg.sha512"
+  ],
+  "logs": []
+}

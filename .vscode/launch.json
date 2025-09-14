@@ -15,8 +15,19 @@
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "internalConsole"
-        }
-        , 
+        },
+        {
+    "name": ".NET: Run Active C# file (dotnet run)",
+    "type": "coreclr",
+    "request": "launch",
+    // dotnet CLI로 현재 파일을 실행 (dotnet run <file>)
+    "program": "dotnet",
+    "args": ["run", "${file}"],
+    "cwd": "${workspaceFolder}",
+    "console": "integratedTerminal",
+    "stopAtEntry": false,
+    "justMyCode": true
+},
         {
             "name": ".NET Launch Active File",
             "type": "coreclr",
@@ -27,7 +38,18 @@
             "cwd": "${fileDirname}",
             "stopAtEntry": false,
             "console": "integratedTerminal"
-        }
+        },
+            {
+      "name": ".NET: Debug project of active file",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "dotnet",
+      "args": ["run", "--project", "${fileDirname}"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "stopAtEntry": false,
+      "justMyCode": true
+    }
 
     ]
 }
