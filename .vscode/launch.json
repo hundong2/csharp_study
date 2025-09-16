@@ -49,6 +49,15 @@
       "console": "integratedTerminal",
       "stopAtEntry": false,
       "justMyCode": true
+    },
+        {
+      "name": ".NET Launch (Example1)",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/csharstudy/dotnetexample/chapter6Example/Reflection/Example1/Example1.csproj",
+      "cwd": "${workspaceFolder}/csharstudy/dotnetexample/chapter6Example/Reflection/Example1",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
     }
 
     ]
