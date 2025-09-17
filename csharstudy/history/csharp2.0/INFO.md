@@ -223,3 +223,11 @@ public class Utility
 
 BaseClass dInst2 = Utility.Allocate<BaseClass, DerivedClass>();
 ```
+
+### Nuallable<T>
+
+```csharp
+Nullable<bool> value1 = null; //null, true, false
+value1? = null; //null, true, false
+//compile time changed `?` -> Nullable<T>
+```
