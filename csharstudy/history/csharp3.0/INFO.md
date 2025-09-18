@@ -1,0 +1,141 @@
+# csharp c# 3.0
+
+## var 
+
+- `type inference` 기능이 추가 되면서 var예약어 사용 가능. 
+
+```csharp
+foreach( KeyValuePair<string, List<int>> element in dict) {}
+//보다 간결 
+foreach(var elemet in dict) {}
+```
+
+## 자동 구현 속성 ( Auto Implemented properties )
+
+- old version
+
+```csharp
+class Person
+{
+    string _name;
+    public string Name { get {return _name;} set { _name = value; }}
+}
+```
+
+- 아래의 코드를 컴파일러는 자동으로 확장 해준다. 
+
+```csharp
+class Person
+{
+    public string Name {set; get;}
+}
+//changed from compiler 
+
+class Person
+{
+    private string ...[Name 자동 속성에 대응 되는 고유 식별자]...
+    public string Name
+    {
+        get { return ....고유식별자...; }
+        set { ...고유식별자...=value; }
+    }
+}
+```
+
+- 자동 구현 속성을 사용할 시 외부에서는 오직 읽기만 가능하고, 내부에서는 읽기/쓰기 모두 가능하게 가능.
+
+```csharp
+class Person
+{
+    public string Name { get; protected set; }
+}
+```
+
+## 개체 초기화 (Object initializers)
+
+- old version 
+
+```csharp
+class Person
+{
+    string _name;
+    int _age;
+
+    public string Name
+    {
+        set{ _name = value; } get { return _name; }
+    }
+    public int Age
+    {
+        set(_age = value;) get {return _age;}
+    }
+    public Person() //default construct
+        : this(string.Empty, 0)
+    {
+
+    }
+
+    public Person(string name)
+        : this(name, 0) {} 
+
+    public Person(string name, int age)
+    {
+        _name = name;
+        _age = age;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Person p = new Person("lle", 33);
+    }
+}
+```
+
+- 개체 초기화 사용
+
+```csharp
+Person p1 = new Person();
+Person p3 = new Person("hello", 33);
+```
+
+- 생성자 객체 초기화 함께 사용
+
+```csharp
+Person p1 = new Person(30) { Name = "name" }
+```
+
+## collection initialize ( 컬렉션 초기화 )
+
+```csharp
+List<int> numbers = new List<int>();
+numbers.Add(0); numbers.Add(1); //...
+```
+
+```csharp
+List<int> numbers = new List<int>{ 0, 1, 2, 3 }; //ICollection<T> Interface 
+```
+
+- 객체 초기화 구문도 가능. 
+
+```csharp
+class Person
+{
+    public int Age {get; set;}
+    public string Name {get; set;}
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<Person> list = new List<Person>()
+        {
+            new Person { Name = "lee", Age = 22 },
+            new Person { Name = "lll", Age = 33 }
+        }
+    }
+}
+```
