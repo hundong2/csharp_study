@@ -135,7 +135,10 @@ class Program
         {
             new Person { Name = "lee", Age = 22 },
             new Person { Name = "lll", Age = 33 }
-        }
+        }   
     }
 }
 ```
+
+- 익명 타입
+
