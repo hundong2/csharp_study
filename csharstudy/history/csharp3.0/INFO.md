@@ -94,7 +94,7 @@ class Program
 }
 ```
 
-- 개체 초기화 사용
+## 개체 초기화 사용
 
 ```csharp
 Person p1 = new Person();
@@ -140,5 +140,14 @@ class Program
 }
 ```
 
-- 익명 타입
+## 익명 타입
+  - [anonymous type](./anony.cs). 
+
+## partial method 
+    - [partial method example](./partialmethod.cs). 
+    - 제약 사항
+      - 부분 메서드는 반환값을 가질 수 없다
+      - ref 매개변수는 사용할 수 있지만, out매서드는 사용 할 수 없다.
+      - 부분 메서드는 private 접근자만 허용
+
 
