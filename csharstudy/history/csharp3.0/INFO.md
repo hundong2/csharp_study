@@ -262,3 +262,7 @@ public static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> sour
 - [Expression Explain](./Expression.md)  
 - [Expression DeepDive](./ExpressionDeppDive.md)  
 
+### LINQ ( Language Integrated Query )
+
+- 컬렉션을 대상으로 쿼리를 수행하는 것 
+- [LINQ](./LINQ.md). 
