@@ -150,4 +150,107 @@ class Program
       - ref 매개변수는 사용할 수 있지만, out매서드는 사용 할 수 없다.
       - 부분 메서드는 private 접근자만 허용
 
+## Extension method 
 
+- 제약 사항 
+  - sealead로 봉인 된 클래스는 확장할 수 없다. 
+  - 클래스를 상속받아 확장하면 기존 소스코드를 새롭게 상속받은 클래스명으로 바꿔야 한다.  
+  - [Extension Example](./ExtensionExample.cs)
+
+```csharp
+Console.WriteLine(text.GetWordCount()); 
+//changed from compiler
+Console.WriteLine(ExtensionMethodSample.GetWordCount(text));
+```
+
+- 사용 불가 
+  - protected member call 
+  - method override 
+
+- ExtensionMethod Example `System.Linq` `Min` for `IEnumerable`
+  - [ExtensionMethod2.cs](./ExtensionMethod2.cs). 
+  - 
+
+## Lambda expression
+
+### code로서의 람다 식 
+
+- 익명 메서드의 간단한 표기용도로 사용된다. 
+
+```csharp
+Thread thread = new Thread(
+    delegate(object obj)
+    {
+        Console.WriteLine("ThreadFunc in anonymous method called!");
+    }
+);
+```
+
+- simple version
+
+```csharp
+Thread thread = new Thread(
+    (obj) =>
+    {
+        Console.WriteLine("ThreadFunc in anonymous method called!");
+    }
+)
+```
+
+### Lambda expression
+
+- [simple version 1](./DelegateExample.cs). 
+- [simple version 2](./LambdaExpressionEx.cs). 
+
+### Action, Func
+
+- delegate를 일일이 정의하는 것을 편하게 하기 위해, 제네릭을 통해 선언. 
+
+```csharp
+public delegate void Action<T>(T obj); //반환값 존재
+public delegate TResult Func<TResult>(); //반환값 미존재 
+```
+
+- [Action, Func Example](./ActionExample.cs). 
+- result 
+
+```sh
+Action delegate example
+Value of pi: 3.14
+3 * 4 = 12
+```
+
+- [Action, Func Example](./ActionFunc.md). 
+
+#### Collection and Lambda method
+
+- `List<T> Foreach`. 
+- `Array Foreach`. 
+
+- [Collection Labmda](./CollectionLambda.cs). 
+    - List의 요소를 하나씩 차례대로 `Action<T>`에 전달 
+    - ForEach((elemnt) => {...});
+      - Action<T> 를 수행 
+
+- [FindAll Example](./ActionFuncEx1.cs). 
+  - `FindAll` method는 `delegate bool Predicate<T>(T obj)`. 
+  - `public List<T> FindAll(Predicate<T> match);`. 
+    - `Func<T, bool`
+- [Example Count](./ActionExample.cs)
+  - `Count` Exmaple 
+  - `public static int Count<TSource>(this IEnumerable<TSource> source)`. 
+  - `public static int Count<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)`. 
+
+- `where` example
+
+```csharp
+public static IEnumerable<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate);
+```
+
+  - [Where Example](./WhereExample.cs). 
+- [Where vs FindAll explain](./WhereFindAllDiff.md). 
+    - `where` is lazy evaluation.  
+    - `FindAll` is immediately
+
+- `FindAll` -> `where`. 
+- `ConvertAll` -> `select`. 
