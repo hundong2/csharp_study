@@ -173,3 +173,7 @@ Console.WriteLine(oldestAge);
 - 특정 자료형에 LINQ를 사용 할 수 있게 별도로 타입을 정의해둔 것을 LINQ 제공자(provider)라고 하고, `System.Xml.Linq`에  대해서는 특별히 LINQ to XML이라고 이름을 붙였다.  
 - [LINQ to XML example](./LINQtoXML.cs)  
 
+
+## LINQ Take and SINGLE
+
+- [Example for take and single](./LINQTAKEandSINGLE.md). 
