@@ -168,5 +168,8 @@ Console.WriteLine(oldestAge);
 
 - `IEnumerable<T>` 타입과 그것을 상속받은 타입을 대상으로 LINQ쿼리가 동작. 
 - 상속받아 정의만 한다면 LINQ쿼리 수행 가능. 
-- `XML`자료형에 
+- `XML`자료형에 LINQ쿼리를 수행할 수 있도록 `System.Xml.Linq` 네임스페이스 아래에 IEnumerable<T>와 연동 가능한 XElement, XAttribute, XDocument등의 타입을 만들어 뒀다.  
+
+- 특정 자료형에 LINQ를 사용 할 수 있게 별도로 타입을 정의해둔 것을 LINQ 제공자(provider)라고 하고, `System.Xml.Linq`에  대해서는 특별히 LINQ to XML이라고 이름을 붙였다.  
+- [LINQ to XML example](./LINQtoXML.cs)  
 
