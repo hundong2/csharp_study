@@ -207,8 +207,8 @@ Thread thread = new Thread(
 - delegate를 일일이 정의하는 것을 편하게 하기 위해, 제네릭을 통해 선언. 
 
 ```csharp
-public delegate void Action<T>(T obj); //반환값 존재
-public delegate TResult Func<TResult>(); //반환값 미존재 
+public delegate void Action<T>(T obj); //반환값 미존재
+public delegate TResult Func<TResult>(); //반환값 존재 
 ```
 
 - [Action, Func Example](./ActionExample.cs). 
