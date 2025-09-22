@@ -58,6 +58,8 @@ var ageSort = from person in people
 
 - orderby에 올수 있는 값은 IComparable interface가 구현된 타입이면 된다.  
 
+### group by
+
 ```csharp
 var addGroup = from person in people
                 group person by person.Address;
@@ -78,5 +80,93 @@ foreach(var itemGroup in addGroup )
 
 var nameAgeList = from person in people
                     group new { Name = person.Name, Age = person.Age} by person.Address;
-
 ```
+
+### join 
+
+```csharp
+var nameToLangList = from person in people
+                    join language in languages
+                    on person.Name equals language.Name
+                    select new { Name = person.Name, Age = person.Age, Language = language.Language }
+Console.WriteLine(string.Join(Environment.NewLine, nameToLangList));
+```
+
+#### inner join 
+
+- Set1: A1, ABCD
+- Set2: A1, B2, C2
+- Set3: A1, B3, C2
+- A1 == A1, join 
+  - A1, B2, C2
+  - A1, B3, C2
+- A1에 대해 결과가 2개 생긴다. 
+
+#### outer join
+
+- join대상에 매칭 되지 않는 element가 있더라도 표시 
+- table A
+
+|Name|Age|Region|
+|---|---|---|
+|Tom|63|Korea|
+|Winnie|40|Tibet|
+|Hawk|15|Korea|
+
+- table B
+
+|Name|Language|
+|---|---|
+|Tom|C#|
+
+- outer join
+
+|Name|Langueage|
+|---|---|
+|Tom|C#|
+|Winnie||
+|Hawk||
+
+```csharp
+var nameToLangAllList = from person in people
+                        join language in languages on person.Name equals language.Name into lang
+                        from language in lang.DefaultIfEmpty(new MainLanguage())
+                        select new {Name=pserson.Name, Age=person.NewLine, language= language.Language};
+Console.WriteLine(string.Join(Environment.NewLine, nameToLangAllList));
+```
+
+## LINQ vs IEnumerable<T>
+
+|LINQ|IEnumerable|
+|---|---|
+|select|Select|
+|where|Where|
+|order by(ascending)|OrderBy|
+|order by(descending)|OrderByDescending|
+|group by|GroupBy|
+|join...in...on...equals|Join|
+|join...in...on...equals...into|GroupJoin|
+
+- IEnumerable<T>에 정의된 확장 메서드는 표준 쿼리 연산자(standard query operators)라고 한다.  
+- [IEnumerable](./IEnumerable.md). 
+
+- LINQ와 MAX의 조합
+
+```csharp
+var all = from person is people
+            where person.Address == "Korea"
+            select person;
+var oldestAge = all.Max((elem) => elem.Age)
+Console.WriteLine(oldestAge);
+```
+
+- LINQ ( Lazy evaluation )
+  - [LINQ Lazy evaluation test](./LINQExample2.cs)  
+  - LINQ에서 반환 타입이 `IEnumerable<T>` or `IOrderedEnumerable<TElement>`가 아니라면 그즉시 실행되어 실행 결과가 반환 된다.  
+
+## LINQ Provider ( LINQ to XML )
+
+- `IEnumerable<T>` 타입과 그것을 상속받은 타입을 대상으로 LINQ쿼리가 동작. 
+- 상속받아 정의만 한다면 LINQ쿼리 수행 가능. 
+- `XML`자료형에 
+
