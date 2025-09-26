@@ -75,6 +75,27 @@ Console.WriteLine(DuckTypingCall(txt, "Test")); // 0
 Console.WriteLine(DuckTypingCall(list, 3)); //2
 ```
 
+## using ironpython with csx
+
+- [ironpython example](./ironpythonEx.csx). 
+- [csx example](./csharpscript.md). 
+
+## Concurrent Collections
+
+- `System.Threading.Monitor`
+- [Single Process - Concurrent Collection example](./concurrentCollectionsEx.cs)
+- [Multi Process](./concurrentCollectionEx2.cs). 
+- [Multi Process using lock](./concurrentCollectionEx3.cs). 
+- [ConcurrentBag Example For replace list<T>]()
+
+- `System.Collections.Concurrent` Thread-safe element 
+  - `BlockingCollection<T>` : Producer, Consumer pattern에서 사용하기 좋은 컬렉션 
+  - `ConcurrentBag<T>` : List<T>의 순서가 지켜지지 않는 동시성 버전
+  - `ConcurrentDictionary<TKey, TValue>`: Dictionary<TKey, TValue>의 동시성 버전 
+  - `ConcurrentQueue<T>`: Queue<T>의 동시성 버전
+  - `ConcurrentStack<T>`: Stack<T>의 동시성 버전  
+
+
 ## reference 
 
 - [Strong Type](./strongType.md). 
