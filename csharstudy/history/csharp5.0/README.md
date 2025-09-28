@@ -23,3 +23,28 @@ async void NormalFunc()
 }
 
 ```
+
+- [Async Example](./asyncEx.cs). 
+- [Async Example2](./asyncEx2.cs). 
+
+### Task, Task<TResult> Type
+
+- [Task Example](./TaskEx.cs). 
+
+```csharp
+Task taskSleep = new Task(() => { Thread.Sleep(5000); });
+taskSleep.Start();
+taskSleep.Wait();
+```
+
+- [Task Factory StartNew](./TaskFactoryStartNew.md). 
+
+```csharp
+Task.Factory.StartNew(
+    ()=>{Console.WriteLine("process Taskitem");}
+);
+Task.Factory.StartNew(
+    (obj) => { Console.WriteLine("process taskitem(obj)" ); }, null
+);
+```
+

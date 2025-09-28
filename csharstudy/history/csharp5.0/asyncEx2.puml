@@ -1,0 +1,93 @@
+@startuml AsyncSocketAwaitFlow
+title Async Socket Receive/Send Await 흐름
+
+actor Client
+participant "Main Thread" as Main
+participant "Program" as Prog
+participant "Listener Socket" as Listener
+participant "Client Socket" as CSock
+participant "OS Network Stack" as OS
+participant "ThreadPool\n(IO Completion)" as TP
+
+== 서버 시작 ==
+Main -> Listener: Bind + Listen
+Main -> Listener: Accept() (블로킹 대기)
+
+== 새 연결 ==
+Client -> Listener: TCP Connect
+Listener --> Main: return Socket (client)
+Main -> Prog: ProcessTcpClient(client)  (async void)
+
+== ProcessTcpClient 진입 ==
+Prog -> CSock: ReceiveAsync(buffer)
+alt 데이터 즉시 도착(동기 완료)
+  CSock --> Prog: ValueTask (IsCompleted=true)
+  note right of Prog: await 'synchronously completes'\n다음 줄 즉시 계속
+else 대기(비동기 I/O)
+  CSock --> Prog: 미완료 Task/ValueTask
+  Prog --> Main: (메서드 반환 - 상태머신 보관)
+  OS <- CSock: I/O 요청 등록
+  ...시간 경과...
+  OS -> TP: 수신 완료 신호(IOCP/epoll)
+  TP -> Prog: continuation 실행 (await 이후 재개)
+end
+
+Prog -> Prog: txt = UTF8.GetString(...)
+Prog -> CSock: SendAsync("Hello "+txt)
+alt 송신 버퍼 즉시 처리
+  CSock --> Prog: 완료 Task
+else 비동기 송신 진행
+  CSock --> Prog: 미완료 Task
+  Prog --> (return to caller)
+  OS <- CSock: 비동기 전송 요청
+  @startuml
+  title Async Socket Receive/Send Await 흐름
+
+  actor Client
+  participant "Main Thread" as Main
+  participant "Program" as Prog
+  participant "Listener Socket" as Listener
+  participant "Client Socket" as CSock
+  participant "OS Network Stack" as OS
+  participant "ThreadPool\n(IO Completion)" as TP
+
+  == 서버 시작 ==
+  Main -> Listener: Bind + Listen
+  Main -> Listener: Accept() (블로킹 대기)
+
+  == 새 연결 ==
+  Client -> Listener: TCP Connect
+  Listener --> Main: return Socket (client)
+  Main -> Prog: ProcessTcpClient(client)  (async void)
+
+  == ProcessTcpClient 진입 ==
+  Prog -> CSock: ReceiveAsync(buffer)
+  alt 데이터 즉시 도착(동기 완료)
+    CSock --> Prog: ValueTask (IsCompleted=true)
+    note right of Prog: await 동기 완료\n다음 줄 즉시 실행
+  else 대기(비동기 I/O)
+    CSock --> Prog: 미완료 Task/ValueTask
+    Prog --> Main: (async 메서드 1차 반환)
+    OS <- CSock: I/O 요청 등록
+    ... 시간 경과 ...
+    OS -> TP: 수신 완료 신호(IOCP/epoll)
+    TP -> Prog: continuation 실행 (await 이후 재개)
+  end
+
+  Prog -> Prog: txt = UTF8.GetString(...)
+  Prog -> CSock: SendAsync("Hello "+txt)
+  alt 송신 버퍼 즉시 처리
+    CSock --> Prog: 완료 Task
+  else 비동기 송신 진행
+    CSock --> Prog: 미완료 Task
+    Prog --> Main: return (async void 즉시 복귀)
+    OS <- CSock: 비동기 전송 요청
+    OS -> TP: 전송 완료 통지
+    TP -> Prog: continuation (await 이후 재개)
+  end
+
+  Prog -> CSock: Close()
+
+  == 메인 루프는 계속 Accept ==
+  Main -> Listener: Accept() (다음 연결 대기)
+  @enduml
