@@ -13,7 +13,7 @@ class Program
             }, null
         );
 
-        //Task Type 
+        //Task Type, Action action
         Task task1 = new Task(() =>
         {
             Console.WriteLine("Task1 processing");
@@ -21,10 +21,11 @@ class Program
 
         task1.Start();
 
+        //Action<object> action, object state
         Task task2 = new Task((obj) =>
         {
             Console.WriteLine("Task2 processing");
-        });
+        }, null);
         task2.Start();
         //Console.ReadLine();
     }

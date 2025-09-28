@@ -48,3 +48,36 @@ Task.Factory.StartNew(
 );
 ```
 
+- Task<object> example
+    - [Example for Task](./TaskEx2.cs). 
+    - using Function<TResult> delegate 
+    - Task.Result를 통해 결과 값을 가져 올 수 있다. 
+      - 내부에 Wait가 있기 때문에 Task.Wait() 호출은 생략 가능.  
+
+- TaskFactory 
+
+```csharp
+Task<int> taskReturn = Task.Factory.StartNew<int>(()=>1);
+taskReturn.Wait();
+Console.WriteLine(taskReturn.Result);
+```
+
+### Async 메서드가 아닌 비동기 처리 
+
+- [Example](./AsyncEx3.cs). 
+- `File.ReadAllText` 메서드는 그에 대응되는 비동기 버전의 메서드를 제공하지 않는다. 
+
+```csharp
+string text= File.ReadAllText(...);
+Console.WriteLine(text);
+```
+
+- Example `AsyncEx3.cs`를 통해 await를 통해 ReadAllText를 비동기처럼 사용 
+
+### parallel 
+
+- [Parallel Example](./ParallelEx.cs). 
+- diff thread and task
+  - [Diff](./diff_thread_task.md).  
+
+
