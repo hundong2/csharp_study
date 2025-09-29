@@ -24,3 +24,8 @@ var weekends = new Dictionary<int, string>
     [6] = "saturday" // ok
 }
 ```
+
+## deconstruct method 
+
+- [Deconstruct method](./DeconstructEx.cs). 
+- 
