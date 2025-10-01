@@ -18,4 +18,9 @@ Parallel.ForEach(sourceCollection, item => Process(item));
 ## Task.WhenALL and Task.WhenAny
 
 - [Task.WhenAll](./TaskWhenALLEX.cs). 
+
+
+## reference 
+
+- https://nikiforovall.blog/csharp/compcsi/dotnet/2020/10/20/awaitable-pattern.html
 - 
