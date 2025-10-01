@@ -28,4 +28,12 @@ var weekends = new Dictionary<int, string>
 ## deconstruct method 
 
 - [Deconstruct method](./DeconstructEx.cs). 
-- 
+
+## Expression bodied members 
+
+- 람다 식을 이용한 메서드 정의 확대 
+- [Expression bodied members](./ExpressionBodiedMember.cs). 
+
+## Local function 
+
+- [Local function](./LocalFunctionEx.cs). 
