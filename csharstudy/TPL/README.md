@@ -19,6 +19,11 @@ Parallel.ForEach(sourceCollection, item => Process(item));
 
 - [Task.WhenAll](./TaskWhenALLEX.cs). 
 
+## Multiple IO Concurrently 
+
+- [Multiple IO](./MultipleIOConcurrently.cs)  
+- [Explaination](./MultipleIO.md). 
+
 
 ## reference 
 
