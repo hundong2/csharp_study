@@ -121,3 +121,27 @@ class Program
     }
 }
 ```
+
+```csharp
+ref struct Vector
+{
+    public int X;
+    public int Y;   
+    public Vector(int x, int y) { X = x; Y = y; }
+}
+ref struct Matrix2x2
+{
+    public Vector v1 = new Vector(); //ref struct
+    public Vector v2 = new Vector(); //ref struct 
+}
+```
+
+```csharp
+ref struct RefStruct : IDisposable //compile error
+{
+    
+}
+```
+
+- interface로의 형변환은 스택 객체가 힙객체로 변환돼야 하는 박싱 작업을 수반하는데 `ref struct` 타입은 힙에 생성할 수 없는 유형이기 때문이다. `ref struct` 타입의 인스턴스는 using문의 대상으로 사용할 수 없다. 
+- 관리 포인터의 경우 GC의 현재 구현상 절대 `관리 힙에 놓일 수 없다.`는 제약을 갖는다. 따라서 `Span<T>` 타입을 구현하면서 관리 포인터를 담을 수 있는 특수한 구조체가 필요하게 됐고 그것이 바로 `ref struct`이다. [참고](https://www.sysnet.pe.kr/2/0/11529)
