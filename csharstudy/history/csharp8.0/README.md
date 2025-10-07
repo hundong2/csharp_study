@@ -203,6 +203,7 @@ public unsafe void ProcessItem()
   - `fixed`, `unsafe` 설명 
 - [Marshal AllocCoTaskMem](./MarshalAllocCoTaskMem.md)  
 - [fixed 문과 fixed크기 버퍼의 차이](./fixed.md). 
-
+- [Serializable Attribute](./serializableAttribute.md). 
+- [Attribute Deepdive](./AttributeDeepDive.md). 
 
 
