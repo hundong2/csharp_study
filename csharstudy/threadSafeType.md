@@ -1,15 +1,22 @@
 # C#의 Thread-Safe 타입과 List<T>의 안전성
+
 어떤 타입이 “여러 스레드에서 동시에 접근/변경”되어도 추가 동기화 없이 올바르게 동작하는지를 설명. List<T>는 쓰기(추가/삭제/정렬 등)가 섞인 동시 접근에 대해 안전하지 않음.
+
 ## 예시 파일
+
 [ConcurrentDictionary 샘플 (dotnet/samples)](https://github.com/dotnet/samples/blob/main/core/linq/csharp/ConcurrentDictionaryExample/Program.cs)
+
 ## 답변
+
 핵심 요약  
+
 - 불변(Immutable) 또는 “읽기 전용으로만 공유”하면 사실상 thread-safe.  
 - List<T>는 “동시 읽기만” 안전(변경 없을 때). 읽기/쓰기 혼재 또는 동시 쓰기 시 안전하지 않음.  
 - 동시 변경이 필요하면 Concurrent* 컬렉션이나 Immutable 컬렉션, 혹은 lock 사용.  
 
 1. 실질적으로 Thread-Safe로 간주 가능한 범주  
 - 완전 불변 타입: string, System.Uri, DateTime, DateTimeOffset, Guid, decimal, 대부분의 struct(필드 모두 값 형식이고 내부 변이 없음)  
+
 - System.Collections.Immutable.* (ImmutableList<T>, ImmutableDictionary<TKey,TValue> 등)  
 - 동시 컬렉션(경쟁 제어 내장):  
   - ConcurrentDictionary<TKey,TValue>  
@@ -48,6 +55,7 @@
 | 다수 읽기, 드문 쓰기 | ImmutableList + Interlocked 스왑 |
 
 6. 짧은 데모: List<T> 경쟁 상황 vs ConcurrentDictionary  
+
 ````csharp
 using System;
 using System.Collections.Concurrent;
