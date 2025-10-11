@@ -149,3 +149,134 @@ public class PointF
     }
 }
 ```
+
+### with 연산자 사용
+
+```csharp
+Point pt1 = new Point(5,10);
+
+Point pt2 = pt1 with { Y = pt1.Y + 2 }; //X = 5, Y = 12 
+Point pt3 = pt1 with { X = pt1.X + 2 }; //X만 변경 
+Point pt4 = pt1 with { X = pt1.X + 2, Y = pt1.Y + 2 }; //X, Y 변경
+```
+
+- C# 컴파일러만 사용할 수 있는 Clone 메서드를 protected 생성자와 함께 제공한다.
+
+```csharp
+public virtual Point <Clone>$()
+{
+    return new Point(this);
+}
+
+protected Point(Point original)
+{
+    this.X = original.X;
+    this.Y = original.Y;
+}
+```
+
+#### with 연산자 사용 시 컴파일 시퀀스
+
+- `pt1 with { Y = pt1.Y + 2};` 코드는 아래와 같이 변경하여 컴파일 된다.
+
+```csharp
+Point pt2 = pt1.<Clone>$();
+pt2.Y = pt1.Y + 2;
+```
+
+## 대상에 따라 new 식 추론 ( Target-typed new expressions )
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        Point pt1 = new Ponit(5, 6); //C#2.0 이하 타입 모두 지정
+        var pt2 = new Point(5,6); //C# 3.0 이상 : new 대상 타입을 추론해 var 결정
+        Point pt3 = new(5,6); //c# 9.0 변수의 타입에 따라 new 연산자 타입을 결정 
+    }
+    public record Point(int X, int Y )
+    {
+        public Point() : this(0,0) {}
+    }
+}
+```
+
+- 배열 및 컬렉션의 초기화 코드를 더 단순하게 만들어 준다.  
+
+```csharp
+var linePt = new Point[]
+{
+    new(5,6),
+    new() { X = 7, Y = 0 }
+}
+
+var dict = new Dictionary<Point, bool>()
+{
+    [new(5,6)] = true,
+    [new(7,3)] = false,
+    [new(){ X = 3, Y = 2}] = false
+}
+```
+
+## 조건식 평가 
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        var note = new Notebook();
+        var desk = new Desktop();
+        Computer prd = ( note ! = null )? note : desk; //C#8.0이하에서는 컴파일 오류 
+        //8.0 이상에서는 타입 추론이 가능해져서 컴파일 오류 X 
+        // 8.0 이하에서는 다음과 같이 
+        //Computer prd = (note != null )? (Computer)note : desk;
+        object returnvalue = (args.Length == 0 ) ? "empty": 1; //암시적 형변환이 가능 
+        int? result = (args.Length != 0 ) ? 1: null;
+    }
+}
+
+public class Computer() {}
+public class Notebook : Computer {}
+public class Desktop : Computer {}
+```
+
+## 로컬 함수에 특성 지정 가능 ( Attribute on local functions )
+
+```csharp
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Log("Main");
+        Log(null);
+    }
+    [Conditional("DEBUG")]
+    static void Log([AllowNull] string text)
+    {
+        string logText = $"[{Thread.CurrentThread.ManagedThreadId}] {text}";
+        Console.WriteLine(logText);
+    }
+}
+```
+
+- extern 유형도 같이 쓸수 있게 되었다.  
+
+```csharp
+using System.Runtime.InteropServices;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        MessageBox(IntPtr.Zero, "message", "title", 0 );
+        //특성을 부여할 수 있으므로 extern P/Invoke 정의를 로컬 함수로도 가능 
+        [DllImport("User32.dll", CharSet = CharSet.Unicode)]
+        static extern int MessageBox(IntPtr h, string m, string c, int type);
+    }
+}
+```
