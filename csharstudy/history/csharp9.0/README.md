@@ -280,3 +280,311 @@ class Program
     }
 }
 ```
+
+## static 익명 함수 
+
+- [Example Static Anomy](./StaticAnomy.cs). 
+
+## 익명 함수의 매개변수 무시 
+
+```csharp
+public class Class1
+{
+    void M(int _)
+    {
+
+    }
+    public void M()
+    {
+        int _;
+        _ = 5;
+        Console.WriteLine(_); // print result : 5
+    }
+}
+
+public class Class2
+{
+    void _()
+    {
+
+    }
+}
+```
+
+- 위 `_`은 out 구문에서의 `_`과 다르다. `여러개`를 쓰면 `에러` 발생
+- `out` 구문에서는 `여러개` `사용 가능`
+
+```csharp
+Class1 c1 = new Class1();
+c1.TryParse("5", out _, out _); //식별자가 아니므로 두개 이상 사용 가능 
+
+public class Class1
+{
+    public bool TryParse(string txt, out int n, out System.Net.IPAddress address)
+    {
+        n = 0;
+        address = System.Net.IPAddress.Any;
+        return true;
+    }
+    public void M(int _) {} //유효한 식별자
+    public void M(int _, int _ ){} //2개 이상동일한 식별자 
+}
+```
+
+## reference 
+
+### 식별자(identifier)란?
+
+- 코드 요소를 가리키는 이름입니다. 규칙: 문자/밑줄(_)로 시작, 대소문자 구분, 키워드는 @로 이스케이프 가능(예: @class).
+- 식별자는 “선언”으로 만들어지고, 같은 스코프에선 중복 선언 불가.
+
+### discard(_)란?
+
+- C# 7+에서 도입된 “버리기 자리표시자”입니다. out, 패턴 매칭, 튜플 분해 등 특정 문맥에서 _를 쓰면 “값을 무시”하겠다는 뜻이고, 어떤 변수도 선언되지 않습니다. 
+- 변수(식별자)가 아니므로 중복 충돌 개념이 없고, 여러 번 사용해도 됩니다.
+- 질문 코드가 왜 “식별자가 아니라서 여러 번 가능”인가?
+- 여기의 _는 “out 변수 선언”이 아니라 “out 값을 버린다”는 discard입니다.
+- 로컬 변수가 만들어지지 않으므로 같은 호출식 안에서 out _를 여러 번 써도 스코프 충돌이 없습니다.
+- 비교 예시: 식별자 '' vs discard ''
+
+
+```csharp
+using System;
+
+public static class IdentifierVsDiscardDemo
+{
+    public static void Main()
+    {
+        // 1) discard: 변수 선언 없음 → 여러 번 가능
+        if (int.TryParse("123", out _)) { /* 값 무시 */ }
+        if (int.TryParse("456", out _)) { /* 또 무시 */ }
+
+        // 2) 실제 변수(식별자) 사용: 한 번만 선언 가능
+        if (int.TryParse("789", out var n)) Console.WriteLine(n);
+        // if (int.TryParse("000", out var n)) { } // 컴파일 오류: n 중복 선언
+
+        // 3) '_'를 식별자로 쓰는 경우(메서드 파라미터 등)
+        M(10);             // OK
+        // void M(int _, int _) { } // 컴파일 오류: 파라미터 이름 중복(둘 다 식별자)
+
+        // 4) 튜플/패턴에서도 discard는 여러 번 가능
+        var (_, y, _) = (1, 2, 3);   // 첫/셋째 요소 버리기
+        Console.WriteLine(y);        // 2
+    }
+
+    static void M(int _) { /* 여기의 _는 '식별자' */ }
+}
+```
+
+#### C#9.0부터는 익명 메서드와 람다 메서드에 대해서는 밑줄을 식별자가 아닌, 무시 구문으로 다룬다. 
+
+```csharp
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Machine cl = new Machine();
+
+        //c#8.0까지는 반드시 매개변수 명을 나열 
+        cl.Run((string name, int time) => {return 0;});
+        cl.Run((arg1, arg2) => { return 0;});
+        //c# 9.0 부터 사용하지 않는 매개변수는 이름 생략 가능
+        cl.Run((string _, int _) => { return 0; });
+        cl.Run((_, _) => 5 );
+        cl.Run(delegate(string _, int _ ){return 0;});
+    }
+    public delegate int RunDelegate(string name, int time);
+    public class Machine
+    {
+        void M(int _){}
+        public void Run(RunDelegate runnable)
+        {
+            Console.WriteLine(runnable(nameof(Machine), 1));
+        }
+    }
+
+}
+```
+
+## TOP-Level statements ( 최상위 문 )
+
+```csharp
+System.Console.WriteLine("Hello World"); //위와 같이 한줄로 컴파일이 가능 
+```
+
+- 컴파일러는 위의 코드를 다음과 같이 변환하여 컴파일 해줌
+
+```csharp
+static class <Program>$
+{
+    static void <Main>$(string[] args)
+    {
+        //Input Top-level statements
+        System.Console.WriteLine("Hello World");
+    }
+}
+```
+
+- 최상위 문에서 바로 사용 가능한 부분
+
+```csharp
+int argLen = args.Length; //최상위 문에서 args 접근 사용 가능
+Console.WriteLine(args[0]);
+```
+
+|최상위문 포함 코드|선택 된 <Main>$ 유형|
+|---|---|
+|return 1;|static int <Main>$(string[] args) {...}|
+|await Task.Delay(10); | static async Task <Main>$(string[] args){...}|
+|await Task.Delay(10); return 1;| static async Task<int> <Main>$(string[] args){...}|
+|그외|static void <Main>$(string[] args) {...}|
+
+```csharp
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+[DllImport("User32.dll", CharSet=CharSet.Unicode)]
+static extern int MessageBox(IntPtr h, string m, string c, int type);
+
+MessageBox(IntPtr.Zero,"c#9.0", "Top-level statements", 0);
+
+Log("Hello World");
+
+[Conditional("DEBUG")]
+static void Log(string text)
+{
+    File.WriteAllText($"test.log", text);
+}
+```
+
+## Pattern matching Improvement
+
+```csharp
+var t = (args.Length, "# of Args");
+
+if(t is (int n, string _ )) {} //C#8.0 이전 
+if(t is (int, string)) {} //C#9.0 변수명을 생략해 타입만 지정 가능 
+object objValue = args.Length;
+
+//switch 구문에서도 타입만 지정 가능
+switch ( objValue)
+{
+    case int: break;
+    case System.String: break;
+}
+
+static bool GreaterThan10(int number) =>
+    number is > 10;
+static bool GreaterThan10(int number) =>
+    number switch
+    {
+        > 10 => true,
+        _ => false
+    }
+```
+
+```csharp
+//is pattern(상수 비교가 아닌 경우)
+static bool GreaterThanTarget(int number, int target) =>
+    number is int value && ( value > target ); //value > target 이 더 효율 적인 예시 임. ( 참고 ) 
+
+//switch패턴 ( 상수 비교가 아닌 경우 )
+static bool GreaterThanTarget(int number, int target) =>
+    number switch
+    {
+        // > target => true, 상수 제약 ( target )
+        int value when value > target => true,
+        _ => false
+    }
+```
+
+- 기존의 `!`,`&&`,`||` 도 `not`, `and`, `or` 예약어를 도입하여 사용. 
+- 기존의 `when`예약어로 사용하던 복잡성을 제거 
+
+```csharp
+//is pattern
+static bool IsLetter(char c) =>
+    c is (>= 'a' and <= 'z') or ( >= 'A' and <= 'Z') => true;
+//switch pattern
+static bool IsLetter(char c) =>
+    c switch
+    {
+        ( >= 'a' and <= 'z' ) or ( >= 'A' and <= 'Z' ) => true,
+        _ => false
+    };
+```
+
+## Module Initializer ( 모듈 이니셜라이저 )
+
+- `ModuleInitializer`라는 이름의 특성을 정적 메서드에 부여하면 C# 컴파일러는 해당 메서드를 <Module> 타입의 정적 생성자에서 호출하는 코드를 넣어 컴파일 한다.
+- 참고: https://www.sysnet.pe.kr/2/0/11335
+- [Example Code](./ModuleInitalizerEx.cs). 
+  - 제약 사항
+    - 반드시 static method
+    - 반환 타입은 void, 매개 변수는 없어야한다.
+    - 제네릭 유형은 허용 안됨
+    - <Module> 타입에서 호출이 가능해야 하므로 internal 또는 public 접근자만 허용 
+  - 어떤 순서로 호출 될 지 제어할 수 없기 때문에 실행 순서에 의존하는 코드를 작성해서는 안됨. 
+
+## 공변 반환 형식 ( Covariant return types )
+
+- 상속 관계에서 return 값에 대해 override 사용 시 일치 시켜야 컴파일이 되었지만 
+- 일치 시키지 않더라도 컴파일이 가능 ( C#9.0 .NET5 이상 )  
+  - 반환 타입이 상속 관계의 하위 타입 인 경우 사용 가능
+
+```csharp
+class Product
+{
+    public virtual Product GetDevice() { return this; }
+}
+class Hashset : Product 
+{
+    public override Hashset GetDevice() //Product를 상속하는 child class 인 경우 가능 
+    {
+        return this;
+    }
+}
+```
+
+## Extension GetEnumerator
+
+- `foreach`루프에 대해 `IEnumerable`을 구현하지 않더라도 `GetEnumerator`확장 메서드를 사용해서 사용 가능. 
+
+```csharp
+Notebook notebook = new();
+foreach(var device in notebook)
+{
+    System.Console.WriteLine(device.Name);
+}
+public static class NotebookExtension
+{
+    //외부 개발자가 GetEnumerator 확장 메서드를 제공
+    public static IEnumerator<Device> GetEnumerator(this Notebook instance)
+    {
+        foreach( Device device in instance.GetDevices())
+        {
+            yield return device;
+        }
+    }
+}
+
+public class Notebook
+{
+    List<Device> _parts;
+    public Notebook()
+    {
+        _parts = new List<Device>()
+        {
+            new Device() { Name = "CPU" },
+            new Device() { Name = "GPU" }
+        };
+    }
+    public Device[] GetDevices()
+    {
+        return _parts.ToArray();
+    }
+}
+```
+
+
+
