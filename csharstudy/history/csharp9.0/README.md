@@ -586,5 +586,185 @@ public class Notebook
 }
 ```
 
+## New features for partial methods
 
+- 오픈 된 제약 사항
+  - 반환 타입 허용
+  - out 매개변수 허용
+  - 명시적으로 private을 포함한 접근 제한자 허용 
+  - 대신 이렇게 사용했을 때는 더 이상 구현부를 생략할 수 없다는 조건
 
+```csharp
+public partial class Computer
+{
+    partial void Beep(); //private 가 자동으로 붙음
+}
+public partial class Computer
+{
+    private partial void Beep() //명시적으로 private을 표현 할 경우, 구현 부를 반드시 작성해야 함. 
+    {
+        System.Console.WriteLine("Beep");
+    }
+}
+```
+
+- 자동으로 소스를 생성하는 방법 : [Auto Generator](./AutoSourceGenerator.md). 
+
+## localsinit 플래그 내보내기 무시 (Suppress emitting localsinit flag)
+
+- C# 컴파일러는 기본적으로 모든 로컬 변수의 공간을 사용 여부에 상관없이 0으로 초기화 하도록 내부 코드를 작성
+- 명시적으로 초기화하는 것(0)이 꼭 필요한 작업은 아님. C# 컴파일러는 개발자가 명시적으로 초기화 하지 않은 변수를 사용할 때 컴파일 오류를 내기 때문.  
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        // 변수 i, c는 기본적으로 0으로 초기화 
+        int i;
+        char c;
+
+        Console.WriteLine(i); //컴파일 에러 초기화 되지 않은 i 사용 
+
+        int i = 5;
+        //변수 i에 해당하는 저장소를 미리 0으로 초기화 
+        //이후 개발자의 코드에 의해 i = 5 로 초기화 
+    }
+}
+```
+
+- 위 변수 초기화 2단계도 생략하여 성능을 높일 수 있음. `SkipLocalsInit` attribute와 `unsafe` 조합.
+
+```csharp
+using System.Runtime.CompilerServices;
+
+class Program
+{
+    [SkipLocalsInit]
+    unsafe static void Main(string[] args)
+    {
+        int i = 5; //변수 i는 0으로 미리 초기화되지 않은 공간, 개발자 코드에 의해 5로 초기화 
+        Console.WriteLine(i);
+    }
+}
+```
+
+- 변수 몇개의 초기화를 생략하는 것이 성능에 크게 영향을 주지 않지만, stackalloc에 적용이 되면 요소의 수와 해당 메서드의 호출 횟수에 따라 성능을 높일 여지가 있음. 
+
+```csharp
+[SkipLocalsInitAttribute]
+unsafe static void LocalsInitStackAlloc()
+{
+    var arr = stackalloc int[1000];
+    for(int i = 0; i < 1000; i++ )
+    {
+        Console.WriteLine($"{arr[i]},");
+    }
+}
+```
+
+## 원시 정수 크기(Native ints)
+
+- 32bit env 에서는 4byte
+- 64bit env 에서는 8byte
+- C/C++언어와 호환성을 위해 있음
+
+- `nint`, `nuint`
+  - 32bit 인 경우 4출력
+  - 64bit 인 경우 8출력
+- `sizeof`로 확인할 경우 `unsafe`구문 필요 
+
+## Function pointer
+
+- C#8.0이전까지는 함수 포인터의 역할을 델리게이트가 담당 
+
+```csharp
+class Program
+{
+    public delegate bool EqualsDelegate(int n1, int n2);
+    static void Main(string[] args)
+    {
+        {
+            EqualsDelegate equalsFunc = Program.Equals;
+            equalsFunc(1,2);
+        }
+        {
+            Func<int, int, bool> equalsFunc = Program.Equals;
+            equalsFunc(1, 2,);
+        }
+    }
+    static bool Equals(int n1, int n2)
+    {
+        return n1 == n2;
+    }
+}
+```
+
+- C#9.0 부터 함수를 바로 호출해 성능을 높일 수 있는 새로운 함수 포인터 구문을 unsafe 문맥으로 제공
+
+```csharp
+class Program
+{
+    unsafe static void Main(string[] args)
+    {
+        delegate*<int, int, bool> equalsFunc = &Program.Equals;
+        equalsFunc(1, 2);
+        delegate*<int, int, bool> writeLineFunc = null;
+        writeLineFunc = &Program.WriteLine;
+        writeLineFunc("1 == 2: " + equalsFunc(1,2));
+    }
+    static bool Equals(int n1, int n2)
+    {
+        return n1 == n2;
+    }
+    static void WriteLine(string text)
+    {
+        Console.WriteLine(text);
+    }
+}
+```
+
+- Func 구조를 생각하면 이해하기 쉬움. 
+
+```csharp
+Func<int, int, bool> A = B;
+delegate*<int, int, bool> A = &B;
+```
+
+## 제약 조건이 없는 형식 매개변수 주석 ( Unconstrained type parameter annotations )
+
+```csharp
+static void CrateArray<T>(int n) /* where T : class */ //제약 조건이 없는 형식 매개변수는 where T : class가 생략 된 걸로 간주
+{
+    var t = new T?[n];
+}
+```
+
+- 상속 관계에서의 제약 조건 없는 메서드를 재정의하는 것에서 `where T : struct`를 유지하도록 지정이 됨에 따라. 
+- 상속 된 자식 class에서의 제약 조건 없는 메서드에서 `where T : class`를 사용하기 위해 
+  - `where T : default` 제약을 이용해야만 한다. 
+
+```csharp
+public class Base
+{
+    public virtual void M<T>(T? t) where T : struct
+    {
+        Console.WriteLine("Base.M struct");
+    }
+    public virtual void M<T>(T? t) /* where T : class */
+    {
+        Console.WriteLine("Base.M class");
+    }
+}
+public class Derived : Base
+{
+    public override void M<T>(T? t) /* 상속 된 제약 조건 없는 매서드는 상위 클래스의 struct에 연결 */
+    {
+        Console.WriteLine("Derived.M.struct");
+    }
+    public overrid void M<T>(T? t) where T : default
+    {
+        Console.WriteLine("Base.M class");
+    }
+}
+```
