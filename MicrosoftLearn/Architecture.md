@@ -240,3 +240,4 @@ public class Program
 # reference 
 
 - [Architecture](https://learn.microsoft.com/ko-kr/dotnet/architecture/modern-web-apps-azure/architectural-principles)  
+- [DI](https://learn.microsoft.com/ko-kr/dotnet/core/extensions/dependency-injection)  
