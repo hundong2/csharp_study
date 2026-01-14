@@ -400,5 +400,3 @@ var yaml = new SerializerBuilder().Build().Serialize(data);
 - CI/CD 파이프라인 (GitHub Actions, GitLab CI)
 - 인프라 코드 (Kubernetes, Ansible)
 - 사람이 직접 편집하는 파일
-
-리스트 형태의 데이터를 많이 다루신다고 하셨는데, API 데이터 전송인가요 아니면 설정 파일 관리인가요? 용도에 따라 더 구체적인 예시를 드릴 수 있습니다.
