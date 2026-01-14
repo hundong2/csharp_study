@@ -4,7 +4,23 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+{
+    var json = @"{ ""key_name"": ""John"", ""lines"": [] }";
 
+    var options = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    };
+
+    var person = JsonSerializer.Deserialize<LineChecker>(json, options) ?? null;
+    if(person is null)
+    {
+        Console.WriteLine("Deserialization failed");
+        return;
+    }
+    Console.WriteLine($"Key Name: {person.KeyName}");
+    Console.WriteLine($"Lines: {person.Lines}");
+}
 class LineChecker
 {
     [JsonPropertyName("key_name")]
@@ -12,27 +28,7 @@ class LineChecker
     [JsonPropertyName("lines")]
     public ListLine Lines { get; set; } = new();
 }
-class Program
-{
-    static void Main(string[] args)
-    {
-        var json = @"{ ""key_name"": ""John"", ""lines"": [] }";
 
-        var options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-
-        var person = JsonSerializer.Deserialize<LineChecker>(json, options) ?? null;
-        if(person is null)
-        {
-            Console.WriteLine("Deserialization failed");
-            return;
-        }
-        Console.WriteLine($"Key Name: {person.KeyName}");
-        Console.WriteLine($"Lines: {person.Lines}");
-    }
-}
 [JsonConverter(typeof(LineListTokenConverter))]
 internal sealed class ListLine : List<LineToken>;
 internal sealed record ElemntToeken(
@@ -82,7 +78,8 @@ internal sealed class LineListTokenConverter : JsonConverter<ListLine>
     {
         if( reader.TokenType != JsonTokenType.StartArray )
             throw new JsonException("Unexpected end of JSON");
-        var list = JsonSerializer.Deserialize<ListLine>(ref reader, options) ?? new();
+        // ✅ List<LineToken>으로 역직렬화하여 무한 재귀 방지
+        var list = JsonSerializer.Deserialize<List<LineToken>>(ref reader, options) ?? new();
         if( list is null )
             throw new JsonException("line list deserialization failed");
         var lineList = new ListLine();
@@ -103,4 +100,6 @@ internal sealed class LineListTokenConverter : JsonConverter<ListLine>
         writer.WriteEndArray();
     }
 }
+
+
 
