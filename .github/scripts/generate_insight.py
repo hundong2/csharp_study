@@ -281,7 +281,7 @@ def generate_with_gemini(article: dict, api_key: str) -> str:
     import google.generativeai as genai
 
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash-lite")
     response = model.generate_content(build_prompt(article))
     return response.text
 
