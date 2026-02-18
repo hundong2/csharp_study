@@ -25,12 +25,11 @@ jobs:
       - name: 📦 Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install requests feedparser google-generativeai openai
+          pip install requests feedparser google-generativeai
 
       - name: 🤖 Generate .NET Daily Insights
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python .github/scripts/generate_insight.py
 
       - name: 📤 Commit and push generated insights

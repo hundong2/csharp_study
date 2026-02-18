@@ -286,42 +286,11 @@ def generate_with_gemini(article: dict, api_key: str) -> str:
     return response.text
 
 
-def generate_with_openai(article: dict, api_key: str) -> str:
-    from openai import OpenAI
-
-    client = OpenAI(api_key=api_key)
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": ".NET 개발자를 위한 기술 뉴스레터를 작성하는 전문가입니다. 교육적이고 실용적인 내용을 한국어로 작성합니다.",
-            },
-            {"role": "user", "content": build_prompt(article)},
-        ],
-        max_tokens=3000,
-        temperature=0.7,
-    )
-    return response.choices[0].message.content
-
-
-def generate_content(
-    article: dict,
-    gemini_key: Optional[str],
-    openai_key: Optional[str],
-) -> Optional[str]:
-    if gemini_key:
-        try:
-            return generate_with_gemini(article, gemini_key)
-        except Exception as e:
-            print(f"  ⚠️  Gemini 오류: {e}")
-            if openai_key:
-                print("  → OpenAI로 폴백합니다...")
-    if openai_key:
-        try:
-            return generate_with_openai(article, openai_key)
-        except Exception as e:
-            print(f"  ⚠️  OpenAI 오류: {e}")
+def generate_content(article: dict, gemini_key: str) -> Optional[str]:
+    try:
+        return generate_with_gemini(article, gemini_key)
+    except Exception as e:
+        print(f"  ⚠️  Gemini 오류: {e}")
     return None
 
 
@@ -405,14 +374,12 @@ def main():
     print("=" * 55)
 
     gemini_key = os.environ.get("GEMINI_API_KEY", "").strip() or None
-    openai_key = os.environ.get("OPENAI_API_KEY", "").strip() or None
 
-    if not gemini_key and not openai_key:
-        print("❌ GEMINI_API_KEY 또는 OPENAI_API_KEY 가 설정되지 않았습니다.")
+    if not gemini_key:
+        print("❌ GEMINI_API_KEY 가 설정되지 않았습니다.")
         sys.exit(1)
 
-    api_label = "Gemini" if gemini_key else "OpenAI"
-    print(f"✅ API: {api_label}")
+    print("✅ API: Gemini")
 
     today = datetime.now(KST)
     date_str = today.strftime("%Y-%m-%d")
@@ -450,7 +417,7 @@ def main():
 
     for i, article in enumerate(selected, 1):
         print(f"[{i}/{len(selected)}] {article['title']}")
-        content = generate_content(article, gemini_key, openai_key)
+        content = generate_content(article, gemini_key)
 
         if content:
             filepath = save_insight(date_str, article, content)
