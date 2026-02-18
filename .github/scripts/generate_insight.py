@@ -282,7 +282,7 @@ def generate_with_gemini(article: dict, api_key: str) -> str:
 
     client = genai.Client(api_key=api_key)
     response = client.models.generate_content(
-        model="gemini-3-flash",
+        model="gemini-2.5-flash",
         contents=build_prompt(article),
     )
     return response.text
