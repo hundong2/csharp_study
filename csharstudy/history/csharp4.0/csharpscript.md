@@ -14,6 +14,7 @@
 2. 도구 설치 (macOS)
 ```bash
 dotnet tool install -g dotnet-script
+
 # PATH 미설정 시
 echo 'export PATH="$PATH:$HOME/.dotnet/tools"' >> ~/.zshrc && source ~/.zshrc
 ```

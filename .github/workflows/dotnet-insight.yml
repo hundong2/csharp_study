@@ -1,0 +1,44 @@
+name: 🗞️ Daily .NET Insight Newsletter
+
+on:
+  schedule:
+    - cron: '0 21 * * *'   # 매일 오전 6시 KST (UTC 21:00 = KST 06:00)
+  workflow_dispatch:        # 수동 실행 가능
+
+jobs:
+  generate-insight:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 🛒 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests feedparser google-generativeai openai
+
+      - name: 🤖 Generate .NET Daily Insights
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python .github/scripts/generate_insight.py
+
+      - name: 📤 Commit and push generated insights
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add insight/
+          git diff --staged --quiet || (
+            git commit -m "📰 .NET Daily Insight - $(TZ=Asia/Seoul date '+%Y-%m-%d')" &&
+            git push
+          )
