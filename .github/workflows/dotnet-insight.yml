@@ -25,7 +25,7 @@ jobs:
       - name: 📦 Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install requests feedparser google-generativeai
+          pip install requests feedparser google-genai
 
       - name: 🤖 Generate .NET Daily Insights
         env:

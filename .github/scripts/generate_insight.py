@@ -278,11 +278,13 @@ def build_prompt(article: dict) -> str:
 # ─────────────────────────────────────────────────────────────
 
 def generate_with_gemini(article: dict, api_key: str) -> str:
-    import google.generativeai as genai
+    from google import genai
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-2.0-flash-lite")
-    response = model.generate_content(build_prompt(article))
+    client = genai.Client(api_key=api_key)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=build_prompt(article),
+    )
     return response.text
 
 
