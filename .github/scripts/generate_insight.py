@@ -366,6 +366,53 @@ def create_daily_index(date_str: str, articles: list, files: list) -> None:
     print(f"  ✅ 인덱스 생성: {index_path}")
 
 
+def update_global_index():
+    """insight/README.md 파일의 최근 인사이트 목록을 업데이트합니다."""
+    print("  🔄 글로벌 인덱스 업데이트 중...")
+    
+    # insight 폴더 내의 날짜 폴더 스캔 (YYYY-MM-DD 형식)
+    date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    insight_dirs = [d for d in os.listdir(INSIGHTS_DIR) if (Path(INSIGHTS_DIR) / d).is_dir() and date_pattern.match(d)]
+    insight_dirs.sort(reverse=True) # 최신 날짜순 정렬
+
+    new_lines = ["\n"]
+    for date_str in insight_dirs:
+        readme_path = Path(INSIGHTS_DIR) / date_str / "README.md"
+        if readme_path.exists():
+            # README.md에서 제목(첫 번째 줄) 추출
+            with open(readme_path, "r", encoding="utf-8") as f:
+                first_line = f.readline().strip()
+                title = first_line.replace("# ", "").split(" — ")[0] # "📰 .NET Daily Insight" 추출
+                new_lines.append(f"- [{date_str} 인사이트]({date_str}/README.md) ({title})\n")
+        else:
+            new_lines.append(f"- [{date_str} 인사이트]({date_str}/)\n")
+
+    # insight/README.md 읽기 및 섹션 교체
+    readme_path = Path(INSIGHTS_DIR) / "README.md"
+    if not readme_path.exists():
+        print(f"  ⚠️ {readme_path} 파일이 존재하지 않습니다.")
+        return
+
+    with open(readme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    marker = "<!-- 아래 목록은 자동으로 생성됩니다 -->"
+    if marker in content:
+        parts = content.split(marker)
+        updated_content = parts[0] + marker + "\n" + "".join(new_lines)
+        
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.write(updated_content)
+        
+        # GitHub Pages용 index.md 복제
+        with open(Path(INSIGHTS_DIR) / "index.md", "w", encoding="utf-8") as f:
+            f.write(updated_content)
+            
+        print(f"  ✅ 글로벌 인덱스 업데이트 완료: {readme_path}")
+    else:
+        print(f"  ⚠️ {readme_path} 파일에 '{marker}' 주석이 없습니다.")
+
+
 # ─────────────────────────────────────────────────────────────
 # 메인
 # ─────────────────────────────────────────────────────────────
@@ -435,6 +482,9 @@ def main():
     if saved_files:
         print(f"\n📁 일일 인덱스 생성 중...")
         create_daily_index(date_str, selected[: len(saved_files)], saved_files)
+
+        # 글로벌 인덱스 업데이트 추가
+        update_global_index()
 
         save_used_urls(used_urls)
         print(f"\n🎉 완료! {len(saved_files)}개 인사이트 생성 → insight/{date_str}/")
