@@ -1,0 +1,10 @@
+title: .NET Daily Insight
+description: 매일 아침 배달되는 .NET 기술 인사이트
+theme: jekyll-theme-primer
+baseurl: "/csharp_study/insight" # 저장소 이름에 맞게 조정 필요 (URL이 /repo/insight 형태일 경우)
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
