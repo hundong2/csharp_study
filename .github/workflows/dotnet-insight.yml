@@ -42,13 +42,5 @@ jobs:
           git add insight/
           git diff --staged --quiet || (
             git commit -m "📰 .NET Daily Insight - $(TZ=Asia/Seoul date '+%Y-%m-%d')" &&
-            git push origin feature/gh-pages-setup
+            git push
           )
-
-      - name: 🚀 Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./insight
-          publish_branch: gh-pages
-          force_orphan: true
