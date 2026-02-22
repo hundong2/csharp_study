@@ -1,0 +1,11 @@
+title: .NET Daily Insight
+description: 매일 아침 배달되는 .NET 기술 인사이트
+theme: jekyll-theme-primer
+baseurl: "/csharp_study"
+
+# insight 폴더 내의 마크다운 파일들을 위한 레이아웃 설정
+defaults:
+  - scope:
+      path: "insight"
+    values:
+      layout: default
