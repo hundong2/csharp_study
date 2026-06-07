@@ -367,7 +367,7 @@ def create_daily_index(date_str: str, articles: list, files: list) -> None:
 
 
 def update_global_index():
-    """insight/README.md 및 insight/index.md 파일의 최근 인사이트 목록을 업데이트합니다."""
+    """insight/README.md 파일의 최근 인사이트 목록을 업데이트합니다."""
     print("  🔄 글로벌 인덱스 업데이트 중...")
     
     # insight 폴더 내의 날짜 폴더 스캔 (YYYY-MM-DD 형식)
@@ -375,15 +375,13 @@ def update_global_index():
     insight_dirs = [d for d in os.listdir(INSIGHTS_DIR) if (Path(INSIGHTS_DIR) / d).is_dir() and date_pattern.match(d)]
     insight_dirs.sort(reverse=True) # 최신 날짜순 정렬
 
-    # Jekyll Front Matter 추가
-    header_content = [
-        "---\n",
-        "layout: default\n",
-        "title: .NET Daily Insight 목록\n",
-        "---\n\n",
-        "# 📰 .NET Daily Insight 목록\n\n",
-        "매일 업데이트되는 .NET 기술 인사이트 저장소입니다. 아래 날짜를 클릭하여 상세 내용을 확인하세요.\n\n",
-        "| 날짜 | 주제 요약 | 링크 |\n",
+    if not insight_dirs:
+        print("  ⚠️ 업데이트할 인사이트 폴더가 없습니다.")
+        return
+
+    # 새 테이블 내용 생성
+    table_lines = [
+        "\n| 날짜 | 주제 요약 | 링크 |\n",
         "| :--- | :--- | :--- |\n"
     ]
 
@@ -398,21 +396,46 @@ def update_global_index():
                 if matches:
                     summary = ", ".join(matches[:2]) + ( "..." if len(matches) > 2 else "" )
         
-        header_content.append(f"| **{date_str}** | {summary} | [상세보기]({date_str}/README.md) |\n")
+        table_lines.append(f"| **{date_str}** | {summary} | [상세보기]({date_str}/README.md) |\n")
 
-    full_content = "".join(header_content)
+    new_list_content = "".join(table_lines)
 
-    # insight/README.md 업데이트
+    # insight/README.md 업데이트 (마커 기준)
     readme_path = Path(INSIGHTS_DIR) / "README.md"
-    with open(readme_path, "w", encoding="utf-8") as f:
-        f.write(full_content)
+    marker = "<!-- 아래 목록은 자동으로 생성됩니다 -->"
     
-    # GitHub Pages용 index.md 복제
-    index_path = Path(INSIGHTS_DIR) / "index.md"
-    with open(index_path, "w", encoding="utf-8") as f:
-        f.write(full_content)
+    if readme_path.exists():
+        with open(readme_path, "r", encoding="utf-8") as f:
+            old_content = f.read()
         
-    print(f"  ✅ 글로벌 인덱스 업데이트 완료: {readme_path} 및 {index_path}")
+        if marker in old_content:
+            parts = old_content.split(marker)
+            new_content = parts[0] + marker + "\n" + new_list_content
+            with open(readme_path, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            print(f"  ✅ insight/README.md 업데이트 완료 (마커 기준)")
+        else:
+            # 마커가 없으면 맨 뒤에 추가
+            with open(readme_path, "a", encoding="utf-8") as f:
+                f.write("\n\n" + marker + "\n" + new_list_content)
+            print(f"  ⚠️ 마커를 찾을 수 없어 insight/README.md 맨 뒤에 추가")
+    else:
+        # 파일이 없으면 새로 생성
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.write("# 📰 .NET Daily Insight\n\n" + marker + "\n" + new_list_content)
+        print(f"  ✅ insight/README.md 생성 완료")
+    
+    # GitHub Pages용 index.md 도 동일하게 업데이트 (있을 경우)
+    index_path = Path(INSIGHTS_DIR) / "index.md"
+    if index_path.exists():
+        with open(index_path, "r", encoding="utf-8") as f:
+            old_index = f.read()
+        if marker in old_index:
+            parts = old_index.split(marker)
+            new_index = parts[0] + marker + "\n" + new_list_content
+            with open(index_path, "w", encoding="utf-8") as f:
+                f.write(new_index)
+            print(f"  ✅ insight/index.md 업데이트 완료")
 
 
 # ─────────────────────────────────────────────────────────────

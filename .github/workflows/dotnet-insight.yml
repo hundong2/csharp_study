@@ -42,7 +42,7 @@ jobs:
           git add insight/
           git diff --staged --quiet || (
             git commit -m "📰 .NET Daily Insight - $(TZ=Asia/Seoul date '+%Y-%m-%d')" &&
-            git push origin feature/gh-pages-setup
+            git push origin ${{ github.ref_name }}
           )
 
       - name: 🚀 Deploy to GitHub Pages
