@@ -15,6 +15,16 @@ public sealed record CustomerDto
     public string? Email { get; init; }
 }
 
+// readonly record struct:
+// - record: 값 비교, ToString 출력이 자동으로 편하게 만들어집니다.
+// - struct: 값 타입입니다. 작은 값 객체에 적합합니다.
+// - readonly: 생성 후 필드/속성을 바꾸지 않겠다는 뜻입니다.
+// 메모리 관점:
+// - class 객체는 힙에 만들어지고 GC 관리 대상입니다.
+// - 작은 struct는 값 자체가 복사되므로 별도 객체 할당이 없습니다.
+// - 단, 큰 struct를 자주 복사하면 비용이 커질 수 있습니다.
+public readonly record struct CustomerId(long Value);
+
 static string GetContactLabel(CustomerDto customer)
 {
     // switch expression:
@@ -35,5 +45,8 @@ var customer = new CustomerDto
     Email = "kim@example.com"
 };
 
+CustomerId customerId = new(1);
+
 Console.WriteLine(customer);
+Console.WriteLine($"CustomerId={customerId.Value}");
 Console.WriteLine(GetContactLabel(customer));

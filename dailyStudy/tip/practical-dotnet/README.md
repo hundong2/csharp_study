@@ -31,6 +31,7 @@ dotnet script 01_language_basics.csx
 | 12 | [12_memory_span_arraypool.md](./12_memory_span_arraypool.md) | [12_memory_span_arraypool.csx](./12_memory_span_arraypool.csx) | Span, Memory, ArrayPool |
 | 13 | [13_datetime_regex_parsing.md](./13_datetime_regex_parsing.md) | [13_datetime_regex_parsing.csx](./13_datetime_regex_parsing.csx) | DateTimeOffset, Regex, TryParse |
 | 14 | [14_external_libraries_roadmap.md](./14_external_libraries_roadmap.md) | - | 실무에서 자주 쓰는 외부 NuGet 라이브러리 |
+| 15 | [15_architecture_records_interfaces.md](./15_architecture_records_interfaces.md) | [15_architecture_records_interfaces.csx](./15_architecture_records_interfaces.csx) | readonly record, interface 다중 상속, 아키텍처 |
 
 ## 권장 기준
 
@@ -38,5 +39,6 @@ dotnet script 01_language_basics.csx
 - 그 다음 `.csx` 파일을 열어 주석을 읽습니다.
 - `dotnet script`로 실행합니다.
 - 출력이 이해되면 값을 조금 바꿔 다시 실행합니다.
+- 아키텍처와 인터페이스 감각이 부족하다면 14번 외부 라이브러리 로드맵보다 15번을 먼저 읽어도 됩니다.
 
 기초 문법이 익숙해지면 날짜별 `dailyStudy/YYYYMMDD` 예제를 보는 부담이 줄어듭니다.
