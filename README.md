@@ -220,9 +220,19 @@ C# / .NET 학습 자료를 체계적으로 정리한 저장소입니다.
 
 | 폴더 / 파일 | 설명 |
 |------------|------|
+| [dailyStudy/BEGINNER_GUIDE.md](./dailyStudy/BEGINNER_GUIDE.md) | DailyStudy 비기너 실습 순서와 기초 문법 가이드 |
+| [dailyStudy/tip_BeginnerSyntaxTour.csx](./dailyStudy/tip_BeginnerSyntaxTour.csx) | C# 기본 문법 투어 실행 파일 |
 | [dailyStudy/20260607.ipynb](./dailyStudy/20260607.ipynb) | 2026-06-07 Jupyter 노트북 |
 | [dailyStudy/20260630/](./dailyStudy/20260630/) | 2026-06-30 학습 기록 |
 | [dailyStudy/20260702/](./dailyStudy/20260702/) | 2026-07-02 학습 기록 |
+| [dailyStudy/20260703/](./dailyStudy/20260703/) | 2026-07-03 학습 기록 |
+| [dailyStudy/20260704/](./dailyStudy/20260704/) | 2026-07-04 학습 기록 |
+| [dailyStudy/20260705/](./dailyStudy/20260705/) | 2026-07-05 학습 기록 |
+| [dailyStudy/20260706/](./dailyStudy/20260706/) | 2026-07-06 학습 기록 |
+| [dailyStudy/20260707/](./dailyStudy/20260707/) | 2026-07-07 학습 기록 |
+| [dailyStudy/20260708/](./dailyStudy/20260708/) | 2026-07-08 학습 기록 |
+| [dailyStudy/20260709/](./dailyStudy/20260709/) | 2026-07-09 학습 기록 |
+| [dailyStudy/20260710/](./dailyStudy/20260710/) | 2026-07-10 학습 기록 |
 | [dailyStudy/DailyStudy2406/](./dailyStudy/DailyStudy2406/) | 2024년 6월 일일 스터디 프로젝트 |
 | [dailyStudy/SolutionDailyApril/](./dailyStudy/SolutionDailyApril/) | 4월 일일 스터디 솔루션 |
 | [dailyStudy/tip/](./dailyStudy/tip/) | 학습 팁 (비동기, JSON, 리플렉션 등) |

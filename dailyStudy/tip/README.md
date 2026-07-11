@@ -21,8 +21,8 @@ dotnet project convert xxx.cs
 ## text.json property setting 
 
 - [json serialize, deserialize setting problem](./jsonproperty/README.md)
+- [attribute and json property runtime behavior](./jsonpropert2.md)
 
 ## reference 
 
 - [의존성 제거](https://learn.microsoft.com/ko-kr/troubleshoot/power-platform/dataverse/working-with-solutions/circular-dependencies-between-solutions)  
-
