@@ -1,5 +1,9 @@
 # csharp tip 
 
+## Practical .NET beginner refresh
+
+- [실무 C#/.NET 복습 세트](./practical-dotnet/README.md)
+
 ## csharp run .net10 preview
 
 ```sh
