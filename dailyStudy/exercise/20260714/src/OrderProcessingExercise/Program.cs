@@ -1,6 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// 학습 순서: ① BasicSyntaxTour에서 타입·조건·컬렉션·람다를 익히고,
+// ② OrderWorkflowDemo에서 유스케이스 실행 흐름을 봅니다.
+// ③ Service → Domain → Interface → Infrastructure → SelfTest 순서로 읽으세요.
+// 입문 문법과 실무 아키텍처를 한 파일에 둔 교육용 예제이며, 실제 프로젝트에서는
+// 각 타입을 역할별 파일과 프로젝트로 나누는 것이 일반적입니다.
+
 Console.OutputEncoding = Encoding.UTF8;
 
 if (args.Contains("--self-test", StringComparer.OrdinalIgnoreCase))
@@ -18,12 +24,15 @@ public static class BasicSyntaxTour
     {
         Console.WriteLine("== Basic syntax tour ==");
 
+        // [기초] C# 변수는 타입과 이름을 가집니다. decimal의 m은 금액에 알맞은
+        // 정확한 소수 리터럴이고, string?는 null이 허용됨을 컴파일러에 알립니다.
         string customerName = "Mina";
         int retryCount = 1;
         decimal dailyBudget = 120_000m;
         bool isVip = true;
         string? optionalMemo = null;
 
+        // [기초] switch 식은 조건에 따라 하나의 결과값을 만드는 분기 문법입니다.
         string retryMessage = retryCount switch
         {
             0 => "first try",
@@ -44,6 +53,7 @@ public static class BasicSyntaxTour
             Console.WriteLine($"stock {item.Key}: {item.Value}");
         }
 
+        // [중급] Func와 람다는 동작도 값처럼 다루며 Strategy/콜백의 기초가 됩니다.
         Func<decimal, decimal, decimal> addTax = (amount, rate) => amount + (amount * rate);
         decimal budgetWithTax = addTax(dailyBudget, 0.1m);
 
@@ -96,6 +106,7 @@ public sealed class DemoApp(OrderService orders, InMemoryOrderRepository reposit
 
 public static class DemoCompositionRoot
 {
+    // [실무] 구체 구현 선택과 객체 연결을 한곳에 모으면 교체와 테스트가 쉬워집니다.
     public static DemoApp Build()
     {
         InMemoryProductCatalog catalog = new(
@@ -124,6 +135,8 @@ public sealed class OrderService(
     IPaymentGateway payment,
     IOrderRepository repository)
 {
+    // [실무] Application Service는 검증→재고 예약→결제→저장의 순서를 조정하고,
+    // 실패 시 이미 예약한 재고를 되돌리는 보상 작업까지 책임집니다.
     public async ValueTask<Result<OrderReceipt>> PlaceOrderAsync(
         CreateOrderCommand command,
         CancellationToken cancellationToken = default)
@@ -197,6 +210,7 @@ public sealed class OrderService(
 
 public sealed class Order
 {
+    // [도메인] mutable List는 private으로 보호하고 IReadOnlyList로만 공개해 불변식을 지킵니다.
     private readonly List<OrderLine> _lines;
 
     public Order(string customerEmail, IEnumerable<OrderLine> lines)
@@ -236,6 +250,7 @@ public sealed record OrderLine(string Sku, string Name, int Quantity, Money Unit
 
 public readonly record struct Money(decimal Amount, string Currency)
 {
+    // [고급] 값 객체가 통화 일치 규칙을 스스로 검사하면 잘못된 연산이 퍼지지 않습니다.
     public static Money operator +(Money left, Money right)
     {
         if (!string.Equals(left.Currency, right.Currency, StringComparison.Ordinal))
@@ -263,6 +278,8 @@ public sealed record OrderReceipt(Guid OrderId, Money Total, OrderStatus Status,
 
 public sealed record Result<T>(T? Value, string? Error)
 {
+    // [고급] 예상 가능한 업무 실패를 값으로 표현합니다. MemberNotNullWhen 특성은
+    // 성공 여부에 따른 nullable 흐름 분석을 컴파일러가 이해하도록 돕습니다.
     [MemberNotNullWhen(true, nameof(Value))]
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess => Error is null;
@@ -273,6 +290,7 @@ public sealed record Result<T>(T? Value, string? Error)
 
 public interface IProductCatalog
 {
+    // [설계] 인터페이스는 서비스가 요구하는 최소 기능만 정의하는 포트(계약)입니다.
     ValueTask<Product?> FindAsync(string sku, CancellationToken cancellationToken);
 }
 
@@ -366,6 +384,7 @@ public sealed class InMemoryOrderRepository : IOrderRepository
 
 public static class SelfTest
 {
+    // [검증] 정상 경로와 이메일·재고·결제 실패 경로를 모두 확인해 회귀를 막습니다.
     public static async Task RunAsync()
     {
         DemoApp app = DemoCompositionRoot.Build();
@@ -413,4 +432,3 @@ public static class SelfTest
         }
     }
 }
-

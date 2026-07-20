@@ -1,6 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// 학습 순서: ① BasicSyntaxTour → ② InventoryDemo → ③ Application Service
+// → ④ Domain Model → ⑤ Repository/Generator → ⑥ SelfTest입니다.
+// [고급 관점] 중복 요청을 같은 결과로 처리하는 멱등성과 불변 record 갱신을 살펴보세요.
+
 Console.OutputEncoding = Encoding.UTF8;
 
 if (args.Contains("--self-test", StringComparer.OrdinalIgnoreCase))
@@ -104,6 +108,8 @@ public sealed class InventoryService(
     IReservationRepository reservations,
     IReservationIdGenerator ids)
 {
+    // [실무] RequestId로 기존 예약을 먼저 찾는 부분이 멱등성입니다.
+    // 같은 네트워크 요청이 재시도돼도 재고를 두 번 차감하지 않습니다.
     public async ValueTask<Result<Reservation>> ReserveAsync(
         ReserveStockCommand command,
         CancellationToken cancellationToken = default)
@@ -169,6 +175,7 @@ public sealed record InventoryItem(string Sku, string Name, int Stock, bool IsAc
                 $"재고가 부족합니다. 현재 {Stock}개, 요청 {quantity}개입니다.");
         }
 
+        // [중급] record의 with는 원본을 바꾸지 않고 일부 값만 바꾼 새 객체를 만듭니다.
         return Result<InventoryItem>.Ok(this with { Stock = Stock - quantity });
     }
 }
@@ -179,6 +186,7 @@ public sealed record Reservation(
 
 public sealed record Result<T>(T? Value, string? Error)
 {
+    // [고급] 재고 부족 같은 예상 가능한 실패는 Result로 반환해 호출자가 명시적으로 분기합니다.
     [MemberNotNullWhen(true, nameof(Value))]
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess => Error is null;
@@ -255,6 +263,7 @@ public sealed class SequentialReservationIdGenerator : IReservationIdGenerator
 
 public static class SelfTest
 {
+    // [검증] 정상·중복·재고 부족·잘못된 수량과 실패 후 상태 보존을 함께 확인합니다.
     public static async Task RunAsync()
     {
         InventoryApp app = CompositionRoot.Build();

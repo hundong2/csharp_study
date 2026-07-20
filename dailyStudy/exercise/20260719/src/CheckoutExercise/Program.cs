@@ -1,6 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// 학습 순서: ① SyntaxTour의 타입·nullable·switch·컬렉션,
+// ② CheckoutDemo의 호출법, ③ Service/Strategy/Result, ④ SelfTest입니다.
+// [고급 관점] 할인 규칙을 Strategy로 분리하고 Composition Root에서 주입하는 이유를 봅니다.
+
 Console.OutputEncoding = Encoding.UTF8;
 
 if (args.Contains("--self-test", StringComparer.OrdinalIgnoreCase))
@@ -17,6 +21,7 @@ static class SyntaxTour
     public static void Run()
     {
         Console.WriteLine("== 1. 기본 문법 ==");
+        // [기초] decimal은 금액, string?는 null 가능성, bool은 참/거짓 상태를 표현합니다.
         string customer = "민수";
         int itemCount = 3;
         decimal unitPrice = 12_000m;
@@ -24,6 +29,7 @@ static class SyntaxTour
         string? couponCode = null;
         decimal subtotal = itemCount * unitPrice;
 
+        // [기초] switch 식은 위에서 아래로 처음 일치하는 패턴의 값을 반환합니다.
         string grade = subtotal switch
         {
             >= 50_000m => "큰 주문",
@@ -60,6 +66,7 @@ static class CheckoutDemo
 
 static class CompositionRoot
 {
+    // [실무] 할인 정책 선택을 조립 지점에 모으면 서비스는 인터페이스 계약만 알면 됩니다.
     public static CheckoutService Build() => new(new MemberDiscountPolicy(0.1m));
 }
 
@@ -95,6 +102,7 @@ sealed class MemberDiscountPolicy(decimal rate) : IDiscountPolicy
 
 sealed record CartItem(string Name, decimal UnitPrice, int Quantity)
 {
+    // [도메인] 계산 속성은 원본 값에서 매번 계산해 저장된 합계와의 불일치를 방지합니다.
     public decimal LineTotal => UnitPrice * Quantity;
 }
 
@@ -103,6 +111,7 @@ sealed record Receipt(string OrderId, decimal Subtotal, decimal Discount, decima
 
 sealed record Result<T>(T? Value, string? Error)
 {
+    // [고급] MemberNotNullWhen은 성공 시 Value가 null이 아님을 컴파일러에 알려줍니다.
     [MemberNotNullWhen(true, nameof(Value))]
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess => Error is null;
@@ -112,6 +121,7 @@ sealed record Result<T>(T? Value, string? Error)
 
 static class SelfTest
 {
+    // [검증] 정상 회원/비회원과 빈 장바구니/0개 수량의 경계까지 확인합니다.
     public static void Run()
     {
         CheckoutService service = CompositionRoot.Build();

@@ -1,6 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// 학습 순서: ① BasicSyntaxTour의 변수·nullable·switch·컬렉션·람다,
+// ② SupportTicketDemo의 실행 흐름, ③ Service와 Domain, ④ Interface와 구현,
+// ⑤ SelfTest 순서로 읽으세요. 실무에서는 역할별 파일/계층으로 분리할 내용을
+// 초보자가 한 번에 흐름을 추적할 수 있도록 한 파일에 모았습니다.
+
 Console.OutputEncoding = Encoding.UTF8;
 
 if (args.Contains("--self-test", StringComparer.OrdinalIgnoreCase))
@@ -18,12 +23,15 @@ public static class BasicSyntaxTour
     {
         Console.WriteLine("== Basic syntax tour ==");
 
+        // [기초] decimal은 시간/금액처럼 정확한 소수 계산에 사용하고,
+        // string?는 값이 없을 수 있음을 타입에 명시합니다.
         string requester = "junior@example.com";
         int openTicketCount = 2;
         bool isPremiumCustomer = true;
         decimal estimatedHours = 1.5m;
         string? optionalPhone = null;
 
+        // [기초] switch 식은 여러 if/else를 결과 중심으로 읽기 좋게 표현합니다.
         string workloadMessage = openTicketCount switch
         {
             0 => "no active work",
@@ -45,6 +53,7 @@ public static class BasicSyntaxTour
             Console.WriteLine($"category {item.Key}: priority {item.Value}");
         }
 
+        // [중급] 람다는 작은 동작을 변수에 담으며, 교체 가능한 정책으로 발전시킬 수 있습니다.
         Func<decimal, decimal> addBuffer = hours => hours + 0.5m;
         decimal plannedHours = addBuffer(estimatedHours);
 
@@ -97,6 +106,7 @@ public sealed class HelpDeskApp(TicketService tickets, InMemoryTicketRepository 
 
 public static class DemoCompositionRoot
 {
+    // [실무] 생성과 연결을 한곳에 모아 서비스가 구체 구현을 직접 만들지 않게 합니다.
     public static HelpDeskApp Build()
     {
         AgentDirectory agents = new(
@@ -125,6 +135,8 @@ public sealed class TicketService(
     IClock clock,
     ITicketRepository repository)
 {
+    // [실무] 입력 검증, 담당자 선택, 마감 계산, 저장을 조정하는 Application Service입니다.
+    // 인터페이스를 생성자로 주입해 저장소와 시간을 테스트용 구현으로 교체할 수 있습니다.
     public async ValueTask<Result<TicketSummary>> CreateAsync(
         CreateTicketCommand command,
         CancellationToken cancellationToken = default)
@@ -183,6 +195,7 @@ public sealed class TicketService(
 
 public sealed class Ticket
 {
+    // [도메인] 상태 변경을 모델의 메서드로 제한해 잘못된 상태 전이를 방지합니다.
     private Ticket(
         string requesterEmail,
         string title,
@@ -289,6 +302,7 @@ public enum TicketStatus
 
 public sealed record Result<T>(T? Value, string? Error)
 {
+    // [고급] 예측 가능한 실패를 Result 값으로 전달하고 nullable 계약을 특성으로 보강합니다.
     [MemberNotNullWhen(true, nameof(Value))]
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess => Error is null;
@@ -299,6 +313,7 @@ public sealed record Result<T>(T? Value, string? Error)
 
 public interface IAgentDirectory
 {
+    // [설계] 인터페이스는 호출자인 TicketService가 실제로 필요한 동작만 노출합니다.
     ValueTask<SupportAgent?> FindForCategoryAsync(TicketCategory category, CancellationToken cancellationToken);
 }
 
@@ -349,6 +364,7 @@ public sealed class InMemoryTicketRepository : ITicketRepository
 
 public static class SelfTest
 {
+    // [검증] 고정 시간과 메모리 저장소 덕분에 언제 실행해도 같은 결과를 검증할 수 있습니다.
     public static async Task RunAsync()
     {
         HelpDeskApp app = DemoCompositionRoot.Build();

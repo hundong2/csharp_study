@@ -1,6 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// 학습 순서: ① BasicSyntaxTour(문법) → ② Demo(사용법) → ③ Service(흐름)
+// → ④ Domain/Rules(업무 규칙) → ⑤ Infrastructure(기술 구현) → ⑥ SelfTest입니다.
+// [고급 관점] 규칙을 작은 객체로 분리한 Pipeline과 의존성 주입이 핵심입니다.
+
 Console.OutputEncoding = Encoding.UTF8;
 
 if (args.Contains("--self-test", StringComparer.OrdinalIgnoreCase))
@@ -123,6 +127,8 @@ public sealed class ExpenseService(
     IExpenseRepository repository,
     IClock clock)
 {
+    // [실무] IEnumerable<IExpenseRule>을 순회하므로 규칙을 추가해도 조건문이 비대해지지 않습니다.
+    // 변경에는 닫고 확장에는 연다는 개방-폐쇄 원칙의 작은 적용입니다.
     public async ValueTask<Result<ExpenseSummary>> SubmitAsync(
         SubmitExpenseCommand command,
         CancellationToken cancellationToken = default)
@@ -151,6 +157,7 @@ public sealed class ExpenseService(
 // Domain: 비용 신청이 반드시 지켜야 할 상태를 표현합니다.
 public sealed class ExpenseReport
 {
+    // [도메인] private set으로 상태 변경 통로를 메서드에 제한해 불변식을 보호합니다.
     private ExpenseReport(
         string employeeId,
         ExpenseCategory category,
@@ -265,6 +272,7 @@ public sealed record ExpenseSummary(
 
 public sealed record Result<T>(T? Value, string? Error)
 {
+    // [고급] 예상 가능한 검증 실패를 예외가 아닌 명시적인 성공/실패 값으로 표현합니다.
     [MemberNotNullWhen(true, nameof(Value))]
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess => Error is null;
@@ -315,6 +323,7 @@ public sealed class FixedClock(DateTimeOffset utcNow) : IClock
 
 public static class SelfTest
 {
+    // [검증] 정상값뿐 아니라 경계값과 실패 후 저장 상태까지 확인해야 부작용을 잡을 수 있습니다.
     public static async Task RunAsync()
     {
         ExpenseApp app = CompositionRoot.Build();

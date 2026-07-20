@@ -1,6 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+// 학습 순서: ① BasicSyntaxTour → ② NotificationDemo → ③ Application Service
+// → ④ Strategy 구현 → ⑤ Repository/Clock → ⑥ SelfTest입니다.
+// [고급 관점] 채널별 발송 전략과 템플릿 책임을 분리해 변경 이유가 다른 코드를 격리합니다.
+
 Console.OutputEncoding = Encoding.UTF8;
 
 if (args.Contains("--self-test", StringComparer.OrdinalIgnoreCase))
@@ -119,6 +123,8 @@ public sealed class NotificationService(
     INotificationLogRepository repository,
     IClock clock)
 {
+    // [실무] 채널에 맞는 전략을 IEnumerable에서 선택합니다. 새 채널은 기존 분기문을
+    // 키우기보다 새 INotificationSender 구현을 추가하는 방식으로 확장할 수 있습니다.
     public async ValueTask<Result<NotificationReceipt>> SendAsync(
         SendNotificationCommand command,
         CancellationToken cancellationToken = default)
@@ -268,6 +274,7 @@ public sealed record NotificationLog(
 
 public sealed record Result<T>(T? Value, string? Error)
 {
+    // [고급] Result<T>와 nullable 특성은 성공/실패 계약을 호출자와 컴파일러에 알립니다.
     [MemberNotNullWhen(true, nameof(Value))]
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSuccess => Error is null;
@@ -318,6 +325,7 @@ public sealed class FixedClock(DateTimeOffset utcNow) : IClock
 
 public static class SelfTest
 {
+    // [검증] FixedClock과 메모리 저장소로 외부 환경 없이 같은 결과를 재현합니다.
     public static async Task RunAsync()
     {
         NotificationApp app = CompositionRoot.Build();
