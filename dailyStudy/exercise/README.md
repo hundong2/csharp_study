@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-07-27 | 재고 예약으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260727/README.md) |
 | 2026-07-26 | 고객 지원 티켓 SLA 분류로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260726/README.md) |
 | 2026-07-25 | 장애 알림 라우팅으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260725/README.md) |
 | 2026-07-24 | 택배 배차로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260724/README.md) |
