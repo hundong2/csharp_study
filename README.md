@@ -12,6 +12,12 @@ C# / .NET 학습 자료를 체계적으로 정리한 저장소입니다.
 
 ---
 
+## ✅ TODO
+
+- [ ] [.NET 11 Preview 6 완전 학습 가이드](./dotnet-11-preview-6/README.md) — 기초 문법부터 CLR·JIT 내부, Libraries, SDK, C# 15, ASP.NET Core, MAUI, EF Core, F#, 컨테이너까지 학습하고 체크리스트 완료하기
+
+---
+
 ## 📌 빠른 탐색
 
 | 유형 | 바로가기 |
