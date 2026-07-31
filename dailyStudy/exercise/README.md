@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-01 | API 요청 할당량으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260801/README.md) |
 | 2026-07-31 | 기능 플래그 점진 배포로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260731/README.md) |
 | 2026-07-30 | 주문 환불 처리로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260730/README.md) |
 | 2026-07-29 | 비용 승인 흐름으로 배우는 C# 기본 문법, Domain Model, Strategy, Repository, DI | [README.md](./20260729/README.md) |
