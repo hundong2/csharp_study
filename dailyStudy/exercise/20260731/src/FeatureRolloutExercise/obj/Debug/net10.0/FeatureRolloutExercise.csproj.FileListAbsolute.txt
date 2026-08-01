@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\bin\Debug\net10.0\FeatureRolloutExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\bin\Debug\net10.0\FeatureRolloutExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\bin\Debug\net10.0\FeatureRolloutExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\bin\Debug\net10.0\FeatureRolloutExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\bin\Debug\net10.0\FeatureRolloutExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\refint\FeatureRolloutExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\FeatureRolloutExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260731\src\FeatureRolloutExercise\obj\Debug\net10.0\ref\FeatureRolloutExercise.dll

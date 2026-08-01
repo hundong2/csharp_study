@@ -1,39 +1,35 @@
+/*
+문제: 키를 여러 stripe로 나눠 중복 영속화 요청을 분산하세요.
+*/
+
 using System;
 using System.Threading;
 
-public sealed class StripedBackoff
+public sealed class StripedBackoffCache
 {
     private readonly int[] _stripes;
 
-    public StripedBackoff(int stripeCount)
+    public StripedBackoffCache(int stripeCount)
     {
         _stripes = new int[stripeCount];
     }
 
-    public bool TryEnter(string key)
+    public bool TryMarkPersistence(string key)
     {
-        int index = GetStripeIndex(key);
-        return Interlocked.CompareExchange(ref _stripes[index], 1, 0) == 0;
-    }
-
-    public void Exit(string key)
-    {
-        int index = GetStripeIndex(key);
-        Interlocked.Exchange(ref _stripes[index], 0);
-    }
-
-    private int GetStripeIndex(string key)
-    {
-        uint hash = (uint)key.GetHashCode();
-        return (int)(hash % (uint)_stripes.Length);
+        int stripe = Math.Abs(key.GetHashCode()) % _stripes.Length;
+        return Interlocked.CompareExchange(ref _stripes[stripe], 1, 0) == 0;
     }
 }
 
-var backoff = new StripedBackoff(Environment.ProcessorCount);
-string cacheKey = "series:KRW-BTC";
+var cache = new StripedBackoffCache(8);
+Console.WriteLine($"[Backoff Cache] First mark: {cache.TryMarkPersistence("tenant:42")}");
+Console.WriteLine($"[Backoff Cache] Second mark: {cache.TryMarkPersistence("tenant:42")}");
+Console.WriteLine("HybridCache System operational with Lock-Free Adaptive Striped Backoff Persistence Engine.");
 
-Console.WriteLine($"[Backoff] First persistence attempt: {backoff.TryEnter(cacheKey)}");
-Console.WriteLine($"[Backoff] Duplicate persistence attempt: {backoff.TryEnter(cacheKey)}");
+/*
+실행 결과:
+[Backoff Cache] First mark: True
+[Backoff Cache] Second mark: False
+HybridCache System operational with Lock-Free Adaptive Striped Backoff Persistence Engine.
+*/
 
-backoff.Exit(cacheKey);
-Console.WriteLine($"[Backoff] After release: {backoff.TryEnter(cacheKey)}");

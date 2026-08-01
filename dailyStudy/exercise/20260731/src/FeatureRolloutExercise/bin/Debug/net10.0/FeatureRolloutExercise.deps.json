@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "FeatureRolloutExercise/1.0.0": {
+        "runtime": {
+          "FeatureRolloutExercise.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FeatureRolloutExercise/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

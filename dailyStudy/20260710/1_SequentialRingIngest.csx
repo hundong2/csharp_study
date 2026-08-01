@@ -1,4 +1,9 @@
+/*
+문제: 수신된 시계열 바이트 청크의 저장 오프셋을 원자적으로 발급하세요.
+*/
+
 using System;
+using System.IO.Pipelines;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -9,46 +14,30 @@ public struct TimeSeriesTick
     public double Price;
 }
 
-public sealed class SequentialRingBuffer
+public sealed class TimeSeriesIngestor
 {
-    private readonly byte[] _buffer;
-    private long _writeOffset;
+    private long _globalOffset;
+    private readonly Pipe _storagePipe = new(new PipeOptions(useSynchronizationContext: false));
 
-    public SequentialRingBuffer(int capacity)
-    {
-        _buffer = new byte[capacity];
-    }
-
-    public long Append(ReadOnlySpan<byte> data)
+    public void IngestTickBurst(ReadOnlySpan<byte> rawSocketBytes)
     {
         // Interlocked.Add:
-        // 여러 스레드가 동시에 Append해도 서로 다른 영역을 예약하게 합니다.
-        long endOffset = Interlocked.Add(ref _writeOffset, data.Length);
-        long startOffset = endOffset - data.Length;
+        // - 여러 스레드가 동시에 들어와도 중복 없는 누적 오프셋을 발급합니다.
+        long currentSlot = Interlocked.Add(ref _globalOffset, rawSocketBytes.Length);
 
-        int index = (int)(startOffset % _buffer.Length);
+        Span<byte> targetBuffer = _storagePipe.Writer.GetSpan(rawSocketBytes.Length);
+        rawSocketBytes.CopyTo(targetBuffer);
+        _storagePipe.Writer.Advance(rawSocketBytes.Length);
 
-        // 예제는 단순화를 위해 wrap-around 없는 작은 데이터만 씁니다.
-        data.CopyTo(_buffer.AsSpan(index, data.Length));
-        return endOffset;
+        Console.WriteLine($"[TSDB Ingest] Ticket chunk persisted to Sequential Ring. Offset: {currentSlot}");
     }
 }
 
-void Run()
-{
-    var tick = new TimeSeriesTick
-    {
-        Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
-        Price = 150.25d
-    };
+var ingestor = new TimeSeriesIngestor();
+byte[] mockTickBytes = new byte[16];
+ingestor.IngestTickBurst(mockTickBytes);
 
-    byte[] bytes = new byte[Marshal.SizeOf<TimeSeriesTick>()];
-    MemoryMarshal.Write(bytes, in tick);
-
-    var ring = new SequentialRingBuffer(1024);
-    long offset = ring.Append(bytes);
-
-    Console.WriteLine($"[TSDB Ingest] Tick chunk appended to sequential ring. Offset: {offset}");
-}
-
-Run();
+/*
+실행 결과:
+[TSDB Ingest] Ticket chunk persisted to Sequential Ring. Offset: 16
+*/

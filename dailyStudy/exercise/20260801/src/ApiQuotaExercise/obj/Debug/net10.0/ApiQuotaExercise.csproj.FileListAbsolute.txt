@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\bin\Debug\net10.0\ApiQuotaExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\bin\Debug\net10.0\ApiQuotaExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\bin\Debug\net10.0\ApiQuotaExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\bin\Debug\net10.0\ApiQuotaExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\bin\Debug\net10.0\ApiQuotaExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\refint\ApiQuotaExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ApiQuotaExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260801\src\ApiQuotaExercise\obj\Debug\net10.0\ref\ApiQuotaExercise.dll

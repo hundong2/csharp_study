@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\refint\InventoryReservationExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\bin\Debug\net10.0\InventoryReservationExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\bin\Debug\net10.0\InventoryReservationExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\bin\Debug\net10.0\InventoryReservationExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\bin\Debug\net10.0\InventoryReservationExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\bin\Debug\net10.0\InventoryReservationExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\InventoryReservationExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260727\src\InventoryReservationExercise\obj\Debug\net10.0\ref\InventoryReservationExercise.dll

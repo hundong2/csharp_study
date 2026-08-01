@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\bin\Debug\net10.0\ExpenseApprovalExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\bin\Debug\net10.0\ExpenseApprovalExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\bin\Debug\net10.0\ExpenseApprovalExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\bin\Debug\net10.0\ExpenseApprovalExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\bin\Debug\net10.0\ExpenseApprovalExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\refint\ExpenseApprovalExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ExpenseApprovalExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260729\src\ExpenseApprovalExercise\obj\Debug\net10.0\ref\ExpenseApprovalExercise.dll

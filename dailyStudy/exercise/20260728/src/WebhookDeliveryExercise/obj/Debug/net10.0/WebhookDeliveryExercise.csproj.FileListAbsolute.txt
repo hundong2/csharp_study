@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\bin\Debug\net10.0\WebhookDeliveryExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\bin\Debug\net10.0\WebhookDeliveryExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\bin\Debug\net10.0\WebhookDeliveryExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\bin\Debug\net10.0\WebhookDeliveryExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\bin\Debug\net10.0\WebhookDeliveryExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\refint\WebhookDeliveryExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\WebhookDeliveryExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260728\src\WebhookDeliveryExercise\obj\Debug\net10.0\ref\WebhookDeliveryExercise.dll

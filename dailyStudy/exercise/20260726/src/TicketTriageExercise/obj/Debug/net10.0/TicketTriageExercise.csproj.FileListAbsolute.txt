@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\bin\Debug\net10.0\TicketTriageExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\bin\Debug\net10.0\TicketTriageExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\bin\Debug\net10.0\TicketTriageExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\bin\Debug\net10.0\TicketTriageExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\bin\Debug\net10.0\TicketTriageExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\refint\TicketTriageExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\TicketTriageExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260726\src\TicketTriageExercise\obj\Debug\net10.0\ref\TicketTriageExercise.dll

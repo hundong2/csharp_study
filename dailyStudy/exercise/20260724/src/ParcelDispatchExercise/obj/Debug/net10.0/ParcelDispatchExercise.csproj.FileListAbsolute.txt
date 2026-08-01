@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\bin\Debug\net10.0\ParcelDispatchExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\bin\Debug\net10.0\ParcelDispatchExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\bin\Debug\net10.0\ParcelDispatchExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\bin\Debug\net10.0\ParcelDispatchExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\bin\Debug\net10.0\ParcelDispatchExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\refint\ParcelDispatchExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ParcelDispatchExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260724\src\ParcelDispatchExercise\obj\Debug\net10.0\ref\ParcelDispatchExercise.dll

@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\bin\Debug\net10.0\JobSchedulerExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\bin\Debug\net10.0\JobSchedulerExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\bin\Debug\net10.0\JobSchedulerExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\bin\Debug\net10.0\JobSchedulerExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\bin\Debug\net10.0\JobSchedulerExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\refint\JobSchedulerExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\JobSchedulerExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260723\src\JobSchedulerExercise\obj\Debug\net10.0\ref\JobSchedulerExercise.dll

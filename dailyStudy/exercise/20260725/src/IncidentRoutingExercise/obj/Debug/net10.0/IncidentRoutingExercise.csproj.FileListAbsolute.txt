@@ -1,0 +1,15 @@
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\bin\Debug\net10.0\IncidentRoutingExercise.exe
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\bin\Debug\net10.0\IncidentRoutingExercise.deps.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\bin\Debug\net10.0\IncidentRoutingExercise.runtimeconfig.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\bin\Debug\net10.0\IncidentRoutingExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\bin\Debug\net10.0\IncidentRoutingExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.GeneratedMSBuildEditorConfig.editorconfig
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.AssemblyInfoInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.AssemblyInfo.cs
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.csproj.CoreCompileInputs.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.sourcelink.json
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\refint\IncidentRoutingExercise.dll
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.pdb
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\IncidentRoutingExercise.genruntimeconfig.cache
+D:\workspace\csharp_study\dailyStudy\exercise\20260725\src\IncidentRoutingExercise\obj\Debug\net10.0\ref\IncidentRoutingExercise.dll
