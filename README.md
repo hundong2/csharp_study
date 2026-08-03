@@ -243,3 +243,18 @@ C# / .NET 학습 자료를 체계적으로 정리한 저장소입니다.
 | [dailyStudy/SolutionDailyApril/](./dailyStudy/SolutionDailyApril/) | 4월 일일 스터디 솔루션 |
 | [dailyStudy/tip/](./dailyStudy/tip/) | 학습 팁 (비동기, JSON, 리플렉션 등) |
 | [study/20230820.md](./study/20230820.md) | 2023-08-20 학습 기록 |
+## make project and build information
+
+[reference for build](./dailyStudy/README.md)  
+[make into the folder](./build.md)  
+
+## C++23 빌드 환경
+
+CMake 프리셋을 사용하는 C++23 예제 프로젝트는 [`cpp23`](./cpp23/README.md)에 있습니다.
+
+```sh
+cd cpp23
+cmake --preset debug
+cmake --build --preset debug
+./build/debug/cpp23_app
+```

@@ -1,4 +1,7 @@
 {
     "docwriter.style": "Doxygen",
-    "dotnet.defaultSolution": "ExampleCollection.sln"
+    "dotnet.defaultSolution": "ExampleCollection.sln",
+    "cmake.sourceDirectory": "${workspaceFolder}/cpp23",
+    "cmake.useCMakePresets": "always",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

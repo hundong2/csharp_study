@@ -52,3 +52,6 @@ Mkfile.old
 dkms.conf
 
 .fake
+
+# CMake build output
+cpp23/build/
