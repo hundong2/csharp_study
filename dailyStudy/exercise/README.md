@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-09 | 장바구니 가격 산정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260809/README.md) |
 | 2026-08-08 | 구독 갱신으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260808/README.md) |
 | 2026-08-07 | 배치 실패 재시도로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260807/README.md) |
 | 2026-08-06 | 재고 발주 제안으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260806/README.md) |
