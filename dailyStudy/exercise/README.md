@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-11 | 직원 접근 권한 프로비저닝으로 배우는 C# 기초 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260811/README.md) |
 | 2026-08-10 | 로그인 위험도 검토로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260810/README.md) |
 | 2026-08-09 | 장바구니 가격 산정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260809/README.md) |
 | 2026-08-08 | 구독 갱신으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260808/README.md) |
