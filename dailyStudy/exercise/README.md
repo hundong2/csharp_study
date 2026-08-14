@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-15 | 주문 출고 준비와 운송사 선택으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260815/README.md) |
 | 2026-08-14 | 고객 알림 발송 계획으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260814/README.md) |
 | 2026-08-13 | 대량 주문 가져오기 검증으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260813/README.md) |
 | 2026-08-12 | 지원 티켓 자동 배정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260812/README.md) |
