@@ -14,6 +14,7 @@ C# / .NET 학습 자료를 체계적으로 정리한 저장소입니다.
 
 ## ✅ TODO
 
+- [ ] [.NET Insider Issue 26 완전 학습 가이드](./dotnet-insider-issue-26/README.md) — 10개 원문의 .NET 11·CLR/JIT·MAUI·서비스 패치·Agent Skills·현대화·Durable MCP·Dev Proxy·SQL 검색·Visual Studio Agent를 CSX로 실습하기
 - [ ] [.NET 11 Preview 6 완전 학습 가이드](./dotnet-11-preview-6/README.md) — 기초 문법부터 CLR·JIT 내부, Libraries, SDK, C# 15, ASP.NET Core, MAUI, EF Core, F#, 컨테이너까지 학습하고 체크리스트 완료하기
 
 ---
