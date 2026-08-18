@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-19 | 휴가 요청 승인과 정책 선택으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260819/README.md) |
 | 2026-08-18 | 회의실 예약 충돌 해결과 배정 전략으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260818/README.md) |
 | 2026-08-17 | 환불 요청 심사와 환불 수단 선택으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260817/README.md) |
 | 2026-08-16 | 재고 이동 요청 승인으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260816/README.md) |
