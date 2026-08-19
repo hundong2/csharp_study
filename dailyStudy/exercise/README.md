@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-20 | 서비스 장애 우선순위와 담당 팀 배정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260820/README.md) |
 | 2026-08-19 | 휴가 요청 승인과 정책 선택으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260819/README.md) |
 | 2026-08-18 | 회의실 예약 충돌 해결과 배정 전략으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260818/README.md) |
 | 2026-08-17 | 환불 요청 심사와 환불 수단 선택으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260817/README.md) |
