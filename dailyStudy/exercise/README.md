@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-23 | 주문 취소 보상 계획으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260823/README.md) |
 | 2026-08-22 | 비밀번호 재설정 요청 분류로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260822/README.md) |
 | 2026-08-21 | API 키 교체 계획으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260821/README.md) |
 | 2026-08-20 | 서비스 장애 우선순위와 담당 팀 배정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260820/README.md) |
