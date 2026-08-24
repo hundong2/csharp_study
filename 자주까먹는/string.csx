@@ -52,3 +52,28 @@ string UsingCreateString()
         }
     });
 }
+
+
+//Using Parameterized Span Example
+UsingParameterizedSpan();
+void UsingParameterizedSpan()
+{
+    Console.WriteLine("Parameter ReadOnlySpan");
+    string dateString = "2026-08-19";
+    ReadOnlySpan<char> dateSpan = dateString.AsSpan();
+
+    int year = ParserYear(dateSpan);
+    Console.WriteLine($"Parsed year: {year}"); // Parsed year: 2026
+}
+public int ReadOnlySpanLength(ReadOnlySpan<char> span)
+{
+    // ReadOnlySpan<char>의 길이를 반환합니다.
+    return span.Length;
+}
+public int ParserYear(ReadOnlySpan<char> dateSpan)
+{
+    // ReadOnlySpan<char>를 사용하여 연도를 파싱합니다.
+    // 예: "2026-08-19"에서 연도 부분을 추출
+    ReadOnlySpan<char> yearSpan = dateSpan.Slice(0, 4);
+    return int.Parse(yearSpan);
+}
