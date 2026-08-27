@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-28 | 고객 동의 갱신 대상 분류로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260828/README.md) |
 | 2026-08-27 | 배송 주소 변경 승인으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260827/README.md) |
 | 2026-08-26 | 재고 실사 차이 조정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260826/README.md) |
 | 2026-08-24 | 개인정보 내보내기 계획으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260824/README.md) |
