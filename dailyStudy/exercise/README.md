@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-08-31 | 쿠폰 발급 자격 판정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260831/README.md) |
 | 2026-08-30 | 반품 요청 처리 계획으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260830/README.md) |
 | 2026-08-29 | 결제 분쟁 초기 분류로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260829/README.md) |
 | 2026-08-28 | 고객 동의 갱신 대상 분류로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260828/README.md) |
