@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-03 | 실시간 센서 이상 감지로 배우는 C# 반복자, 비동기 스트림, Producer-Consumer, Strategy, Repository, DI | [README.md](./20260903/README.md) |
 | 2026-09-02 | 공급업체 등록 심사로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260902/README.md) |
 | 2026-08-31 | 쿠폰 발급 자격 판정으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260831/README.md) |
 | 2026-08-30 | 반품 요청 처리 계획으로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260830/README.md) |
