@@ -47,3 +47,24 @@ void RunPriorityQueueExampleWithCustomComparer()
 // Dequeued: Task B
 // Dequeued: Task C
 // Dequeued: Task A
+
+RunPriorityQueueExampleWithTuple();
+void RunPriorityQueueExampleWithTuple()
+{
+    Console.WriteLine("PriorityQueue Example with Tuple:");
+
+    // 우선순위 큐 생성 (최소 힙)
+    PriorityQueue<(string Task, int Priority), int> priorityQueue = new();
+
+    // 요소 추가 (값, 우선순위)
+    priorityQueue.Enqueue(("Task A", 3), 3);
+    priorityQueue.Enqueue(("Task B", 1), 1);
+    priorityQueue.Enqueue(("Task C", 2), 2);
+
+    // 우선순위에 따라 요소 제거
+    while (priorityQueue.Count > 0)
+    {
+        var item = priorityQueue.Dequeue();
+        Console.WriteLine($"Dequeued: {item.Task} with Priority: {item.Priority}");
+    }
+}
