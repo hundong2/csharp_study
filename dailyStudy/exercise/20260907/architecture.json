@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "가격 조회 캐시 아키텍처",
+    "output": "dailyStudy/exercise/20260907/architecture.html",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "mode": "grid",
+    "origin": [44, 84],
+    "cols": 5,
+    "gapX": 78,
+    "gapY": 96,
+    "cellW": 150,
+    "cellH": 82
+  },
+  "components": [
+    {
+      "id": "console",
+      "type": "frontend",
+      "label": "Console UI",
+      "sublabel": "Composition Root",
+      "row": 0,
+      "col": 0
+    },
+    {
+      "id": "application",
+      "type": "backend",
+      "label": "PriceQueryService",
+      "sublabel": "Application Service",
+      "row": 0,
+      "col": 1
+    },
+    {
+      "id": "cacheDecorator",
+      "type": "backend",
+      "label": "CachedPriceProvider",
+      "sublabel": "성공 refresh 공유",
+      "row": 0,
+      "col": 2
+    },
+    {
+      "id": "repositoryAdapter",
+      "type": "backend",
+      "label": "RepositoryPriceProvider",
+      "sublabel": "IPriceProvider Adapter",
+      "row": 0,
+      "col": 3,
+      "size": [172, 60]
+    },
+    {
+      "id": "repository",
+      "type": "database",
+      "label": "Price Repository",
+      "sublabel": "원본 가격 저장소",
+      "row": 0,
+      "col": 4
+    },
+    {
+      "id": "cacheStore",
+      "type": "database",
+      "label": "Concurrent State",
+      "sublabel": "TTL cache + SKU gates",
+      "row": 1,
+      "col": 2,
+      "size": [160, 60]
+    },
+    {
+      "id": "freshnessPolicy",
+      "type": "backend",
+      "label": "Freshness Policy",
+      "sublabel": "Strategy",
+      "row": 1,
+      "col": 1
+    },
+    {
+      "id": "clock",
+      "type": "external",
+      "label": "TimeProvider",
+      "sublabel": "교체 가능한 시간",
+      "row": 1,
+      "col": 3
+    }
+  ],
+  "connections": [
+    {
+      "from": "console",
+      "to": "application",
+      "label": "SKU 조회"
+    },
+    {
+      "from": "application",
+      "to": "cacheDecorator",
+      "label": "IPriceProvider",
+      "variant": "emphasis"
+    },
+    {
+      "from": "cacheDecorator",
+      "to": "repositoryAdapter",
+      "label": "inner 호출"
+    },
+    {
+      "from": "repositoryAdapter",
+      "to": "repository",
+      "label": "FindAsync"
+    },
+    {
+      "from": "cacheDecorator",
+      "to": "cacheStore",
+      "label": "hit / 저장 / SKU gate",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    },
+    {
+      "from": "freshnessPolicy",
+      "to": "cacheDecorator",
+      "label": "만료 여부 판정",
+      "variant": "dashed"
+    },
+    {
+      "from": "clock",
+      "to": "cacheDecorator",
+      "label": "현재 UTC 시각",
+      "variant": "dashed"
+    },
+    {
+      "from": "clock",
+      "to": "repositoryAdapter",
+      "label": "조회 시각",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "의존성 방향",
+      "items": [
+        "Application은 IPriceProvider 추상화에만 의존",
+        "Decorator는 같은 계약의 Adapter 앞에 캐시 정책을 추가"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "테스트 가능성",
+      "items": [
+        "TimeProvider를 바꾸어 기다리지 않고 TTL 검증",
+        "저장소를 메모리 구현으로 바꾸어 외부 의존성 제거"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "동시성 안전성",
+      "items": [
+        "같은 SKU는 성공 refresh 뒤 캐시를 재사용",
+        "서로 다른 SKU는 독립적으로 병렬 처리"
+      ]
+    }
+  ]
+}

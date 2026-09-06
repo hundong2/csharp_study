@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-07 | 상품 가격 캐시 조회로 배우는 TimeProvider, ConcurrentDictionary, SKU별 성공 refresh 합치기, Decorator, Repository, DI | [README.md](./20260907/README.md) |
 | 2026-09-04 | 외부 환율 API 연동으로 배우는 C# HttpClient, JSON, Gateway/Adapter, Strategy, DI, async | [README.md](./20260904/README.md) |
 | 2026-09-03 | 실시간 센서 이상 감지로 배우는 C# 반복자, 비동기 스트림, Producer-Consumer, Strategy, Repository, DI | [README.md](./20260903/README.md) |
 | 2026-09-02 | 공급업체 등록 심사로 배우는 C# 기본 문법, Domain Model, Result, Strategy, Repository, DI, async | [README.md](./20260902/README.md) |
