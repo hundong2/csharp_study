@@ -11,6 +11,8 @@
 - [PriorityQueue](./PriorityQueue.csx)  
     - [Comparer Explaination](#c의-comparer-가이드-및-상세-분석)  
     - [Comparer With CompareTo](#compareto). 
+- [in_out과 invariance/공변성](./in_out_keyword.md). 
+    - return 값이 `IList<IList<string>>`일때 tip.
 
 # C#의 Comparer<T> 가이드 및 상세 분석
 

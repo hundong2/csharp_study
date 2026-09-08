@@ -1,3 +1,5 @@
+- [Return값이 IList<IList<string>>일때 팁](#return값이-ilistilist-일때)  
+
 # C#에서 `<out T>`의 `out` 키워드는 "이 제네릭 타입 T는 오직 출력(반환)용으로만 쓰겠다"고 컴파일러와 약속하는 선언입니다. 
 
 - 이 약속을 통해 앞서 겪었던 엄격한 타입 불일치 문제를 해결하고, 자식 타입의 컬렉션을 부모 타입의 컬렉션으로 취급할 수 있는 공변성(Covariance)을 안전하게 허용합니다.
@@ -86,3 +88,40 @@ dogDoctor(new Dog());
 ```
 
 이처럼 `in` 키워드는 제네릭이 **결과를 반환하지 않고 매개변수로 받아 소비하기만 할 때**, 범용적인 처리기(부모)를 구체적인 상황(자식)에 제약 없이 재사용할 수 있도록 유연성을 부여합니다.
+
+## Return값이 IList<IList<string>> 일때
+
+- Return값이 IList<IList<string>> 일때, List<IList<string>> 또는, Array<IList<string>> 가 되는 이유
+
+```
+[최종 목표]: IList < IList<string> > 반환
+======================================================
+❌ 실패 케이스: List < List<string> > 
+ ├── 1차 심사 (외부): List는 IList를 상속하므로 통과! (O)
+ └── 2차 심사 (내부 T): 요구하는 T는 'IList<string>'인데 
+                        들어온 T는 'List<string>'이므로 탈락! (X)
+
+✅ 성공 케이스: List < IList<string> >
+ ├── 1차 심사 (외부): List는 IList를 상속하므로 통과! (O)
+ └── 2차 심사 (내부 T): 요구하는 T와 들어온 T가 
+                        'IList<string>'으로 완벽 일치! (O)
+```
+
+- C#의 제네릭(Generic)시스템은 런타임 에러를 막기 위해 무공변성(Invariance)이라는 매우 엄격한 규칙을 적용. 제네릭 괄호 `< >`안에 들어가는 `내용물(T)`의 타입은 부모-자식 상속 관계와 무관하게 단 1%의 오차도 없이 완벽하게 일치해야만 컴파일러가 승인 
+
+- `Dictionary<string, List<string>>.Values`를 IEnumerable<List<string>> 컬렉션으로 인식. 이 상태에서 `.ToList()`를 호출하면 원본 제네릭 타입 파라미터가 그대로 유지되어 메모리 상에 `List<List<string>>` 객체가 생성. 엄격한 무공변성(Invariance) 규칙에 의해 `IList<IList<string>>`으로의 암시적 변환이 완전히 차단. 
+
+```
+[요구되는 반환 규격]: IList<IList<string>> (외부: IList, 내부: IList<string>)
+
+1. .Cast().ToList() 전략
+   [생성된 객체 실체]: List<IList<string>>
+    ├── 외부 컨테이너(List) ───> IList 규격 만족! (O)
+    └── 내부 컨테이너(IList<string>) ───> 완벽 일치! (O)
+
+2. 배열(.ToArray()) 전략
+   [생성된 객체 실체]: IList<string>[] (1차원 배열)
+    ├── 외부 컨테이너(Array) ───> IList 규격 만족! (O)
+    └── 내부 컨테이너(IList<string>) ───> 완벽 일치! (O)
+
+```
