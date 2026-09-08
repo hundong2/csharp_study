@@ -12,6 +12,11 @@ C# / .NET 학습 자료를 체계적으로 정리한 저장소입니다.
 
 ---
 
+## 자주까먹는 
+
+- [자주까먹는](./자주까먹는/README.md). 
+- [C# SKILLS forked repo in hundong2](https://github.com/hundong2/skills_dotnet).  
+
 ## ✅ TODO
 
 - [ ] [.NET Insider Issue 27 완전 학습 가이드](./dotnet-insider-issue-27/README.md) — MCP C# SDK v2·Agent Skills·테스트/Binlog Agent·NuGet 보안·SQL/UoW/멀티테넌시·로컬 음성 AI·Fetch Metadata·.NET 11 JIT를 8개 CSX로 실습하기
