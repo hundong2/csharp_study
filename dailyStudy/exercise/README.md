@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-09 | 보고서 작업 큐로 배우는 bounded Channel, backpressure, Worker Pool, graceful shutdown, Strategy, Repository, DI | [README.md](./20260909/README.md) |
 | 2026-09-08 | 주문 생성으로 배우는 Transactional Outbox, Unit of Work, at-least-once, 멱등 소비자, Repository, DI | [README.md](./20260908/README.md) |
 | 2026-09-07 | 상품 가격 캐시 조회로 배우는 TimeProvider, ConcurrentDictionary, SKU별 성공 refresh 합치기, Decorator, Repository, DI | [README.md](./20260907/README.md) |
 | 2026-09-04 | 외부 환율 API 연동으로 배우는 C# HttpClient, JSON, Gateway/Adapter, Strategy, DI, async | [README.md](./20260904/README.md) |
