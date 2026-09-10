@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-11 | 정산 파일 안전 공개로 배우는 C# 14 field, IAsyncDisposable, await using, staging, commit-or-abort, Strategy, Repository, DI | [README.md](./20260911/README.md) |
 | 2026-09-10 | 지식 문서 공동 편집으로 배우는 optimistic concurrency, lost update, compare-and-swap, 불변 record, Strategy, Repository, DI | [README.md](./20260910/README.md) |
 | 2026-09-09 | 보고서 작업 큐로 배우는 bounded Channel, backpressure, Worker Pool, graceful shutdown, Strategy, Repository, DI | [README.md](./20260909/README.md) |
 | 2026-09-08 | 주문 생성으로 배우는 Transactional Outbox, Unit of Work, at-least-once, 멱등 소비자, Repository, DI | [README.md](./20260908/README.md) |
