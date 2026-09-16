@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "문서 변환 관측 가능성 아키텍처",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1320, 720]
+  },
+  "components": [
+    {
+      "id": "caller",
+      "type": "external",
+      "label": "호출자",
+      "sublabel": "검증된 ConversionRequest",
+      "pos": [20, 300],
+      "size": [160, 72]
+    },
+    {
+      "id": "decorator",
+      "type": "backend",
+      "label": "Observed Workflow",
+      "sublabel": "Observability Decorator",
+      "tag": "IConversionWorkflow",
+      "pos": [300, 300],
+      "size": [200, 76]
+    },
+    {
+      "id": "core_service",
+      "type": "backend",
+      "label": "Conversion Service",
+      "sublabel": "Application Service",
+      "tag": "business flow only",
+      "pos": [650, 300],
+      "size": [200, 76]
+    },
+    {
+      "id": "converter_adapter",
+      "type": "backend",
+      "label": "Document Converter",
+      "sublabel": "Port → Adapter",
+      "tag": "Result for rejection",
+      "pos": [1050, 200],
+      "size": [200, 72]
+    },
+    {
+      "id": "receipt_repository",
+      "type": "database",
+      "label": "Receipt Repository",
+      "sublabel": "Port → in-memory Adapter",
+      "tag": "safe metadata only",
+      "pos": [1050, 420],
+      "size": [200, 72]
+    },
+    {
+      "id": "telemetry_apis",
+      "type": "backend",
+      "label": "Telemetry APIs",
+      "sublabel": "ILogger + ActivitySource + Meter",
+      "tag": "safe fields + bounded metric tags",
+      "pos": [280, 70],
+      "size": [300, 76]
+    },
+    {
+      "id": "collector",
+      "type": "external",
+      "label": "Collector / APM",
+      "sublabel": "OpenTelemetry in production",
+      "tag": "export + correlate",
+      "pos": [760, 70],
+      "size": [220, 76]
+    }
+  ],
+  "connections": [
+    {
+      "id": "invoke_workflow",
+      "from": "caller",
+      "to": "decorator",
+      "label": "ExecuteAsync",
+      "variant": "emphasis"
+    },
+    {
+      "id": "delegate_core",
+      "from": "decorator",
+      "to": "core_service",
+      "label": "same interface",
+      "variant": "emphasis"
+    },
+    {
+      "id": "convert_document",
+      "from": "core_service",
+      "to": "converter_adapter",
+      "label": "IDocumentConverter"
+    },
+    {
+      "id": "save_receipt",
+      "from": "core_service",
+      "to": "receipt_repository",
+      "label": "IConversionReceiptRepository"
+    },
+    {
+      "id": "emit_signals",
+      "from": "decorator",
+      "to": "telemetry_apis",
+      "label": "log + span + metric",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "collect_signals",
+      "from": "telemetry_apis",
+      "to": "collector",
+      "label": "provider / exporter"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "업무 경계",
+      "items": [
+        "Application Service는 관측 API를 모른다",
+        "Converter 거절은 Result, 기술 장애는 예외다"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Decorator",
+      "items": [
+        "같은 IConversionWorkflow 계약을 감싼다",
+        "성공·거절·취소·장애를 한 번만 분류한다"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Telemetry 안전성",
+      "items": [
+        "원문과 예외 메시지는 signal에서 제외한다",
+        "metric은 target_format과 outcome만 태그로 쓴다"
+      ]
+    }
+  ]
+}

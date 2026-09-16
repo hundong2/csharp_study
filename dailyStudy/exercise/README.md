@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-16 | 문서 변환으로 배우는 structured logging, ActivitySource trace, Meter metric, 낮은 카디널리티, Observability Decorator, Port-Adapter, DI | [README.md](./20260916/README.md) |
 | 2026-09-15 | 배포 이력 대시보드로 배우는 CQRS, Event Sourcing, Aggregate, Projection, Read Model, optimistic concurrency | [README.md](./20260915/README.md) |
 | 2026-09-14 | 주기 재고 감시로 배우는 Generic Host, BackgroundService, PeriodicTimer, Options, 회차별 DI Scope, graceful shutdown | [README.md](./20260914/README.md) |
 | 2026-09-11 | 정산 파일 안전 공개로 배우는 C# 14 field, IAsyncDisposable, await using, staging, commit-or-abort, Strategy, Repository, DI | [README.md](./20260911/README.md) |
