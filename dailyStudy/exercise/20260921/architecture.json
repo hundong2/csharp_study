@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "보고서 API의 파티션별 동시성 제한",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1390, 660]
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "HTTP Client",
+      "sublabel": "X-Demo-Client + JSON",
+      "pos": [40, 260],
+      "size": [150, 64]
+    },
+    {
+      "id": "routing",
+      "type": "backend",
+      "label": "ASP.NET Core Routing",
+      "sublabel": "endpoint 선택",
+      "pos": [250, 260],
+      "size": [160, 64]
+    },
+    {
+      "id": "limiter",
+      "type": "security",
+      "label": "Partitioned Limiter",
+      "sublabel": "alpha · beta · anonymous",
+      "tag": "실행 1 + 대기 1",
+      "pos": [480, 260],
+      "size": [175, 72]
+    },
+    {
+      "id": "endpoint",
+      "type": "backend",
+      "label": "POST /reports",
+      "sublabel": "HTTP ↔ Result 변환",
+      "pos": [700, 260],
+      "size": [150, 64]
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "Application Service",
+      "sublabel": "render → save 조정",
+      "pos": [900, 260],
+      "size": [155, 64]
+    },
+    {
+      "id": "domain",
+      "type": "backend",
+      "label": "Domain Model",
+      "sublabel": "불변 request · report",
+      "pos": [900, 80],
+      "size": [155, 64]
+    },
+    {
+      "id": "renderer_port",
+      "type": "backend",
+      "label": "Renderer Port",
+      "sublabel": "Strategy 계약",
+      "pos": [1100, 185],
+      "size": [100, 60]
+    },
+    {
+      "id": "renderer",
+      "type": "backend",
+      "label": "Text Renderer",
+      "sublabel": "Adapter",
+      "pos": [1245, 185],
+      "size": [125, 60]
+    },
+    {
+      "id": "repository_port",
+      "type": "backend",
+      "label": "Repository Port",
+      "sublabel": "저장 계약",
+      "pos": [1100, 345],
+      "size": [100, 60]
+    },
+    {
+      "id": "memory_store",
+      "type": "database",
+      "label": "Memory Repository",
+      "sublabel": "process-local",
+      "pos": [1235, 345],
+      "size": [135, 60]
+    },
+    {
+      "id": "health",
+      "type": "backend",
+      "label": "GET /health",
+      "sublabel": "정책 미적용",
+      "pos": [250, 445],
+      "size": [150, 60]
+    },
+    {
+      "id": "rejection",
+      "type": "security",
+      "label": "429 ProblemDetails",
+      "sublabel": "endpoint 진입 전 거절",
+      "pos": [490, 445],
+      "size": [165, 60]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "HTTP · Admission",
+      "wraps": ["routing", "limiter", "endpoint", "health", "rejection"],
+      "pad": 22
+    },
+    {
+      "kind": "region",
+      "label": "Domain · Application",
+      "wraps": ["service", "domain", "renderer_port", "repository_port"],
+      "pad": 22
+    },
+    {
+      "kind": "region",
+      "label": "Infrastructure Adapters",
+      "wraps": ["renderer", "memory_store"],
+      "pad": 20
+    }
+  ],
+  "connections": [
+    {
+      "id": "client_to_routing",
+      "from": "client",
+      "to": "routing",
+      "label": "HTTP 요청",
+      "variant": "emphasis"
+    },
+    {
+      "id": "routing_to_limiter",
+      "from": "routing",
+      "to": "limiter",
+      "label": "POST /reports",
+      "variant": "security"
+    },
+    {
+      "id": "routing_to_health",
+      "from": "routing",
+      "to": "health",
+      "label": "GET /health",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "limiter_to_endpoint",
+      "from": "limiter",
+      "to": "endpoint",
+      "label": "lease 획득",
+      "variant": "emphasis",
+      "labelDy": -30
+    },
+    {
+      "id": "limiter_to_rejection",
+      "from": "limiter",
+      "to": "rejection",
+      "label": "permit + queue 가득 참",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "endpoint_to_service",
+      "from": "endpoint",
+      "to": "service",
+      "label": "CreateAsync",
+      "labelAt": [875, 250]
+    },
+    {
+      "id": "service_to_domain",
+      "from": "service",
+      "to": "domain",
+      "label": "검증된 값"
+    },
+    {
+      "id": "service_to_renderer_port",
+      "from": "service",
+      "to": "renderer_port"
+    },
+    {
+      "id": "renderer_to_port",
+      "from": "renderer",
+      "to": "renderer_port",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "right"
+    },
+    {
+      "id": "service_to_repository_port",
+      "from": "service",
+      "to": "repository_port",
+      "label": "save"
+    },
+    {
+      "id": "store_to_port",
+      "from": "memory_store",
+      "to": "repository_port",
+      "variant": "dashed",
+      "fromSide": "left",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Admission",
+      "items": [
+        "같은 client는 실행 1건과 대기 1건만 허용",
+        "초과 요청은 비싼 endpoint 전에 429로 종료"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Core",
+      "items": [
+        "Application은 HTTP limiter 구현을 모름",
+        "Strategy와 Repository Port로 외부 기술을 분리"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Operational boundary",
+      "items": [
+        "데모 key는 세 종류로 제한",
+        "process-local limiter는 분산 quota가 아님"
+      ]
+    }
+  ]
+}
