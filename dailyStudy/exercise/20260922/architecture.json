@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "문서 접근 API · 인증과 인가 경계",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "request-path",
+        "label": "요청의 주 경로",
+        "focus": ["client", "authentication", "endpoint-policy", "endpoint", "application", "repository-port", "memory-adapter"],
+        "note": "신원 확인부터 업무 처리와 저장까지의 주 경로입니다."
+      },
+      {
+        "id": "resource-rule",
+        "label": "문서별 읽기 권한",
+        "focus": ["endpoint", "authorization-service", "resource-handler", "document"],
+        "note": "Endpoint가 Authorization Service에 실제 문서를 전달하면 알맞은 handler가 owner 또는 Admin인지 판단합니다."
+      },
+      {
+        "id": "composition",
+        "label": "Composition Root",
+        "focus": ["program", "authentication", "endpoint-policy", "authorization-service", "resource-handler", "application", "memory-adapter"],
+        "note": "Program이 구체 구현과 보안 정책을 한곳에서 조립합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "HTTP Client",
+      "sublabel": "X-Demo-User + JSON",
+      "pos": [40, 260],
+      "size": [145, 66]
+    },
+    {
+      "id": "authentication",
+      "type": "security",
+      "label": "Authentication Handler",
+      "sublabel": "header → ClaimsPrincipal",
+      "tag": "학습용 Strategy",
+      "pos": [235, 260],
+      "size": [175, 72]
+    },
+    {
+      "id": "endpoint-policy",
+      "type": "security",
+      "label": "Authorization Middleware",
+      "sublabel": "fallback + named policy",
+      "tag": "401 / 403",
+      "pos": [465, 260],
+      "size": [180, 72]
+    },
+    {
+      "id": "endpoint",
+      "type": "backend",
+      "label": "Minimal API Endpoint",
+      "sublabel": "HTTP Adapter",
+      "pos": [705, 260],
+      "size": [165, 66]
+    },
+    {
+      "id": "application",
+      "type": "backend",
+      "label": "Application Service",
+      "sublabel": "create / find use case",
+      "pos": [930, 260],
+      "size": [165, 66]
+    },
+    {
+      "id": "repository-port",
+      "type": "backend",
+      "label": "Repository Port",
+      "sublabel": "IDocumentRepository",
+      "pos": [1155, 260],
+      "size": [165, 66]
+    },
+    {
+      "id": "memory-adapter",
+      "type": "database",
+      "label": "Memory Adapter",
+      "sublabel": "ConcurrentDictionary",
+      "tag": "process-local",
+      "pos": [1155, 445],
+      "size": [165, 72]
+    },
+    {
+      "id": "authorization-service",
+      "type": "security",
+      "label": "Authorization Service",
+      "sublabel": "requirement dispatch",
+      "pos": [465, 78],
+      "size": [165, 66]
+    },
+    {
+      "id": "resource-handler",
+      "type": "security",
+      "label": "Resource Handler",
+      "sublabel": "인증된 owner / Admin",
+      "tag": "fail-closed",
+      "pos": [705, 75],
+      "size": [165, 72]
+    },
+    {
+      "id": "document",
+      "type": "backend",
+      "label": "ProjectDocument",
+      "sublabel": "Domain resource",
+      "pos": [1155, 78],
+      "size": [165, 66]
+    },
+    {
+      "id": "program",
+      "type": "cloud",
+      "label": "Program",
+      "sublabel": "Composition Root",
+      "tag": "DI + middleware order",
+      "pos": [705, 445],
+      "size": [165, 72]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "security-group",
+      "label": "ASP.NET Core security boundary",
+      "wraps": ["authentication", "endpoint-policy", "endpoint", "authorization-service", "resource-handler"]
+    },
+    {
+      "kind": "region",
+      "label": "Application and Domain",
+      "wraps": ["application", "document", "repository-port"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "client-authenticates",
+      "from": "client",
+      "to": "authentication",
+      "label": "HTTP request",
+      "labelDy": -27,
+      "variant": "emphasis"
+    },
+    {
+      "id": "principal-to-policy",
+      "from": "authentication",
+      "to": "endpoint-policy",
+      "label": "ClaimsPrincipal",
+      "labelDy": -23,
+      "variant": "security"
+    },
+    {
+      "id": "policy-allows-endpoint",
+      "from": "endpoint-policy",
+      "to": "endpoint",
+      "label": "policy success",
+      "labelDy": -23,
+      "variant": "security"
+    },
+    {
+      "id": "endpoint-calls-service",
+      "from": "endpoint",
+      "to": "application",
+      "label": "create / find",
+      "labelDy": -35
+    },
+    {
+      "id": "service-uses-port",
+      "from": "application",
+      "to": "repository-port",
+      "label": "async contract",
+      "labelAt": [1125, 340]
+    },
+    {
+      "id": "adapter-implements-port",
+      "from": "memory-adapter",
+      "to": "repository-port",
+      "label": "implements",
+      "variant": "dashed"
+    },
+    {
+      "id": "endpoint-requests-authorization",
+      "from": "endpoint",
+      "to": "authorization-service",
+      "label": "user + document",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "via": [[787.5, 200], [547.5, 200]],
+      "labelAt": [668, 190],
+      "variant": "security"
+    },
+    {
+      "id": "authorization-dispatches-handler",
+      "from": "authorization-service",
+      "to": "resource-handler",
+      "label": "dispatch",
+      "fromSide": "right",
+      "toSide": "left",
+      "labelAt": [667, 160],
+      "variant": "security"
+    },
+    {
+      "id": "handler-checks-document",
+      "from": "resource-handler",
+      "to": "document",
+      "label": "claim vs OwnerId",
+      "fromSide": "right",
+      "toSide": "left",
+      "labelAt": [1008, 161],
+      "variant": "security"
+    },
+    {
+      "id": "service-creates-document",
+      "from": "application",
+      "to": "document",
+      "label": "validate / create",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "via": [[1012.5, 200], [1237.5, 200]],
+      "labelAt": [1070, 190]
+    },
+    {
+      "id": "program-registers-authentication",
+      "from": "program",
+      "to": "authentication",
+      "label": "register scheme",
+      "variant": "dashed"
+    },
+    {
+      "id": "program-registers-policy",
+      "from": "program",
+      "to": "endpoint-policy",
+      "label": "register policies",
+      "variant": "dashed"
+    },
+    {
+      "id": "program-composes-application",
+      "from": "program",
+      "to": "application",
+      "label": "constructor DI",
+      "labelDy": -40,
+      "fromSide": "top",
+      "variant": "dashed"
+    },
+    {
+      "id": "program-selects-adapter",
+      "from": "program",
+      "to": "memory-adapter",
+      "label": "select adapter",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "보안 경계",
+      "items": [
+        "Authentication은 신원을 만들고 Authorization은 접근을 판단합니다.",
+        "header scheme은 학습 전용이며 운영에서는 OIDC/JWT 검증으로 교체합니다."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "업무 경계",
+      "items": [
+        "Application Service는 검증과 저장 순서만 조율합니다.",
+        "Domain resource와 Repository Port는 HTTP 구현을 모릅니다."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "읽기 권한",
+      "items": [
+        "문서를 불러온 뒤 Authorization Service가 알맞은 resource handler를 실행합니다.",
+        "handler는 인증된 owner 또는 안정적인 subject가 있는 Admin만 허용합니다.",
+        "권한 없는 조회는 존재 열거를 줄이기 위해 404로 감춥니다."
+      ]
+    }
+  ]
+}

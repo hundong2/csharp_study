@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "diagramType": "architecture",
+  "recordedAt": "2026-09-22T03:54:20+09:00",
+  "output": "architecture.html",
+  "specification": {
+    "path": "architecture.json",
+    "sha256": "cf66fb8e64b4c71edab232f71da27b0a2b0dacdf0f24c971df51e6e0e392bb63",
+    "bytes": 7705
+  },
+  "artifact": {
+    "sha256": "159d995ce9af900a8d333810d19eadc856a65f4ffc69795ad53894d79bc9f762",
+    "bytes": 723733
+  },
+  "validation": {
+    "qualityProfile": "showcase",
+    "checksPassed": 9,
+    "checkCount": 9,
+    "errors": 0,
+    "warnings": 0
+  },
+  "browserEvidence": {
+    "status": "passed",
+    "receipt": "architecture.visual-check.json",
+    "viewports": [
+      "1440x900",
+      "1600x1000",
+      "1920x1080",
+      "2048x1320"
+    ],
+    "themesCaptured": [
+      "1440x900 light",
+      "1440x900 dark",
+      "2048x1320 light",
+      "2048x1320 dark"
+    ]
+  },
+  "visualReview": {
+    "status": "passed",
+    "correctionRounds": 1,
+    "notes": "라이트·다크 화면에서 노드, 라벨, 연결선, 카드의 겹침과 잘림이 없음을 확인했고, 보안 경계와 Application/Domain 경계가 분명히 분리되도록 한 차례 배치를 교정했습니다."
+  }
+}

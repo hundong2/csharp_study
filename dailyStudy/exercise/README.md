@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-22 | 프로젝트 문서 API로 배우는 ASP.NET Core 인증, claim·role, 정책·리소스 기반 인가, 401·403·404, Repository, DI | [README.md](./20260922/README.md) |
 | 2026-09-21 | 보고서 생성 API로 배우는 ASP.NET Core partitioned concurrency rate limiting, 429 ProblemDetails, Application Service, Strategy, Repository, DI | [README.md](./20260921/README.md) |
 | 2026-09-18 | 독서 목록으로 배우는 ASP.NET Core Minimal API, HTTP 요청 파이프라인, ProblemDetails, Repository, Strategy, DI | [README.md](./20260918/README.md) |
 | 2026-09-17 | 주문 목록으로 배우는 안정적인 keyset 커서 페이지 조회, 복합 정렬 키, Repository, Strategy, Result, DI | [README.md](./20260917/README.md) |
