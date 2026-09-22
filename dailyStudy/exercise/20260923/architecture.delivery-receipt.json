@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "diagramType": "architecture",
+  "output": "architecture.html",
+  "specification": {
+    "sha256": "070f681b96eebc3dc005df32ae1c0264a22e43bf3c3ba963bc7b7009e4a5bb22",
+    "bytes": 5186
+  },
+  "artifact": {
+    "sha256": "2fe7664581584f122882e8fd5c2160abfc4b7022e17f764c24036b130699ea96",
+    "bytes": 715895
+  },
+  "validation": {
+    "profile": "showcase",
+    "checksPassed": 9,
+    "checkCount": 9,
+    "errors": 0,
+    "warnings": 0
+  },
+  "browserEvidence": {
+    "status": "passed",
+    "receipt": "architecture.visual-check.json",
+    "viewports": [
+      "1440x900",
+      "1600x1000",
+      "1920x1080",
+      "2048x1320"
+    ],
+    "themesCaptured": [
+      "1440x900 light",
+      "1440x900 dark",
+      "2048x1320 light",
+      "2048x1320 dark"
+    ]
+  },
+  "visualReview": {
+    "status": "passed",
+    "correctionRounds": 1,
+    "observations": [
+      "light와 dark에서 글자와 node가 잘리지 않음",
+      "관계선 교차와 모호한 공유 경로가 없음",
+      "node, boundary, conclusion card가 겹치지 않음",
+      "가장 큰 viewport에서도 하단 공간과 diagram 비율이 균형적임"
+    ]
+  }
+}

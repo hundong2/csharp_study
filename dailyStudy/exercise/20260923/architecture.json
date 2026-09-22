@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "ETag 조건부 상품 수정 아키텍처",
+    "quality_profile": "showcase",
+    "viewBox": [1380, 820],
+    "views": [
+      {
+        "id": "request-boundary",
+        "label": "HTTP 조건 경계",
+        "focus": ["client", "endpoints", "etagCodec"],
+        "note": "If-None-Match와 If-Match가 ETag Strategy를 거쳐 HTTP 결과로 바뀝니다."
+      },
+      {
+        "id": "atomic-update",
+        "label": "원자적 수정",
+        "focus": ["endpoints", "application", "domain", "repositoryPort", "memoryRepository"],
+        "note": "CAS 충돌 뒤 원래 조건을 최신 버전에 다시 적용하고, Repository가 원자적으로 비교합니다."
+      },
+      {
+        "id": "composition",
+        "label": "Composition Root",
+        "focus": ["program", "endpoints", "etagCodec", "application", "memoryRepository"],
+        "note": "Program이 route, Strategy, Application Service, Repository Adapter의 구현과 수명을 선택합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "HTTP client",
+      "sublabel": "ETag 보관과 조건 헤더 전송",
+      "pos": [20, 320],
+      "size": [150, 76]
+    },
+    {
+      "id": "endpoints",
+      "type": "frontend",
+      "label": "CatalogEndpoints",
+      "sublabel": "HTTP Presentation Adapter",
+      "pos": [290, 320],
+      "size": [170, 76]
+    },
+    {
+      "id": "application",
+      "type": "backend",
+      "label": "CatalogApplicationService",
+      "sublabel": "조건 재평가와 bounded retry",
+      "pos": [580, 320],
+      "size": [180, 76]
+    },
+    {
+      "id": "repositoryPort",
+      "type": "backend",
+      "label": "ICatalogRepository",
+      "sublabel": "Repository Port",
+      "pos": [880, 320],
+      "size": [170, 76]
+    },
+    {
+      "id": "memoryRepository",
+      "type": "database",
+      "label": "InMemoryCatalogRepository",
+      "sublabel": "lock + compare-and-swap",
+      "pos": [1170, 320],
+      "size": [190, 76]
+    },
+    {
+      "id": "etagCodec",
+      "type": "security",
+      "label": "VersionEntityTagCodec",
+      "sublabel": "strong / weak ETag Strategy",
+      "pos": [290, 80],
+      "size": [170, 76]
+    },
+    {
+      "id": "domain",
+      "type": "backend",
+      "label": "CatalogItem + Result<T>",
+      "sublabel": "불변 Domain 규칙과 Version",
+      "pos": [580, 560],
+      "size": [180, 76]
+    },
+    {
+      "id": "program",
+      "type": "cloud",
+      "label": "Program",
+      "sublabel": "Composition Root",
+      "pos": [1170, 80],
+      "size": [190, 76]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Presentation",
+      "wraps": ["endpoints", "etagCodec"],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "Application",
+      "wraps": ["application", "repositoryPort"],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "Domain",
+      "wraps": ["domain"],
+      "pad": 18
+    },
+    {
+      "kind": "region",
+      "label": "Infrastructure",
+      "wraps": ["memoryRepository"],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    {
+      "id": "client-to-endpoints",
+      "from": "client",
+      "to": "endpoints",
+      "label": "GET / PATCH + 조건 헤더",
+      "variant": "emphasis"
+    },
+    {
+      "id": "endpoints-to-codec",
+      "from": "endpoints",
+      "to": "etagCodec",
+      "label": "ETag parse · 비교"
+    },
+    {
+      "id": "endpoints-to-application",
+      "from": "endpoints",
+      "to": "application",
+      "label": "Find / conditional update",
+      "labelDy": 62
+    },
+    {
+      "id": "application-to-port",
+      "from": "application",
+      "to": "repositoryPort",
+      "label": "조회 · 조건 교체"
+    },
+    {
+      "id": "port-to-repository",
+      "from": "repositoryPort",
+      "to": "memoryRepository",
+      "label": "DI로 선택된 Adapter",
+      "variant": "dashed"
+    },
+    {
+      "id": "application-to-domain",
+      "from": "application",
+      "to": "domain",
+      "label": "Revise · Result",
+      "labelDy": 24
+    },
+    {
+      "id": "program-to-repository",
+      "from": "program",
+      "to": "memoryRepository",
+      "label": "Singleton Adapter 등록",
+      "labelDy": 24,
+      "variant": "dashed"
+    },
+    {
+      "id": "program-to-codec",
+      "from": "program",
+      "to": "etagCodec",
+      "label": "ETag Strategy 등록",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "읽기 재검증",
+      "items": [
+        "If-None-Match가 맞으면 304와 빈 본문",
+        "weak 비교로 의미상 같은 표현을 재사용"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "쓰기 보호",
+      "items": [
+        "If-Match 누락 428 · 불일치 412",
+        "strong 비교 · CAS 재평가 · 8회 한도 뒤 503"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "교체 가능한 경계",
+      "items": [
+        "Application은 HTTP와 Dictionary를 모름",
+        "Strategy와 Repository Adapter를 DI에서 선택"
+      ]
+    }
+  ]
+}
