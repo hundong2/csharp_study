@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "공지 조회 Output Cache 아키텍처",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1180, 640],
+    "views": [
+      {
+        "id": "cache-hit-path",
+        "label": "캐시 hit 경로",
+        "focus": ["client", "output_cache", "cache_store"],
+        "note": "정규화 입력과 현재 generation이 같은 GET은 endpoint를 실행하지 않고 저장된 200 응답을 돌려줍니다."
+      },
+      {
+        "id": "cache-miss-path",
+        "label": "캐시 miss 경로",
+        "focus": ["output_cache", "endpoints", "application", "localizer", "repository", "data_store"],
+        "note": "miss 한 요청만 계층을 따라 데이터를 읽고 응답을 채웁니다."
+      },
+      {
+        "id": "publish-invalidation",
+        "label": "게시 후 무효화",
+        "focus": ["endpoints", "application", "repository", "data_store", "output_cache", "cache_store"],
+        "note": "POST 저장 성공 뒤 generation을 올려 stale 재사용을 막고 이전 tag entry를 정리합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "학습자 Client",
+      "sublabel": "curl / PowerShell",
+      "pos": [40, 260],
+      "size": [135, 76]
+    },
+    {
+      "id": "output_cache",
+      "type": "cloud",
+      "label": "Output Cache",
+      "sublabel": "VaryByValue + generation + lock",
+      "tag": "GET 200만 저장",
+      "pos": [235, 260],
+      "size": [165, 76]
+    },
+    {
+      "id": "cache_store",
+      "type": "database",
+      "label": "응답 Cache Store",
+      "sublabel": "process memory",
+      "tag": "tag: announcement-feed",
+      "pos": [235, 70],
+      "size": [165, 76]
+    },
+    {
+      "id": "endpoints",
+      "type": "backend",
+      "label": "Presentation",
+      "sublabel": "Minimal API endpoints",
+      "pos": [470, 260],
+      "size": [155, 76]
+    },
+    {
+      "id": "application",
+      "type": "backend",
+      "label": "Application Service",
+      "sublabel": "조회·게시 use case",
+      "pos": [695, 260],
+      "size": [165, 76]
+    },
+    {
+      "id": "localizer",
+      "type": "backend",
+      "label": "언어 Strategy",
+      "sublabel": "ko / en 응답 선택",
+      "pos": [695, 450],
+      "size": [165, 72]
+    },
+    {
+      "id": "repository",
+      "type": "backend",
+      "label": "Repository Adapter",
+      "sublabel": "thread-safe in-memory",
+      "pos": [930, 260],
+      "size": [170, 76]
+    },
+    {
+      "id": "data_store",
+      "type": "database",
+      "label": "공지 Snapshot",
+      "sublabel": "immutable records",
+      "pos": [930, 450],
+      "size": [170, 72]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "AnnouncementCacheApi process",
+      "wraps": ["output_cache", "cache_store", "endpoints", "application", "localizer", "repository", "data_store"],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {
+      "id": "request",
+      "from": "client",
+      "to": "output_cache",
+      "label": "HTTP request",
+      "variant": "emphasis",
+      "labelAt": [205, 350],
+      "route": "orthogonal-h"
+    },
+    {
+      "id": "cache_lookup",
+      "from": "output_cache",
+      "to": "cache_store",
+      "label": "정규화 key 조회·응답 저장",
+      "labelAt": [318, 200]
+    },
+    {
+      "id": "cache_miss",
+      "from": "output_cache",
+      "to": "endpoints",
+      "label": "miss / non-cache method",
+      "variant": "emphasis",
+      "labelAt": [435, 350]
+    },
+    {
+      "id": "use_case",
+      "from": "endpoints",
+      "to": "application",
+      "label": "검증된 use case 호출",
+      "labelAt": [660, 256]
+    },
+    {
+      "id": "select_language",
+      "from": "application",
+      "to": "localizer",
+      "label": "언어별 text 선택",
+      "labelAt": [778, 390]
+    },
+    {
+      "id": "port_call",
+      "from": "application",
+      "to": "repository",
+      "label": "Repository Port",
+      "labelAt": [895, 350]
+    },
+    {
+      "id": "snapshot_access",
+      "from": "repository",
+      "to": "data_store",
+      "label": "불변 snapshot 읽기·쓰기",
+      "labelAt": [1015, 390]
+    },
+    {
+      "id": "tag_evict",
+      "from": "endpoints",
+      "to": "cache_store",
+      "label": "generation 증가 + tag 정리",
+      "variant": "dashed",
+      "labelAt": [520, 180]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "캐시 key",
+      "items": [
+        "category와 언어를 업무 의미로 canonicalize",
+        "generation으로 old in-flight 응답을 격리",
+        "같은 key의 동시 miss는 resource lock으로 합침"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "일관성",
+      "items": [
+        "저장 성공 뒤 generation 증가 후 tag 정리",
+        "검증 실패는 기존 정상 cache를 지우지 않음"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "운영 전환",
+      "items": [
+        "cache와 generation은 process마다 독립적인 memory",
+        "다중 instance는 Redis·분산 revision·shared DB 검토"
+      ]
+    }
+  ]
+}
