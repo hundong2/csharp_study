@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "D:\\workspace\\csharp_study\\dailyStudy\\exercise\\20260928\\architecture.json",
+  "output": "D:\\workspace\\csharp_study\\dailyStudy\\exercise\\20260928\\architecture.html",
+  "specification": {
+    "sha256": "b39c01ed5efebf72c0c2272fc821bde1225ab93a03f6438acb42a4ce5c7cb634",
+    "bytes": 4156
+  },
+  "artifact": {
+    "sha256": "c064a7a59244fba804835e19dc56a6a35867d616260d38a0462d1f87053e689b",
+    "bytes": 710097
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

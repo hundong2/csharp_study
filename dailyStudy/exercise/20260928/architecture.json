@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "보고서 요청 제한 시간과 협력적 취소",
+    "quality_profile": "showcase",
+    "viewBox": [1180, 700],
+    "views": [
+      {
+        "id": "success-path",
+        "label": "정상 완료 경로",
+        "focus": ["client", "timeout-middleware", "http-endpoint", "application-service", "report-repository", "format-strategy"],
+        "note": "짧은 작업이 Repository 조회와 Strategy 포맷을 거쳐 200 응답이 되는 흐름입니다."
+      },
+      {
+        "id": "timeout-path",
+        "label": "제한 시간 경로",
+        "focus": ["timeout-middleware", "http-endpoint", "application-service", "report-repository", "problem-response"],
+        "note": "시간이 끝나면 RequestAborted가 아래 계층에 전달되고 504 Problem Details를 씁니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "API 호출자",
+      "sublabel": "GET /reports/{customerId}",
+      "pos": [35, 270],
+      "size": [155, 82]
+    },
+    {
+      "id": "timeout-middleware",
+      "type": "security",
+      "label": "Request Timeout",
+      "sublabel": "150ms named policy",
+      "pos": [225, 270],
+      "size": [165, 82]
+    },
+    {
+      "id": "http-endpoint",
+      "type": "backend",
+      "label": "HTTP Endpoint",
+      "sublabel": "입력 변환과 결과 매핑",
+      "pos": [425, 270],
+      "size": [165, 82]
+    },
+    {
+      "id": "application-service",
+      "type": "backend",
+      "label": "Application Service",
+      "sublabel": "유스케이스 조정",
+      "pos": [625, 270],
+      "size": [170, 82]
+    },
+    {
+      "id": "report-repository",
+      "type": "database",
+      "label": "Repository Adapter",
+      "sublabel": "취소 가능한 데이터 조회",
+      "pos": [835, 270],
+      "size": [180, 82]
+    },
+    {
+      "id": "format-strategy",
+      "type": "backend",
+      "label": "Format Strategy",
+      "sublabel": "CSV 또는 JSON",
+      "pos": [625, 425],
+      "size": [170, 82]
+    },
+    {
+      "id": "problem-response",
+      "type": "backend",
+      "label": "504 Problem Details",
+      "sublabel": "일관된 timeout 계약",
+      "pos": [225, 425],
+      "size": [165, 82]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "ReportTimeoutApi process",
+      "wraps": ["timeout-middleware", "http-endpoint", "application-service", "report-repository", "format-strategy", "problem-response"],
+      "pad": 26
+    }
+  ],
+  "connections": [
+    {
+      "id": "client-request",
+      "from": "client",
+      "to": "timeout-middleware",
+      "label": "HTTP request",
+      "labelDy": 65,
+      "variant": "emphasis"
+    },
+    {
+      "id": "middleware-dispatch",
+      "from": "timeout-middleware",
+      "to": "http-endpoint",
+      "label": "linked RequestAborted",
+      "labelDy": -35
+    },
+    {
+      "id": "endpoint-command",
+      "from": "http-endpoint",
+      "to": "application-service",
+      "label": "command + token",
+      "labelDy": -35
+    },
+    {
+      "id": "service-load",
+      "from": "application-service",
+      "to": "report-repository",
+      "label": "LoadAsync(token)",
+      "labelDy": -35,
+      "variant": "emphasis"
+    },
+    {
+      "id": "service-format",
+      "from": "application-service",
+      "to": "format-strategy",
+      "label": "format completed rows",
+      "labelAt": [710, 383]
+    },
+    {
+      "id": "timeout-problem",
+      "from": "timeout-middleware",
+      "to": "problem-response",
+      "label": "deadline exceeded",
+      "labelAt": [308, 383],
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "정상 경로",
+      "items": [
+        "검증 성공 후 Repository를 비동기로 조회",
+        "선택한 Strategy로 응답 본문을 생성"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "시간 초과 경로",
+      "items": [
+        "CancellationToken을 모든 비동기 경계에 전달",
+        "OperationCanceledException을 실패 Result로 바꾸지 않음"
+      ]
+    }
+  ]
+}
