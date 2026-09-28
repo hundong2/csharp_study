@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-09-29 | 서비스 상태 API로 배우는 ASP.NET Core Health Checks, liveness·startup·readiness, required/optional 정책, probe timeout, Port-Adapter, Strategy, DI | [README.md](./20260929/README.md) |
 | 2026-09-28 | 보고서 생성 API로 배우는 ASP.NET Core Request Timeouts, 협력적 취소, Problem Details, Application Service, Repository, Strategy, DI | [README.md](./20260928/README.md) |
 | 2026-09-25 | 공지 조회 API로 배우는 ASP.NET Core Output Caching, canonical vary, generation key, tag cleanup, resource locking, Repository, Strategy, DI | [README.md](./20260925/README.md) |
 | 2026-09-23 | 상품 PATCH API로 배우는 ETag, 304·412·428·503, optimistic concurrency, bounded CAS retry, Repository, Strategy, DI | [README.md](./20260923/README.md) |
