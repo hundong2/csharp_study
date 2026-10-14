@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "프로젝트 초대 토큰 API 의존성 구조",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1360, 760]
+  },
+  "components": [
+    {
+      "id": "apiClient",
+      "type": "external",
+      "label": "API Client",
+      "sublabel": "발급 · 조회 · 사용",
+      "pos": [40, 335],
+      "size": [150, 72]
+    },
+    {
+      "id": "endpoints",
+      "type": "frontend",
+      "label": "InvitationEndpoints",
+      "sublabel": "HTTP ↔ Application 변환",
+      "pos": [245, 335],
+      "size": [170, 72]
+    },
+    {
+      "id": "applicationService",
+      "type": "backend",
+      "label": "InvitationApplicationService",
+      "sublabel": "유스케이스 순서 조율",
+      "pos": [550, 335],
+      "size": [190, 72]
+    },
+    {
+      "id": "domainModel",
+      "type": "backend",
+      "label": "ProjectInvitation",
+      "sublabel": "불변 규칙 · Result",
+      "pos": [560, 565],
+      "size": [170, 72]
+    },
+    {
+      "id": "tokenPort",
+      "type": "security",
+      "label": "Token Protector Port",
+      "sublabel": "Protect · Unprotect 계약",
+      "pos": [805, 155],
+      "size": [180, 72]
+    },
+    {
+      "id": "repositoryPort",
+      "type": "backend",
+      "label": "Repository Port",
+      "sublabel": "원자적 1회 사용 계약",
+      "pos": [805, 535],
+      "size": [180, 72]
+    },
+    {
+      "id": "dataProtectionAdapter",
+      "type": "security",
+      "label": "Data Protection Adapter",
+      "sublabel": "purpose · 만료 · 위변조 감지",
+      "pos": [1060, 155],
+      "size": [190, 72]
+    },
+    {
+      "id": "keyRing",
+      "type": "database",
+      "label": "Data Protection Key Ring",
+      "sublabel": "데모: 프로세스 메모리",
+      "pos": [1065, 335],
+      "size": [180, 72]
+    },
+    {
+      "id": "memoryRepository",
+      "type": "database",
+      "label": "In-memory Repository",
+      "sublabel": "lock 기반 원자 전이",
+      "pos": [1060, 535],
+      "size": [190, 72]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "InvitationTokenApi 프로세스",
+      "wraps": [
+        "endpoints",
+        "applicationService",
+        "domainModel",
+        "tokenPort",
+        "repositoryPort",
+        "dataProtectionAdapter",
+        "keyRing",
+        "memoryRepository"
+      ],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {
+      "id": "httpContract",
+      "from": "apiClient",
+      "to": "endpoints",
+      "label": "HTTP JSON",
+      "variant": "emphasis"
+    },
+    {
+      "id": "useCaseCall",
+      "from": "endpoints",
+      "to": "applicationService",
+      "label": "command / result",
+      "variant": "emphasis"
+    },
+    {
+      "id": "domainRules",
+      "from": "applicationService",
+      "to": "domainModel",
+      "label": "검증 · 상태 규칙",
+      "labelDy": 24
+    },
+    {
+      "id": "tokenUse",
+      "from": "applicationService",
+      "to": "tokenPort",
+      "label": "Protect / Unprotect",
+      "variant": "security"
+    },
+    {
+      "id": "repositoryUse",
+      "from": "applicationService",
+      "to": "repositoryPort",
+      "label": "저장 · 원자 사용"
+    },
+    {
+      "id": "tokenImplementation",
+      "from": "dataProtectionAdapter",
+      "to": "tokenPort",
+      "label": "implements",
+      "variant": "dashed"
+    },
+    {
+      "id": "keyAccess",
+      "from": "dataProtectionAdapter",
+      "to": "keyRing",
+      "label": "purpose별 파생 키",
+      "variant": "security",
+      "labelDy": 24
+    },
+    {
+      "id": "repositoryImplementation",
+      "from": "memoryRepository",
+      "to": "repositoryPort",
+      "label": "implements",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "의존성 방향",
+      "items": [
+        "HTTP와 Infrastructure는 Application의 Port를 향합니다.",
+        "Domain은 ASP.NET Core와 암호화 구현을 모릅니다."
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "보안 경계",
+      "items": [
+        "purpose가 다른 소비자의 payload 해독을 막습니다.",
+        "토큰은 로그와 재사용 경로에 남기지 않습니다."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "일회성 보장",
+      "items": [
+        "암호화는 위변조를 막고 Repository가 재사용을 막습니다.",
+        "운영에서는 공유·보호된 durable key ring이 필요합니다."
+      ]
+    }
+  ]
+}
