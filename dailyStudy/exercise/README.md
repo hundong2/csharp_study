@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-10-16 | 결제 웹훅 수신 API로 배우는 HMAC-SHA256, exact raw body 서명, timestamp 시간창, replay 방지, Repository, Strategy, DI | [README.md](./20261016/README.md) |
 | 2026-10-15 | 배포 진행률 API로 배우는 .NET 10 SSE, async stream, Last-Event-ID replay, bounded Channel, Repository, Strategy, DI | [README.md](./20261015/README.md) |
 | 2026-10-14 | 프로젝트 초대 API로 배우는 ASP.NET Core Data Protection, purpose 격리, 변조·만료 검증, 원자적 1회 사용, TimeProvider, Repository, Strategy, DI | [README.md](./20261014/README.md) |
 | 2026-10-01 | 워크숍 등록 API로 배우는 ASP.NET Core OpenAPI 3.1.1, TypedResults, Transformer, 실행 가능한 계약 검증, Repository, Strategy, DI | [README.md](./20261001/README.md) |
