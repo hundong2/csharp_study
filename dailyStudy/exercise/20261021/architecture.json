@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "장비 대여 API와 테스트 피라미드",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1080, 760],
+    "views": [
+      {
+        "id": "runtime-path",
+        "label": "운영 요청 경로",
+        "focus": ["httpClient", "endpoint", "service", "policy", "domain", "repositoryPort", "memoryAdapter"],
+        "note": "HTTP 입력이 정책과 Domain 검증을 지나 원자적으로 저장되는 흐름입니다."
+      },
+      {
+        "id": "test-path",
+        "label": "통합 테스트 경로",
+        "focus": ["mtpRunner", "testSuite", "webFactory", "endpoint", "memoryAdapter", "fixedClock"],
+        "note": "MTP가 테스트를 실행하고 WebApplicationFactory가 실제 pipeline과 교체된 의존성을 검증합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "httpClient",
+      "type": "external",
+      "label": "HTTP Client",
+      "sublabel": "POST /rentals",
+      "pos": [30, 235],
+      "size": [130, 66]
+    },
+    {
+      "id": "endpoint",
+      "type": "frontend",
+      "label": "Presentation",
+      "sublabel": "RentalEndpoints",
+      "pos": [220, 235],
+      "size": [145, 66]
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "Application Service",
+      "sublabel": "CreateRentalService",
+      "pos": [430, 235],
+      "size": [155, 66]
+    },
+    {
+      "id": "policy",
+      "type": "backend",
+      "label": "Policy Strategies",
+      "sublabel": "Laptop / Camera",
+      "pos": [650, 90],
+      "size": [155, 66]
+    },
+    {
+      "id": "domain",
+      "type": "backend",
+      "label": "Domain Model",
+      "sublabel": "Window · Reservation · Result",
+      "pos": [650, 235],
+      "size": [170, 66]
+    },
+    {
+      "id": "repositoryPort",
+      "type": "backend",
+      "label": "Repository Port",
+      "sublabel": "IEquipmentRentalRepository",
+      "pos": [650, 380],
+      "size": [170, 66]
+    },
+    {
+      "id": "memoryAdapter",
+      "type": "database",
+      "label": "In-memory Adapter",
+      "sublabel": "lock + Dictionary",
+      "pos": [885, 380],
+      "size": [155, 66]
+    },
+    {
+      "id": "mtpRunner",
+      "type": "external",
+      "label": "dotnet test + MTP",
+      "sublabel": "17 tests",
+      "pos": [30, 575],
+      "size": [145, 66]
+    },
+    {
+      "id": "testSuite",
+      "type": "backend",
+      "label": "MSTest Suite",
+      "sublabel": "Unit · Contract · Race",
+      "pos": [235, 575],
+      "size": [150, 66]
+    },
+    {
+      "id": "webFactory",
+      "type": "cloud",
+      "label": "WebApplicationFactory",
+      "sublabel": "TestServer + DI override",
+      "pos": [455, 575],
+      "size": [170, 66]
+    },
+    {
+      "id": "fixedClock",
+      "type": "database",
+      "label": "FixedTimeProvider",
+      "sublabel": "2026-10-21T00:00Z",
+      "pos": [700, 575],
+      "size": [165, 66]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Production composition",
+      "wraps": ["endpoint", "service", "policy", "domain", "repositoryPort", "memoryAdapter"],
+      "pad": 26
+    },
+    {
+      "kind": "region",
+      "label": "Test composition",
+      "wraps": ["testSuite", "webFactory", "fixedClock"],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {
+      "id": "http-to-endpoint",
+      "from": "httpClient",
+      "to": "endpoint",
+      "label": "JSON / HTTP",
+      "variant": "emphasis"
+    },
+    {
+      "id": "endpoint-to-service",
+      "from": "endpoint",
+      "to": "service",
+      "label": "CreateRentalCommand",
+      "labelAt": [330, 330]
+    },
+    {
+      "id": "service-to-policy",
+      "from": "service",
+      "to": "policy",
+      "label": "category policy"
+    },
+    {
+      "id": "service-to-domain",
+      "from": "service",
+      "to": "domain",
+      "label": "validate + create",
+      "labelAt": [730, 330]
+    },
+    {
+      "id": "service-to-port",
+      "from": "service",
+      "to": "repositoryPort",
+      "label": "TryAddAsync"
+    },
+    {
+      "id": "adapter-implements-port",
+      "from": "repositoryPort",
+      "to": "memoryAdapter",
+      "label": "implements",
+      "variant": "dashed"
+    },
+    {
+      "id": "mtp-to-suite",
+      "from": "mtpRunner",
+      "to": "testSuite",
+      "label": "discover + run",
+      "variant": "emphasis",
+      "labelAt": [205, 655]
+    },
+    {
+      "id": "suite-to-factory",
+      "from": "testSuite",
+      "to": "webFactory",
+      "label": "CreateClient",
+      "labelAt": [420, 655]
+    },
+    {
+      "id": "factory-to-endpoint",
+      "from": "webFactory",
+      "to": "endpoint",
+      "label": "in-memory HTTP"
+    },
+    {
+      "id": "factory-to-clock",
+      "from": "webFactory",
+      "to": "fixedClock",
+      "label": "DI replacement",
+      "variant": "dashed",
+      "labelAt": [663, 655]
+    },
+    {
+      "id": "factory-to-adapter",
+      "from": "webFactory",
+      "to": "memoryAdapter",
+      "label": "fresh singleton",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "labelAt": [805, 515]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "빠른 단위 테스트",
+      "items": [
+        "RentalWindow와 Application 규칙을 HTTP 없이 검증",
+        "FixedTimeProvider로 날짜와 시간의 비결정성 제거"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "실제 계약 통합 테스트",
+      "items": [
+        "WebApplicationFactory가 routing, JSON, DI, middleware를 함께 실행",
+        "201·400·404·409·415와 Problem Details를 검증"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "경쟁 조건 검증",
+      "items": [
+        "24개 Task가 같은 장비 시간에 동시에 저장 경쟁",
+        "lock 경계에서 정확히 한 예약만 성공"
+      ]
+    }
+  ]
+}

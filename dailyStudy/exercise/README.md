@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-10-21 | 사내 장비 대여 API로 배우는 .NET 테스트 피라미드, MSTest, Microsoft.Testing.Platform, WebApplicationFactory, DI 교체, 동시성 검증 | [README.md](./20261021/README.md) |
 | 2026-10-20 | 감사 이벤트 API로 배우는 System.Text.Json 소스 생성, 허용 목록 다형성, .NET 10 Strict JSON, Result, Strategy, Repository, DI | [README.md](./20261020/README.md) |
 | 2026-10-19 | 면접 일정 API로 배우는 .NET 10 Minimal API 자동 검증, DataAnnotations, IValidatableObject, 검증 경계, 원자적 Repository, Strategy, DI | [README.md](./20261019/README.md) |
 | 2026-10-16 | 결제 웹훅 수신 API로 배우는 HMAC-SHA256, exact raw body 서명, timestamp 시간창, replay 방지, Repository, Strategy, DI | [README.md](./20261016/README.md) |
