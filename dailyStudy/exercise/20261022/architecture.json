@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "글로벌 일정 API — 시간대 안전 의존성",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1280, 850],
+    "views": [
+      {
+        "id": "schedule-path",
+        "label": "회의 생성 경로",
+        "focus": ["client", "endpoint", "service", "resolverPort", "timeAdapter", "domain", "repoPort", "repoAdapter"],
+        "note": "지역 입력이 UTC Domain 값으로 확정되어 원자적으로 저장되는 주 경로입니다."
+      },
+      {
+        "id": "dst-policy",
+        "label": "DST 중복 선택",
+        "focus": ["resolverPort", "timeAdapter", "policyPort", "offsetStrategy", "domain"],
+        "note": "시간대 기술과 모호한 시각의 업무 정책을 Port와 Strategy로 분리합니다."
+      },
+      {
+        "id": "composition",
+        "label": "DI 조립과 테스트",
+        "focus": ["compositionRoot", "service", "timeAdapter", "offsetStrategy", "repoAdapter", "clock"],
+        "note": "Composition Root가 구체 구현과 교체 가능한 시계를 한곳에서 연결합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "client",
+      "type": "external",
+      "label": "HTTP Client",
+      "sublabel": "날짜 · 시각 · IANA ID",
+      "pos": [10, 330],
+      "size": [140, 72]
+    },
+    {
+      "id": "endpoint",
+      "type": "frontend",
+      "label": "MeetingEndpoints",
+      "sublabel": "Presentation · HTTP 계약",
+      "pos": [245, 330],
+      "size": [160, 72]
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "ScheduleMeetingService",
+      "sublabel": "Application Service",
+      "pos": [540, 330],
+      "size": [180, 72]
+    },
+    {
+      "id": "domain",
+      "type": "backend",
+      "label": "시간 Domain",
+      "sublabel": "LocalTime · Slot · Reservation · Result",
+      "pos": [540, 70],
+      "size": [210, 78]
+    },
+    {
+      "id": "resolverPort",
+      "type": "backend",
+      "label": "ILocalTimeResolver",
+      "sublabel": "시간대 해석 Port",
+      "pos": [810, 290],
+      "size": [180, 68]
+    },
+    {
+      "id": "repoPort",
+      "type": "database",
+      "label": "IMeetingRepository",
+      "sublabel": "원자 저장 Port",
+      "pos": [810, 510],
+      "size": [180, 68]
+    },
+    {
+      "id": "timeAdapter",
+      "type": "backend",
+      "label": "TimeZoneInfo Adapter",
+      "sublabel": "invalid · ambiguous · UTC 변환",
+      "pos": [1060, 280],
+      "size": [200, 78]
+    },
+    {
+      "id": "policyPort",
+      "type": "backend",
+      "label": "IAmbiguousTimePolicy",
+      "sublabel": "모호성 Strategy Port",
+      "pos": [800, 70],
+      "size": [200, 68]
+    },
+    {
+      "id": "offsetStrategy",
+      "type": "backend",
+      "label": "Require Explicit Offset",
+      "sublabel": "사용자가 -04:00 / -05:00 선택",
+      "pos": [1060, 65],
+      "size": [190, 78]
+    },
+    {
+      "id": "repoAdapter",
+      "type": "database",
+      "label": "InMemory Repository",
+      "sublabel": "lock · UTC overlap · Dictionary",
+      "pos": [1060, 505],
+      "size": [200, 78]
+    },
+    {
+      "id": "clock",
+      "type": "external",
+      "label": "TimeProvider",
+      "sublabel": "System / Fixed Test Clock",
+      "pos": [540, 555],
+      "size": [180, 68]
+    },
+    {
+      "id": "compositionRoot",
+      "type": "cloud",
+      "label": "Program",
+      "sublabel": "Composition Root · DI",
+      "pos": [250, 675],
+      "size": [180, 68]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Domain + Application — 기술 독립 핵심",
+      "wraps": ["service", "domain", "resolverPort", "policyPort", "repoPort"],
+      "pad": 26
+    },
+    {
+      "kind": "region",
+      "label": "Infrastructure Adapters",
+      "wraps": ["timeAdapter", "offsetStrategy", "repoAdapter"],
+      "pad": 10
+    }
+  ],
+  "connections": [
+    { "id": "request", "from": "client", "to": "endpoint", "label": "JSON 지역 입력", "variant": "emphasis" },
+    { "id": "command", "from": "endpoint", "to": "service", "label": "ScheduleMeetingCommand", "variant": "emphasis" },
+    { "id": "service-domain", "from": "service", "to": "domain", "label": "불변식 생성", "fromSide": "top", "toSide": "bottom" },
+    { "id": "service-resolver", "from": "service", "to": "resolverPort", "label": "지역 시각 해석" },
+    { "id": "service-repository", "from": "service", "to": "repoPort", "label": "UTC 충돌 저장" },
+    { "id": "service-clock", "from": "service", "to": "clock", "label": "현재 UTC", "labelDy": 24 },
+    { "id": "adapter-resolver", "from": "timeAdapter", "to": "resolverPort", "variant": "dashed" },
+    { "id": "adapter-policy", "from": "timeAdapter", "to": "policyPort", "label": "중복 offset 선택" },
+    { "id": "strategy-policy", "from": "offsetStrategy", "to": "policyPort", "label": "implements", "variant": "dashed" },
+    { "id": "adapter-repository", "from": "repoAdapter", "to": "repoPort", "label": "implements", "variant": "dashed" },
+    { "id": "root-service", "from": "compositionRoot", "to": "service", "label": "Port와 Adapter 조립", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "지역 입력을 보존",
+      "items": ["DateOnly + TimeOnly + IANA ID", "중복 시각은 명시적 UTC offset 요구"]
+    },
+    {
+      "dot": "emerald",
+      "title": "UTC로 확정",
+      "items": ["invalid time은 400으로 거절", "UTC 반열린 구간으로 충돌 비교"]
+    },
+    {
+      "dot": "violet",
+      "title": "교체 가능한 경계",
+      "items": ["Resolver · Strategy · Repository Port", "TimeProvider로 현재 시각 고정"]
+    }
+  ]
+}
