@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "주문-결제 대사 애플리케이션 구조",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "main-flow",
+        "label": "주요 대사 흐름",
+        "focus": ["learner", "composition-root", "reconcile-service", "left-join", "report"],
+        "note": "두 데이터 집합이 누락을 보존하는 보고서로 바뀌는 주 경로입니다."
+      },
+      {
+        "id": "ports-adapters",
+        "label": "Port와 Adapter",
+        "focus": ["order-adapter", "payment-adapter", "reconcile-service"],
+        "note": "Application Service는 저장 방식이 아니라 Port 계약에만 의존합니다."
+      },
+      {
+        "id": "business-policy",
+        "label": "업무 규칙",
+        "focus": ["reconcile-service", "amount-policy", "report"],
+        "note": "조인과 금액 판정을 분리해 규칙을 독립적으로 교체하고 검사합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "learner",
+      "type": "external",
+      "label": "학습자",
+      "sublabel": "demo / self-test",
+      "pos": [30, 270],
+      "size": [135, 64]
+    },
+    {
+      "id": "composition-root",
+      "type": "backend",
+      "label": "Program",
+      "sublabel": "Composition Root",
+      "pos": [225, 270],
+      "size": [145, 64]
+    },
+    {
+      "id": "order-adapter",
+      "type": "database",
+      "label": "주문 Adapter",
+      "sublabel": "IOrderRepository",
+      "pos": [250, 70],
+      "size": [160, 68]
+    },
+    {
+      "id": "payment-adapter",
+      "type": "database",
+      "label": "결제 Adapter",
+      "sublabel": "IPaymentRepository",
+      "pos": [250, 470],
+      "size": [160, 68]
+    },
+    {
+      "id": "reconcile-service",
+      "type": "backend",
+      "label": "대사 Application Service",
+      "sublabel": "use case orchestration",
+      "tag": "DIP",
+      "pos": [500, 270],
+      "size": [180, 72]
+    },
+    {
+      "id": "left-join",
+      "type": "backend",
+      "label": ".NET 10 LeftJoin",
+      "sublabel": "누락된 결제도 보존",
+      "tag": "LINQ",
+      "pos": [770, 165],
+      "size": [170, 68]
+    },
+    {
+      "id": "amount-policy",
+      "type": "backend",
+      "label": "금액 일치 Strategy",
+      "sublabel": "통화·금액 판정",
+      "tag": "OCP",
+      "pos": [770, 375],
+      "size": [170, 68]
+    },
+    {
+      "id": "report",
+      "type": "frontend",
+      "label": "불변 대사 보고서",
+      "sublabel": "Matched / Missing / Mismatch",
+      "pos": [1050, 270],
+      "size": [185, 72]
+    }
+  ],
+  "connections": [
+    {
+      "id": "learner-runs",
+      "from": "learner",
+      "to": "composition-root",
+      "label": "실행 mode 선택",
+      "labelAt": [195, 348],
+      "variant": "emphasis"
+    },
+    {
+      "id": "root-composes",
+      "from": "composition-root",
+      "to": "reconcile-service",
+      "label": "의존성 조립",
+      "labelAt": [400, 350],
+      "variant": "emphasis"
+    },
+    {
+      "id": "orders-read",
+      "from": "order-adapter",
+      "to": "reconcile-service",
+      "label": "주문 목록 반환"
+    },
+    {
+      "id": "payments-read",
+      "from": "payment-adapter",
+      "to": "reconcile-service",
+      "label": "결제 목록 반환"
+    },
+    {
+      "id": "service-joins",
+      "from": "reconcile-service",
+      "to": "left-join",
+      "label": "OrderId 기준 결합",
+      "variant": "emphasis"
+    },
+    {
+      "id": "service-evaluates",
+      "from": "reconcile-service",
+      "to": "amount-policy",
+      "label": "업무 판정 위임"
+    },
+    {
+      "id": "join-reports",
+      "from": "left-join",
+      "to": "report",
+      "label": "누락 포함 행 생성",
+      "variant": "emphasis"
+    },
+    {
+      "id": "policy-classifies",
+      "from": "amount-policy",
+      "to": "report",
+      "label": "상태와 차액 결정"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "LINQ 계약",
+      "items": [
+        "LeftJoin은 모든 주문을 남깁니다.",
+        "결제가 없으면 nullable로 드러냅니다."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "아키텍처",
+      "items": [
+        "Application은 Repository Port에만 의존합니다.",
+        "Strategy가 금액 판정 규칙을 캡슐화합니다."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "검증",
+      "items": [
+        "경계값과 잘못된 입력을 Result로 검사합니다.",
+        "self-test가 누락·불일치·중복을 재현합니다."
+      ]
+    }
+  ]
+}
