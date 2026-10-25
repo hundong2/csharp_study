@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "길이 접두사 텔레메트리 수신 파이프라인",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1280, 720],
+    "views": [
+      {
+        "id": "byte-flow",
+        "label": "바이트 처리 흐름",
+        "focus": ["byte-stream", "pipe-reader", "frame-reader", "json-decoder"],
+        "note": "임의로 잘린 바이트가 완전한 JSON 메시지로 복원되는 경로입니다."
+      },
+      {
+        "id": "use-case",
+        "label": "업무 처리 흐름",
+        "focus": ["json-decoder", "domain-model", "ingestion-service", "repository", "receipt"],
+        "note": "검증된 측정값만 멱등 저장하고 처리 결과를 만드는 경로입니다."
+      },
+      {
+        "id": "composition",
+        "label": "의존성 조립",
+        "focus": ["learner", "composition-root", "pipe-reader", "ingestion-service"],
+        "note": "Program 한곳에서 Port와 Adapter를 연결해 안쪽 계층을 구체 기술로부터 분리합니다."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "learner",
+      "type": "external",
+      "label": "학습자",
+      "sublabel": "demo / self-test",
+      "pos": [30, 70],
+      "size": [135, 64]
+    },
+    {
+      "id": "composition-root",
+      "type": "backend",
+      "label": "Program",
+      "sublabel": "Composition Root",
+      "pos": [250, 90],
+      "size": [150, 64]
+    },
+    {
+      "id": "byte-stream",
+      "type": "external",
+      "label": "조각난 바이트 Stream",
+      "sublabel": "header / payload 분할",
+      "pos": [30, 320],
+      "size": [165, 68]
+    },
+    {
+      "id": "pipe-reader",
+      "type": "messagebus",
+      "label": "PipeReader",
+      "sublabel": "buffer 수명과 backpressure",
+      "tag": ".NET 10",
+      "pos": [250, 320],
+      "size": [165, 68]
+    },
+    {
+      "id": "frame-reader",
+      "type": "backend",
+      "label": "길이 접두사 Reader",
+      "sublabel": "4-byte big-endian",
+      "tag": "Strategy",
+      "pos": [475, 320],
+      "size": [175, 68]
+    },
+    {
+      "id": "json-decoder",
+      "type": "backend",
+      "label": "JSON Decoder",
+      "sublabel": "UTF-8 DTO 변환",
+      "tag": "Adapter",
+      "pos": [710, 320],
+      "size": [165, 68]
+    },
+    {
+      "id": "domain-model",
+      "type": "security",
+      "label": "TelemetryReading",
+      "sublabel": "불변식 검증",
+      "tag": "Domain",
+      "pos": [710, 90],
+      "size": [165, 68]
+    },
+    {
+      "id": "ingestion-service",
+      "type": "backend",
+      "label": "Ingestion Service",
+      "sublabel": "use case orchestration",
+      "tag": "DIP",
+      "pos": [955, 318],
+      "size": [180, 72]
+    },
+    {
+      "id": "repository",
+      "type": "database",
+      "label": "측정값 Repository",
+      "sublabel": "원자적 TryAdd",
+      "tag": "Idempotency",
+      "pos": [968, 90],
+      "size": [155, 70]
+    },
+    {
+      "id": "receipt",
+      "type": "frontend",
+      "label": "수집 결과",
+      "sublabel": "저장 / 중복 / 거절",
+      "pos": [968, 520],
+      "size": [155, 70]
+    }
+  ],
+  "connections": [
+    {
+      "id": "learner-runs",
+      "from": "learner",
+      "to": "composition-root",
+      "label": "실행",
+      "labelAt": [207, 74],
+      "variant": "emphasis"
+    },
+    {
+      "id": "root-builds-reader",
+      "from": "composition-root",
+      "to": "pipe-reader",
+      "label": "처리기 조립",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [325, 235],
+      "variant": "dashed"
+    },
+    {
+      "id": "stream-feeds-pipe",
+      "from": "byte-stream",
+      "to": "pipe-reader",
+      "label": "async read",
+      "labelAt": [222, 403],
+      "variant": "emphasis"
+    },
+    {
+      "id": "pipe-exposes-buffer",
+      "from": "pipe-reader",
+      "to": "frame-reader",
+      "variant": "emphasis"
+    },
+    {
+      "id": "reader-emits-frame",
+      "from": "frame-reader",
+      "to": "json-decoder",
+      "label": "완전한 payload",
+      "labelAt": [682, 403],
+      "variant": "emphasis"
+    },
+    {
+      "id": "decoder-validates-domain",
+      "from": "json-decoder",
+      "to": "domain-model",
+      "label": "factory 검증",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelAt": [792, 235]
+    },
+    {
+      "id": "decoder-yields-result",
+      "from": "json-decoder",
+      "to": "ingestion-service",
+      "label": "Result",
+      "labelAt": [915, 403],
+      "variant": "emphasis"
+    },
+    {
+      "id": "service-persists",
+      "from": "ingestion-service",
+      "to": "repository",
+      "label": "원자적 저장",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelAt": [1055, 235]
+    },
+    {
+      "id": "service-reports",
+      "from": "ingestion-service",
+      "to": "receipt",
+      "label": "집계 snapshot",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [1055, 460],
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "프로토콜 경계",
+      "items": [
+        "헤더는 network byte order로 읽습니다.",
+        "최대 payload 길이를 먼저 제한합니다."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "buffer 수명",
+      "items": [
+        "성공해 ReadResult를 받은 read마다 AdvanceTo합니다.",
+        "AdvanceTo 뒤에는 이전 sequence를 보관하지 않습니다."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "업무 경계",
+      "items": [
+        "입력 오류는 Result로 반환합니다.",
+        "취소와 예기치 않은 장애는 삼키지 않습니다."
+      ]
+    }
+  ]
+}
