@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "공급업체 견적 집계 아키텍처",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1380, 840]
+  },
+  "components": [
+    {
+      "id": "console",
+      "type": "frontend",
+      "label": "Program",
+      "sublabel": "Composition Root",
+      "pos": [50, 350],
+      "size": [165, 74]
+    },
+    {
+      "id": "service",
+      "type": "backend",
+      "label": "CollectSupplierQuotesService",
+      "sublabel": "Application Service",
+      "pos": [300, 350],
+      "size": [250, 74]
+    },
+    {
+      "id": "gatewayPort",
+      "type": "backend",
+      "label": "ISupplierQuoteGateway",
+      "sublabel": "Gateway Port",
+      "pos": [690, 115],
+      "size": [220, 68]
+    },
+    {
+      "id": "policyPort",
+      "type": "backend",
+      "label": "IQuoteSelectionPolicy",
+      "sublabel": "Strategy Port",
+      "pos": [690, 350],
+      "size": [220, 68]
+    },
+    {
+      "id": "repositoryPort",
+      "type": "database",
+      "label": "IQuoteRoundRepository",
+      "sublabel": "Repository Port",
+      "pos": [690, 585],
+      "size": [220, 68]
+    },
+    {
+      "id": "scriptedGateways",
+      "type": "external",
+      "label": "ScriptedSupplierQuoteGateway",
+      "sublabel": "외부 공급업체 Adapter",
+      "pos": [1050, 115],
+      "size": [255, 68]
+    },
+    {
+      "id": "lowestCostPolicy",
+      "type": "backend",
+      "label": "LowestTotalCostPolicy",
+      "sublabel": "Strategy Adapter",
+      "pos": [1050, 350],
+      "size": [255, 68]
+    },
+    {
+      "id": "repository",
+      "type": "database",
+      "label": "InMemoryQuoteRoundRepository",
+      "sublabel": "Repository Adapter",
+      "pos": [1050, 585],
+      "size": [255, 68]
+    },
+    {
+      "id": "domain",
+      "type": "backend",
+      "label": "Domain Models",
+      "sublabel": "Result · Quote · Report",
+      "pos": [300, 690],
+      "size": [250, 68]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Application 경계: 유스케이스와 Port",
+      "wraps": ["service", "gatewayPort", "policyPort", "repositoryPort"]
+    },
+    {
+      "kind": "region",
+      "label": "Infrastructure 경계: 교체 가능한 Adapter",
+      "wraps": ["scriptedGateways", "lowestCostPolicy", "repository"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "composeAndRun",
+      "from": "console",
+      "to": "service",
+      "label": "조립하고 실행",
+      "variant": "emphasis",
+      "labelDy": -32
+    },
+    {
+      "id": "requestQuotes",
+      "from": "service",
+      "to": "gatewayPort",
+      "label": "모든 요청 시작",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "selectQuote",
+      "from": "service",
+      "to": "policyPort",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "saveRound",
+      "from": "service",
+      "to": "repositoryPort",
+      "label": "집계 결과 저장",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "gatewayImplementation",
+      "from": "scriptedGateways",
+      "to": "gatewayPort",
+      "label": "구현",
+      "variant": "dashed"
+    },
+    {
+      "id": "policyImplementation",
+      "from": "lowestCostPolicy",
+      "to": "policyPort",
+      "label": "구현",
+      "variant": "dashed"
+    },
+    {
+      "id": "repositoryImplementation",
+      "from": "repository",
+      "to": "repositoryPort",
+      "label": "구현",
+      "variant": "dashed"
+    },
+    {
+      "id": "buildReport",
+      "from": "service",
+      "to": "domain",
+      "label": "불변 report 생성",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "완료 순서 처리",
+      "items": [
+        "모든 Gateway Task를 먼저 시작합니다.",
+        "Task.WhenEach로 끝난 Task부터 await foreach로 소비합니다."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "실패 경계와 의존성 역전",
+      "items": [
+        "품절은 Result에 남기고 취소와 예상 밖 예외는 전파합니다.",
+        "Application은 Port만 알고 Program이 Adapter를 조립합니다."
+      ]
+    }
+  ]
+}

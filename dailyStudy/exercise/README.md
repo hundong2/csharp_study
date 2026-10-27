@@ -4,6 +4,7 @@
 
 | 날짜 | 주제 | 자료 |
 | --- | --- | --- |
+| 2026-10-27 | 공급업체 견적 집계로 배우는 .NET 10 Task.WhenEach, 완료 순서, 부분 실패, Result, Gateway, Strategy, Repository, DI | [README.md](./20261027/README.md) |
 | 2026-10-26 | 장치 텔레메트리 수신으로 배우는 .NET 10 System.IO.Pipelines, 길이 접두사 프레이밍, 다중 세그먼트, 자원 제한, Result, Repository, DI | [README.md](./20261026/README.md) |
 | 2026-10-23 | 주문-결제 대사로 배우는 .NET 10 LeftJoin, nullable, C# 14 extension members, Result, Repository, Strategy, DI | [README.md](./20261023/README.md) |
 | 2026-10-22 | 글로벌 일정 API로 배우는 DateOnly, TimeOnly, TimeZoneInfo, DST 공백·중복 시각, UTC 충돌, Result, Strategy, Repository, DI | [README.md](./20261022/README.md) |
